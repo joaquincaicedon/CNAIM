@@ -142,7 +142,7 @@
 #' furfuraldehyde = "Default",
 #' reliability_factor = "Default")
 
-pof_transformador_34,5kv <- function(transformer_type = "66kV Transformer (GM)",
+pof_transformador_34_5kv <- function(transformer_type = "66kV Transformer (GM)",
                                     year_of_manufacture,
                                     utilisation_pct = "Default",
                                     no_taps = "Default",
