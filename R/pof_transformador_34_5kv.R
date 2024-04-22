@@ -197,7 +197,7 @@ pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)
   # Ref. table Categorisation of Assets and Generic Terms for Assets  --
 
   asset_category <- gb_ref_taken$categorisation_of_assets %>%
-    dplyr::filter(`Asset Register Category` == transformer_type) %>%
+    dplyr::filter(`Asset Register Category` == tipo_transformador) %>%
     dplyr::select(`Health Index Asset Category`) %>% dplyr::pull()
 
   generic_term_1 <- gb_ref_taken$generic_terms_for_assets %>%
@@ -218,14 +218,14 @@ pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)
   }
 
   normal_expected_life_tf <- gb_ref_taken$normal_expected_life %>%
-    dplyr::filter(`Asset Register  Category` == transformer_type & `Sub-division` ==
+    dplyr::filter(`Asset Register  Category` == tipo_transformador & `Sub-division` ==
                     sub_division) %>%
     dplyr::pull()
 
   # Normal expected life for tapchanger -----------------------------
 
   normal_expected_life_tc <- gb_ref_taken$normal_expected_life %>%
-    dplyr::filter(`Asset Register  Category` == transformer_type & `Sub-division` ==
+    dplyr::filter(`Asset Register  Category` == tipo_transformador & `Sub-division` ==
                     "Tapchanger") %>%
     dplyr::pull()
 
@@ -255,7 +255,7 @@ pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)
                                                  altitude_m,
                                                  distance_from_coast_km,
                                                  corrosion_category_index,
-                                                 asset_type = transformer_type)
+                                                 asset_type = tipo_transformador)
 
   # Expected life for transformer ------------------------------
   expected_life_years_tf <- expected_life(normal_expected_life =
