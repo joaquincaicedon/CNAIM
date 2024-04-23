@@ -11,7 +11,7 @@
 #' asset category. See See page 17, table 1 in CNAIM (2021).
 #' Options:
 #' \code{tipo_transformador =
-#' c("33kV Transformer (GM)", "66kV Transformer (GM)")}. The default setting is
+#' c("33kV Transformer (GM)", "Transformador 34kV (GM)", "66kV Transformer (GM)")}. The default setting is
 #' \code{tipo_transformador = "66kV Transformer (GM)"}
 #' @param year_of_manufacture Numeric. Normal expected life depends on the
 #' year for manufacture, see page 107 table 20 in CNAIM (2021).
