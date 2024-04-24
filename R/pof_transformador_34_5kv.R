@@ -184,7 +184,7 @@ pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)
 
   `Asset Register Category` = `Health Index Asset Category` =
     `Generic Term...1` = `Generic Term...2` = `Functional Failure Category` =
-    `K-Value (%)` = `C-Value` = `Asset Register  Category` = `Sub-division` =
+    `K-Value (%)` = `C-Value` = `Asset Register Category` = `Sub-division` =
     `Asset Category` = NULL
   # due to NSE notes in R CMD check
   if(is.null(gb_ref_given)){
