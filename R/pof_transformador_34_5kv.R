@@ -214,6 +214,11 @@ dato_cualquiera_1 <- gb_ref_taken$measured_cond_modifier_mmi_cal %>%
     dplyr::select(`Parameters for Combination Using MMI Technique - Factor Divider 1`) %>% dplyr::pull()
 print(dato_cualquiera_1)
 
+   # Lectura de tabla 1-----------------------------
+dato_cualquiera_2 <- gb_ref_taken$categorisation_of_assets %>%
+    dplyr::filter(`Asset Register Category` == "Transformador 34kV (GM)") %>%
+    dplyr::select(`Health Index Asset Category`) %>% dplyr::pull()
+print(dato_cualquiera_2)
   
   # Normal expected life for transformer -----------------------------
 
