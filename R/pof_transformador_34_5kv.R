@@ -203,11 +203,11 @@ pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)
   generic_term_1 <- gb_ref_taken$generic_terms_for_assets %>%
     dplyr::filter(`Health Index Asset Category` == asset_category) %>%
     dplyr::select(`Generic Term...1`) %>% dplyr::pull()
-
+print(generic_term_1)
   generic_term_2 <- gb_ref_taken$generic_terms_for_assets %>%
     dplyr::filter(`Health Index Asset Category` == asset_category) %>%
     dplyr::select(`Generic Term...2`) %>% dplyr::pull()
-
+print(generic_term_2)
   # Normal expected life for transformer -----------------------------
 
   if (year_of_manufacture < 1980) {
