@@ -181,7 +181,7 @@ pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)
                                     furfuraldehyde = "Default",
                                     reliability_factor = "Default",
                                     gb_ref_given = NULL) {
-
+print(tipo_transformador)
   `Asset Register Category` = `Health Index Asset Category` =
     `Generic Term...1` = `Generic Term...2` = `Functional Failure Category` =
     `K-Value (%)` = `C-Value` = `Asset Register Category` = `Sub-division` =
