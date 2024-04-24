@@ -199,7 +199,7 @@ pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)
   asset_category <- gb_ref_taken$categorisation_of_assets %>%
     dplyr::filter(`Asset Register Category` == tipo_transformador) %>%
     dplyr::select(`Health Index Asset Category`) %>% dplyr::pull()
-
+  print(Asset Register Category)
   generic_term_1 <- gb_ref_taken$generic_terms_for_assets %>%
     dplyr::filter(`Health Index Asset Category` == asset_category) %>%
     dplyr::select(`Generic Term...1`) %>% dplyr::pull()
