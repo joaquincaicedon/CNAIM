@@ -208,6 +208,13 @@ print(generic_term_1)
     dplyr::filter(`Health Index Asset Category` == asset_category) %>%
     dplyr::select(`Generic Term...2`) %>% dplyr::pull()
 print(generic_term_2)
+ # Lectura de tabla 15-----------------------------
+dato_cualquiera_1 <- gb_ref_taken$measured_cond_modifier_mmi_cal %>%
+    dplyr::filter(`Asset Category` == LV UGB) %>%
+    dplyr::select(`Parameters for Combination Using MMI Technique - Factor Divider 1`) %>% dplyr::pull()
+print(dato_cualquiera_1)
+
+  
   # Normal expected life for transformer -----------------------------
 
   if (year_of_manufacture < 1980) {
