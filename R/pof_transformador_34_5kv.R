@@ -210,7 +210,7 @@ print(generic_term_1)
 print(generic_term_2)
  # Lectura de tabla 15-----------------------------
 dato_cualquiera_1 <- gb_ref_taken$measured_cond_modifier_mmi_cal %>%
-    dplyr::filter(`Asset Category` == LV UGB) %>%
+    dplyr::filter(`Asset Category` == "LV UGB") %>%
     dplyr::select(`Parameters for Combination Using MMI Technique - Factor Divider 1`) %>% dplyr::pull()
 print(dato_cualquiera_1)
 
