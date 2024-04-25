@@ -5,7 +5,7 @@
 #' The function is a cubic curve that is based on
 #' the first three terms of the Taylor series for an
 #' exponential function. For more information about the
-#' probability of failure function see section 6
+#' probabilidad de falla, ver la sección 6
 #' on page 34 in CNAIM (2021).
 #' @param tipo_transformador String. A sting that refers to the specific
 #' asset category. See See page 17, table 1 in CNAIM (2021).
@@ -214,6 +214,7 @@ dato_cualquiera_1 <- gb_ref_taken$measured_cond_modifier_mmi_cal %>%
     dplyr::select(`Parameters for Combination Using MMI Technique - Factor Divider 1`) %>% dplyr::pull()
 print(dato_cualquiera_1)
 
+<<<<<<< Updated upstream
    # Lectura de tabla 1-----------------------------
 dato_cualquiera_2 <- gb_ref_taken$categorisation_of_assets %>%
     dplyr::filter(`Asset Register Category` == "Transformador 34kV (GM)") %>%
@@ -221,6 +222,9 @@ dato_cualquiera_2 <- gb_ref_taken$categorisation_of_assets %>%
 print(dato_cualquiera_2)
   
   # Normal expected life for transformer -----------------------------
+=======
+  # Normal expected life for transformador-----------------------------
+>>>>>>> Stashed changes
 
   if (year_of_manufacture < 1980) {
     sub_division <- "Transformer - Pre 1980"
