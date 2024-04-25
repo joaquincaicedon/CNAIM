@@ -1,20 +1,18 @@
 #' @importFrom magrittr %>%
-#' @title Current Probability of Failure for 33/10kV and 66/10kV Transformers
-#' @description This function calculates the current
-#' annual probability of failure for 33/10kV and 66/10kV transformers.
-#' The function is a cubic curve that is based on
-#' the first three terms of the Taylor series for an
-#' exponential function. For more information about the
-#' probabilidad de falla, ver la sección 6
-#' on page 34 in CNAIM (2021).
-#' @param tipo_transformador String. A sting that refers to the specific
-#' asset category. See See page 17, table 1 in CNAIM (2021).
+#' @title Probabilidad de falla actual para transformadores de 34,5/13,8 kV
+#' @description Esta función calcula la probabilidad anual actual de falla para
+#'  transformadores de 33/10 kV y 66/10 kV.  La función es una curva cúbica que
+#'  se basa en los tres primeros términos de la serie de Taylor para una función
+#'  exponencial. Para más información sobre la probabilidad de falla, ver la
+#'  sección 6 en  la página 34 en CNAIM (2021).
+#' @param tipo_transformador Texto. Texto que hace referencia a la categoría específica
+#'  de activos. Véase la página 17, tabla 1 en CNAIM (2021).
 #' Options:
 #' \code{tipo_transformador =
 #' c("33kV Transformer (GM)", "Transformador 34kV (GM)", "66kV Transformer (GM)")}. The default setting is
 #' \code{tipo_transformador = "66kV Transformer (GM)"}
-#' @param year_of_manufacture Numeric. Normal expected life depends on the
-#' year for manufacture, see page 107 table 20 in CNAIM (2021).
+#' @param año_de_fabricación Numerico. La vida útil normal esperada depende
+#' del año de fabricación, véase la página 107 del cuadro 20 de CNAIM (2021).
 #' @inheritParams duty_factor_transformer_33_66kv
 #' @inheritParams location_factor
 #' @inheritParams current_health
@@ -104,7 +102,7 @@
 #' @examples
 #' # Current probability of failure for a 66/10kV transformer
 #' pof_transformer_33_66kv(tipo_transformador = "66kV Transformer (GM)",
-#' year_of_manufacture = 1980,
+#' año_de_fabricación = 1980,
 #' utilisation_pct = "Default",
 #' no_taps = "Default",
 #' placement = "Default",
@@ -143,7 +141,7 @@
 #' reliability_factor = "Default")
 
 pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)",
-                                    year_of_manufacture,
+                                    año_de_fabricación,
                                     utilisation_pct = "Default",
                                     no_taps = "Default",
                                     placement = "Default",
@@ -229,7 +227,7 @@ print(dato_cualquiera_2)
   # Normal expected life for transformador-----------------------------
 
 
-  if (year_of_manufacture < 1980) {
+  if (año_de_fabricación < 1980) {
     sub_division <- "Transformer - Pre 1980"
   } else {
     sub_division <- "Transformer - Post 1980"
