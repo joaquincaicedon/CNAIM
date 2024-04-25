@@ -207,7 +207,7 @@ print(tipo_transformador)
   generic_term_2 <- gb_ref_taken$generic_terms_for_assets %>%
     dplyr::filter(`Health Index Asset Category` == asset_category) %>%
     dplyr::select(`Generic Term...2`) %>% dplyr::pull()
-  
+
  # Lectura de tabla 15-----------------------------
 dato_cualquiera_1 <- gb_ref_taken$measured_cond_modifier_mmi_cal %>%
     dplyr::filter(`Asset Category` == "LV UGB") %>%
@@ -918,4 +918,6 @@ print(dato_cualquiera_2)
        (((c * current_health_score)^3) / factorial(3)))
 
   return(data.frame(pof = probability_of_failure, chs = current_health_score))
+  cat("Termino generico 1:", generic_term_1)
+  cat("Termino generico 2:", generic_term_2)
 }
