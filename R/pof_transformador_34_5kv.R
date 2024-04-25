@@ -194,20 +194,20 @@ print(tipo_transformador)
     gb_ref_taken <- gb_ref_given
   }
 
-  # Ref. table Categorisation of Assets and Generic Terms for Assets  --
+   # Ref. table Categorisation of Assets and Generic Terms for Assets  --
 
   asset_category <- gb_ref_taken$categorisation_of_assets %>%
     dplyr::filter(`Asset Register Category` == tipo_transformador) %>%
     dplyr::select(`Health Index Asset Category`) %>% dplyr::pull()
-  print(asset_category)
+
   generic_term_1 <- gb_ref_taken$generic_terms_for_assets %>%
     dplyr::filter(`Health Index Asset Category` == asset_category) %>%
     dplyr::select(`Generic Term...1`) %>% dplyr::pull()
-print(generic_term_1)
+
   generic_term_2 <- gb_ref_taken$generic_terms_for_assets %>%
     dplyr::filter(`Health Index Asset Category` == asset_category) %>%
     dplyr::select(`Generic Term...2`) %>% dplyr::pull()
-print(generic_term_2)
+  
  # Lectura de tabla 15-----------------------------
 dato_cualquiera_1 <- gb_ref_taken$measured_cond_modifier_mmi_cal %>%
     dplyr::filter(`Asset Category` == "LV UGB") %>%
