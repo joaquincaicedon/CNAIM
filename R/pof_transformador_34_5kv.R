@@ -103,7 +103,7 @@
 #' # Current probability of failure for a 66/10kV transformer
 #' pof_transformer_33_66kv(tipo_transformador = "66kV Transformer (GM)",
 #' año_de_fabricación = 1980,
-#' utilisation_pct = "Default",
+#' utilización = "Default",
 #' no_taps = "Default",
 #' placement = "Default",
 #' altitude_m = "Default",
@@ -142,7 +142,7 @@
 
 pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)",
                                     año_de_fabricación,
-                                    utilisation_pct = "Default",
+                                    utilización = "Default",
                                     no_taps = "Default",
                                     placement = "Default",
                                     altitude_m = "Default",
@@ -257,7 +257,7 @@ print(dato_cualquiera_2)
                     'EHV Transformer/ 132kV Transformer') %>% dplyr::select(`C-Value`) %>% dplyr::pull()
 
   # Duty factor -------------------------------------------------------------
-  duty_factor_tf_11kv <- duty_factor_transformer_33_66kv(utilisation_pct,
+  duty_factor_tf_11kv <- duty_factor_transformer_33_66kv(utilización,
                                                          no_taps)
   duty_factor_tf <-
     duty_factor_tf_11kv$duty_factor[which(duty_factor_tf_11kv$category ==
