@@ -16,20 +16,20 @@
 #' @inheritParams duty_factor_transformer_33_66kv
 #' @inheritParams location_factor
 #' @inheritParams current_health
-#' @param age_tf Numeric. The current age in years
+#' @param edad_TP Numeric. The current age in years
 #' of the transformer.
-#' @param age_tc Numeric. The current age in years
+#' @param edad_CT Numeric. The current age in years
 #' of the tapchanger
-#' @param partial_discharge_tf String. Indicating the
+#' @param descarga_parcial_TP String. Indicating the
 #' level of partial discharge in the transformer.
 #' Options:
-#' \code{partial_discharge_tf = c("Low", "Medium", "High (Not Confirmed)",
-#'  "High (Confirmed)", "Default")}. See page 154, table 173 in CNAIM (2021).
-#' @param partial_discharge_tc String. Indicating the
+#' \code{descarga_parcial_TP = c("Baja", "Media", "Alta (No Confirmada)",
+#'  "Alta (Confirmada)", "Default")}. See page 154, table 173 in CNAIM (2021).
+#' @param descarga_parcial_CT String. Indicating the
 #' level of partial discharge in the tapchanger
 #' Options:
-#' \code{partial_discharge_tc = c("Low", "Medium", "High (Not Confirmed)",
-#'  "High (Confirmed)", "Default")}. See page 155, table 175 in CNAIM (2021).
+#' \code{descarga_parcial_CT = c("Baja", "Media", "Alta (No Confirmada)",
+#'  "Alta (Confirmada)", "Default")}. See page 155, table 175 in CNAIM (2021).
 #' @param temperature_reading String. Indicating the criticality.
 #' Options:
 #' \code{temperature_reading = c("Normal", "Moderately High",
@@ -109,10 +109,10 @@
 #' altura_m = "Default",
 #' distancia_costa_km = "Default",
 #' categoria_indice_corrosion = "Default",
-#' age_tf = 43,
-#' age_tc = 43,
-#' partial_discharge_tf = "Default",
-#' partial_discharge_tc = "Default",
+#' edad_TP = 43,
+#' edad_CT = 43,
+#' descarga_parcial_TP = "Default",
+#' descarga_parcial_CT = "Default",
 #' temperature_reading = "Default",
 #' main_tank = "Default",
 #' coolers_radiator = "Default",
@@ -148,10 +148,10 @@ pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)
                                     altura_m = "Default",
                                     distancia_costa_km = "Default",
                                     categoria_indice_corrosion = "Default",
-                                    age_tf,
-                                    age_tc,
-                                    partial_discharge_tf = "Default",
-                                    partial_discharge_tc = "Default",
+                                    edad_TP,
+                                    edad_CT,
+                                    descarga_parcial_TP = "Default",
+                                    descarga_parcial_CT = "Default",
                                     temperature_reading = "Default",
                                     main_tank = "Default",
                                     coolers_radiator = "Default",
@@ -202,26 +202,26 @@ print(tipo_transformador)
     dplyr::filter(`Health Index Asset Category` == asset_category) %>%
     dplyr::select(`Generic Term...1`) %>% dplyr::pull()
 
-  cat("Termino generico 1:", generic_term_1)
+  # cat("Termino generico 1:", generic_term_1)
 
 
   generic_term_2 <- gb_ref_taken$generic_terms_for_assets %>%
     dplyr::filter(`Health Index Asset Category` == asset_category) %>%
     dplyr::select(`Generic Term...2`) %>% dplyr::pull()
 
-  cat("Termino generico 2:", generic_term_2)
+  # cat("Termino generico 2:", generic_term_2)
  # Lectura de tabla 15-----------------------------
-dato_cualquiera_1 <- gb_ref_taken$measured_cond_modifier_mmi_cal %>%
-    dplyr::filter(`Asset Category` == "LV UGB") %>%
-    dplyr::select(`Parameters for Combination Using MMI Technique - Factor Divider 1`) %>% dplyr::pull()
-print(dato_cualquiera_1)
+  # dato_cualquiera_1 <- gb_ref_taken$measured_cond_modifier_mmi_cal %>%
+  #   dplyr::filter(`Asset Category` == "LV UGB") %>%
+  #   dplyr::select(`Parameters for Combination Using MMI Technique - Factor Divider 1`) %>% dplyr::pull()
+  # print(dato_cualquiera_1)
 
 
    # Lectura de tabla 1-----------------------------
-dato_cualquiera_2 <- gb_ref_taken$categorisation_of_assets %>%
-    dplyr::filter(`Asset Register Category` == "Transformador 34kV (GM)") %>%
-    dplyr::select(`Health Index Asset Category`) %>% dplyr::pull()
-print(dato_cualquiera_2)
+# dato_cualquiera_2 <- gb_ref_taken$categorisation_of_assets %>%
+#    dplyr::filter(`Asset Register Category` == "Transformador 34kV (GM)") %>%
+#   dplyr::select(`Health Index Asset Category`) %>% dplyr::pull()
+# print(dato_cualquiera_2)
 
 
   # Normal expected life for transformador-----------------------------
@@ -274,7 +274,7 @@ print(dato_cualquiera_2)
                                                  distancia_costa_km,
                                                  categoria_indice_corrosion,
                                                  asset_type = tipo_transformador)
-  cat("factor de localización Ctap:", location_factor_transformer)
+  cat("factor de localización:", location_factor_transformer)
 
   # Expected life for transformer ------------------------------
   expected_life_years_tf <- expected_life(normal_expected_life =
@@ -293,8 +293,8 @@ print(dato_cualquiera_2)
   b1_tc <- beta_1(expected_life_years_tc)
 
   # Initial health score ----------------------------------------------------
-  initial_health_score_tf <- initial_health(b1_tf, age_tf)
-  initial_health_score_tc <- initial_health(b1_tc, age_tc)
+  initial_health_score_tf <- initial_health(b1_tf, edad_TP)
+  initial_health_score_tc <- initial_health(b1_tc, edad_CT)
 
   ## NOTE
   # Typically, the Health Score Collar is 0.5 and
@@ -345,50 +345,50 @@ print(dato_cualquiera_2)
     ])
 
 
-  # Partial discharge transformer ----------------------------------------------
+  # Descargas parciales en el transformador ----------------------------------------------
   mci_hv_tf_partial_discharge <-
     gb_ref_taken$mci_ehv_tf_main_tf_prtl_dis
 
-  ci_factor_partial_discharge_tf <-
+  ci_factor_descarga_parcial_TP <-
     mci_hv_tf_partial_discharge$`Condition Input Factor`[which(
       mci_hv_tf_partial_discharge$
         `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge_tf)]
+        descarga_parcial_TP)]
 
-  ci_cap_partial_discharge_tf <-
+  ci_cap_descarga_parcial_TP <-
     mci_hv_tf_partial_discharge$`Condition Input Cap`[which(
       mci_hv_tf_partial_discharge$
         `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge_tf)]
+        descarga_parcial_TP)]
 
-  ci_collar_partial_discharge_tf <-
+  ci_collar_descarga_parcial_TP <-
     mci_hv_tf_partial_discharge$`Condition Input Collar`[which(
       mci_hv_tf_partial_discharge$
         `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge_tf)]
+        descarga_parcial_TP)]
 
 
-  # Partial discharge tapchanger ------------------------------------------------
-  mci_hv_tf_partial_discharge_tc <-
+  # Descargas parciales en el cambiador de taps ------------------------------------------------
+  mci_hv_tf_descarga_parcial_CT <-
     gb_ref_taken$mci_ehv_tf_tapchngr_prtl_dis
 
-  ci_factor_partial_discharge_tc <-
-    mci_hv_tf_partial_discharge_tc$`Condition Input Factor`[which(
-      mci_hv_tf_partial_discharge_tc$
+  ci_factor_descarga_parcial_CT <-
+    mci_hv_tf_descarga_parcial_CT$`Condition Input Factor`[which(
+      mci_hv_tf_descarga_parcial_CT$
         `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge_tc)]
+        descarga_parcial_CT)]
 
-  ci_cap_partial_discharge_tc <-
-    mci_hv_tf_partial_discharge_tc$`Condition Input Cap`[which(
-      mci_hv_tf_partial_discharge_tc$
+  ci_cap_descarga_parcial_CT <-
+    mci_hv_tf_descarga_parcial_CT$`Condition Input Cap`[which(
+      mci_hv_tf_descarga_parcial_CT$
         `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge_tc)]
+        descarga_parcial_CT)]
 
-  ci_collar_partial_discharge_tc <-
-    mci_hv_tf_partial_discharge_tc$`Condition Input Collar`[which(
-      mci_hv_tf_partial_discharge_tc$
+  ci_collar_descarga_parcial_CT <-
+    mci_hv_tf_descarga_parcial_CT$`Condition Input Collar`[which(
+      mci_hv_tf_descarga_parcial_CT$
         `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge_tc)]
+        descarga_parcial_CT)]
 
 
   # Temperature readings ----------------------------------------------------
@@ -414,7 +414,7 @@ print(dato_cualquiera_2)
         temperature_reading)]
 
   # measured condition factor -----------------------------------------------
-  factors_tf <- c(ci_factor_partial_discharge_tf,
+  factors_tf <- c(ci_factor_descarga_parcial_TP,
                   ci_factor_temp_reading)
 
   measured_condition_factor_tf <- mmi(factors_tf,
@@ -423,25 +423,25 @@ print(dato_cualquiera_2)
                                       max_no_combined_factors_tf)
 
 
-  measured_condition_factor_tc <- mmi(ci_factor_partial_discharge_tc,
+  measured_condition_factor_tc <- mmi(ci_factor_descarga_parcial_CT,
                                       factor_divider_1_tc,
                                       factor_divider_2_tc,
                                       max_no_combined_factors_tc)
 
   # Measured condition cap --------------------------------------------------
-  caps_tf <- c(ci_cap_partial_discharge_tf,
+  caps_tf <- c(ci_cap_descarga_parcial_TP,
                ci_cap_temp_reading)
   measured_condition_cap_tf <- min(caps_tf)
 
 
-  measured_condition_cap_tc <- ci_cap_partial_discharge_tc
+  measured_condition_cap_tc <- ci_cap_descarga_parcial_CT
 
   # Measured condition collar -----------------------------------------------
-  collars_tf <- c(ci_collar_partial_discharge_tf,
+  collars_tf <- c(ci_collar_descarga_parcial_TP,
                   ci_collar_temp_reading)
   measured_condition_collar_tf <- max(collars_tf)
 
-  measured_condition_collar_tc <- ci_collar_partial_discharge_tc
+  measured_condition_collar_tc <- ci_collar_descarga_parcial_CT
 
   # Measured condition modifier ---------------------------------------------
   measured_condition_modifier_tf <- data.frame(measured_condition_factor_tf,
