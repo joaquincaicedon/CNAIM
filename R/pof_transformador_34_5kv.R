@@ -30,10 +30,10 @@
 #' Options:
 #' \code{descarga_parcial_CT = c("Baja", "Media", "Alta (No Confirmada)",
 #'  "Alta (Confirmada)", "Default")}. See page 155, table 175 in CNAIM (2021).
-#' @param temperature_reading String. Indicating the criticality.
+#' @param Temperatura_lectura String. Indicating the criticality.
 #' Options:
-#' \code{temperature_reading = c("Normal", "Moderately High",
-#' "Very High", "Default")}. See page 154, table 174 in CNAIM (2021).
+#' \code{Temperatura_lectura = c("Normal", "Moderadamente alta",
+#' "Muy alta", "Default")}. See page 154, table 174 in CNAIM (2021).
 #' @param main_tank String. Indicating the observed condition of the
 #' main tank. Options:
 #' \code{main_tank = c("Superficial/minor deterioration", "Some Deterioration",
@@ -113,7 +113,7 @@
 #' edad_CT = 43,
 #' descarga_parcial_TP = "Default",
 #' descarga_parcial_CT = "Default",
-#' temperature_reading = "Default",
+#' Temperatura_lectura = "Default",
 #' main_tank = "Default",
 #' coolers_radiator = "Default",
 #' bushings = "Default",
@@ -152,7 +152,7 @@ pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)
                                     edad_CT,
                                     descarga_parcial_TP = "Default",
                                     descarga_parcial_CT = "Default",
-                                    temperature_reading = "Default",
+                                    Temperatura_lectura = "Default",
                                     main_tank = "Default",
                                     coolers_radiator = "Default",
                                     bushings = "Default",
@@ -391,7 +391,7 @@ print(tipo_transformador)
         descarga_parcial_CT)]
 
   cat("Descargas parciales en el cambiador de tap:", ci_factor_descarga_parcial_CT)
-  # Temperature readings ----------------------------------------------------
+  # Lecturas de temperatura ----------------------------------------------------
   mci_hv_tf_temp_readings <-
     gb_ref_taken$mci_ehv_tf_temp_readings
 
@@ -399,21 +399,23 @@ print(tipo_transformador)
     mci_hv_tf_temp_readings$`Condition Input Factor`[which(
       mci_hv_tf_temp_readings$
         `Condition Criteria: Temperature Reading` ==
-        temperature_reading)]
+        Temperatura_lectura)]
 
   ci_cap_temp_reading <-
     mci_hv_tf_temp_readings$`Condition Input Cap`[which(
       mci_hv_tf_temp_readings$
         `Condition Criteria: Temperature Reading` ==
-        temperature_reading)]
+        Temperatura_lectura)]
 
   ci_collar_temp_reading <-
     mci_hv_tf_temp_readings$`Condition Input Collar`[which(
       mci_hv_tf_temp_readings$
         `Condition Criteria: Temperature Reading` ==
-        temperature_reading)]
+        Temperatura_lectura)]
 
-  # measured condition factor -----------------------------------------------
+  cat("Lecturas de temperatura:", ci_factor_temp_reading)
+
+  # Factor de condicion medido -----------------------------------------------
   factors_tf <- c(ci_factor_descarga_parcial_TP,
                   ci_factor_temp_reading)
 
@@ -427,6 +429,7 @@ print(tipo_transformador)
                                       factor_divider_1_tc,
                                       factor_divider_2_tc,
                                       max_no_combined_factors_tc)
+  cat("Factor de condicion medido TP y CT:", measured_condition_factor_tf, measured_condition_factor_tc)
 
   # Measured condition cap --------------------------------------------------
   caps_tf <- c(ci_cap_descarga_parcial_TP,
