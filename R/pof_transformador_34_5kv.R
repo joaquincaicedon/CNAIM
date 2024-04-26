@@ -34,19 +34,19 @@
 #' Options:
 #' \code{Temperatura_lectura = c("Normal", "Moderadamente alta",
 #' "Muy alta", "Default")}. See page 154, table 174 in CNAIM (2021).
-#' @param main_tank String. Indicating the observed condition of the
+#' @param tanque_principal String. Indicating the observed condition of the
 #' main tank. Options:
-#' \code{main_tank = c("Superficial/minor deterioration", "Some Deterioration",
-#' "Substantial Deterioration", "Default")}. See page 131, table 83
+#' \code{tanque_principal = c("Deterioro superficial/leve", "Cierto deterioro",
+#' "Deterioro sustancial", "Default")}. See page 131, table 83
 #' in CNAIM (2021).
-#' @param coolers_radiator String. Indicating the observed condition of the
-#' coolers/radiators. Options:
-#' \code{coolers_radiator = c("Superficial/minor deterioration", "Some Deterioration",
-#' "Substantial Deterioration", "Default")}. See page 131, table 84
+#' @param ventiladores_radiador Texto indicando el estado observado de los enfriadores/radiadores.
+#'  Opciones:
+#' \code{ventiladores_radiador = c("Deterioro superficial/leve", "Cierto deterioro",
+#' "Deterioro sustancial", "Default")}. See page 131, table 84
 #' in CNAIM (2021).
-#' @param bushings String. Indicating the observed condition of the
-#' bushings. Options:
-#' \code{bushings = c("Superficial/minor deterioration", "Some Deterioration",
+#' @param pasatapas String. Indicating the observed condition of the
+#' pasatapas. Options:
+#' \code{pasatapas = c("Superficial/minor deterioration", "Some Deterioration",
 #' "Substantial Deterioration", "Default")}. See page 131, table 85
 #' in CNAIM (2021).
 #' @param kiosk String. Indicating the observed condition of the
@@ -114,9 +114,9 @@
 #' descarga_parcial_TP = "Default",
 #' descarga_parcial_CT = "Default",
 #' Temperatura_lectura = "Default",
-#' main_tank = "Default",
-#' coolers_radiator = "Default",
-#' bushings = "Default",
+#' tanque_principal = "Default",
+#' ventiladores_radiador = "Default",
+#' pasatapas = "Default",
 #' kiosk = "Default",
 #' cable_boxes = "Default",
 #' external_tap = "Default",
@@ -153,9 +153,9 @@ pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)
                                     descarga_parcial_TP = "Default",
                                     descarga_parcial_CT = "Default",
                                     Temperatura_lectura = "Default",
-                                    main_tank = "Default",
-                                    coolers_radiator = "Default",
-                                    bushings = "Default",
+                                    tanque_principal = "Default",
+                                    ventiladores_radiador = "Default",
+                                    pasatapas = "Default",
                                     kiosk = "Default",
                                     cable_boxes = "Default",
                                     external_tap = "Default",
@@ -391,6 +391,7 @@ print(tipo_transformador)
         descarga_parcial_CT)]
 
   cat("Descargas parciales en el cambiador de tap:", ci_factor_descarga_parcial_CT)
+
   # Lecturas de temperatura ----------------------------------------------------
   mci_hv_tf_temp_readings <-
     gb_ref_taken$mci_ehv_tf_temp_readings
@@ -492,67 +493,73 @@ print(tipo_transformador)
               "Tapchanger") ])
 
 
-  # Transformer -------------------------------------------------------------
+  # Transformer ------------OJO-----oci_ehv_tf_tanque_principal_cond--------------------------------------------
 
-  # Main tank condition
-  oci_ehv_tf_main_tank_cond <-
-    gb_ref_taken$oci_ehv_tf_main_tank_cond
+  # Condicion observada del tanque principal
+  oci_ehv_tf_tanque_principal_cond <-
+    gb_ref_taken$oci_ehv_tf_tanque_principal_cond
 
-  Oi_collar_main_tank <-
-    oci_ehv_tf_main_tank_cond$`Condition Input Collar`[which(
-      oci_ehv_tf_main_tank_cond$`Condition Criteria: Observed Condition` ==
-        main_tank)]
+  Oi_collar_tanque_principal <-
+    oci_ehv_tf_tanque_principal_cond$`Condition Input Collar`[which(
+      oci_ehv_tf_tanque_principal_cond$`Condition Criteria: Observed Condition` ==
+        tanque_principal)]
 
-  Oi_cap_main_tank <-
-    oci_ehv_tf_main_tank_cond$`Condition Input Cap`[which(
-      oci_ehv_tf_main_tank_cond$`Condition Criteria: Observed Condition` ==
-        main_tank)]
+  Oi_cap_tanque_principal <-
+    oci_ehv_tf_tanque_principal_cond$`Condition Input Cap`[which(
+      oci_ehv_tf_tanque_principal_cond$`Condition Criteria: Observed Condition` ==
+        tanque_principal)]
 
-  Oi_factor_main_tank <-
-    oci_ehv_tf_main_tank_cond$`Condition Input Factor`[which(
-      oci_ehv_tf_main_tank_cond$`Condition Criteria: Observed Condition` ==
-        main_tank)]
+  Oi_factor_tanque_principal <-
+    oci_ehv_tf_tanque_principal_cond$`Condition Input Factor`[which(
+      oci_ehv_tf_tanque_principal_cond$`Condition Criteria: Observed Condition` ==
+        tanque_principal)]
 
-  # Coolers/Radiator condition
+  cat("Factor de condicion del tanque principal:", Oi_factor_tanque_principal)
+
+
+  # Condicion de los ventiladores y radiador
 
   oci_ehv_tf_cooler_radiatr_cond <-
     gb_ref_taken$oci_ehv_tf_cooler_radiatr_cond
 
-  Oi_collar_coolers_radiator <-
+  Oi_collar_ventiladores_radiador <-
     oci_ehv_tf_cooler_radiatr_cond$`Condition Input Collar`[which(
       oci_ehv_tf_cooler_radiatr_cond$`Condition Criteria: Observed Condition` ==
-        coolers_radiator)]
+        ventiladores_radiador)]
 
-  Oi_cap_coolers_radiator <-
+  Oi_cap_ventiladores_radiador <-
     oci_ehv_tf_cooler_radiatr_cond$`Condition Input Cap`[which(
       oci_ehv_tf_cooler_radiatr_cond$`Condition Criteria: Observed Condition` ==
-        coolers_radiator)]
+        ventiladores_radiador)]
 
-  Oi_factor_coolers_radiator <-
+  Oi_factor_ventiladores_radiador <-
     oci_ehv_tf_cooler_radiatr_cond$`Condition Input Factor`[which(
       oci_ehv_tf_cooler_radiatr_cond$`Condition Criteria: Observed Condition` ==
-        coolers_radiator)]
+        ventiladores_radiador)]
 
+  cat("Factor de Condicion de los ventiladores y radiador:", Oi_factor_ventiladores_radiador)
 
-  # Bushings
+  # Condicion observada del Pasatapas OJO ___ oci_ehv_tf__cond
 
-  oci_ehv_tf_bushings_cond <-
+  oci_ehv_tf__cond <-
     gb_ref_taken$oci_ehv_tf_bushings_cond
 
-  Oi_collar_bushings <-
+  Oi_collar_pasatapas <-
     oci_ehv_tf_bushings_cond$`Condition Input Collar`[which(
       oci_ehv_tf_bushings_cond$`Condition Criteria: Observed Condition` ==
-        bushings)]
+        pasatapas)]
 
-  Oi_cap_bushings <-
+  Oi_cap_pasatapas <-
     oci_ehv_tf_bushings_cond$`Condition Input Cap`[which(
       oci_ehv_tf_bushings_cond$`Condition Criteria: Observed Condition` ==
-        bushings)]
+        pasatapas)]
 
-  Oi_factor_bushings <-
+  Oi_factor_pasatapas <-
     oci_ehv_tf_bushings_cond$`Condition Input Factor`[which(
       oci_ehv_tf_bushings_cond$`Condition Criteria: Observed Condition` ==
-        bushings)]
+        pasatapas)]
+
+  cat("Factor de Condicion de los pasatapas:", Oi_factor_pasatapas)
 
   # Kiosk
 
@@ -698,9 +705,9 @@ print(tipo_transformador)
   # Observed condition factor --------------------------------------
 
   # Transformer
-  factors_tf_obs <- c(Oi_factor_main_tank,
-                      Oi_factor_coolers_radiator,
-                      Oi_factor_bushings,
+  factors_tf_obs <- c(Oi_factor_tanque_principal,
+                      Oi_factor_ventiladores_radiador,
+                      Oi_factor_pasatapas,
                       Oi_factor_kiosk,
                       Oi_factor_cable_boxes)
 
@@ -728,9 +735,9 @@ print(tipo_transformador)
   # Observed condition cap -----------------------------------------
 
   # Transformer
-  caps_tf_obs <- c(Oi_cap_main_tank,
-                   Oi_cap_coolers_radiator,
-                   Oi_cap_bushings,
+  caps_tf_obs <- c(Oi_cap_tanque_principal,
+                   Oi_cap_ventiladores_radiador,
+                   Oi_cap_pasatapas,
                    Oi_cap_kiosk,
                    Oi_cap_cable_boxes)
 
@@ -750,9 +757,9 @@ print(tipo_transformador)
   # Observed condition collar ---------------------------------------
 
   # Transformer
-  collars_tf_obs <- c(Oi_collar_main_tank,
-                      Oi_collar_coolers_radiator,
-                      Oi_collar_bushings,
+  collars_tf_obs <- c(Oi_collar_tanque_principal,
+                      Oi_collar_ventiladores_radiador,
+                      Oi_collar_pasatapas,
                       Oi_collar_kiosk,
                       Oi_collar_cable_boxes)
 
