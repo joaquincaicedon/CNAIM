@@ -104,7 +104,7 @@
 #' pof_transformer_33_66kv(tipo_transformador = "66kV Transformer (GM)",
 #' año_de_fabricación = 1980,
 #' utilización = "Default",
-#' no_taps = "Default",
+#' nro_taps = "Default",
 #' placement = "Default",
 #' altitude_m = "Default",
 #' distance_from_coast_km = "Default",
@@ -143,7 +143,7 @@
 pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)",
                                     año_de_fabricación,
                                     utilización = "Default",
-                                    no_taps = "Default",
+                                    nro_taps = "Default",
                                     placement = "Default",
                                     altitude_m = "Default",
                                     distance_from_coast_km = "Default",
@@ -258,14 +258,15 @@ print(dato_cualquiera_2)
 
   # Duty factor -------------------------------------------------------------
   duty_factor_tf_11kv <- duty_factor_transformer_33_66kv(utilización,
-                                                         no_taps)
+                                                         nro_taps)
   duty_factor_tf <-
     duty_factor_tf_11kv$duty_factor[which(duty_factor_tf_11kv$category ==
                                             "transformer")]
   duty_factor_tc <-
     duty_factor_tf_11kv$duty_factor[which(duty_factor_tf_11kv$category ==
                                             "tapchanger")]
-
+  cat("factor de utilización TP:", duty_factor_tf)
+  cat("factor de utilización Ctap:", duty_factor_tc)
 
   # Location factor ----------------------------------------------------
   location_factor_transformer <- location_factor(placement,
