@@ -11,7 +11,7 @@
 #' \code{tipo_transformador =
 #' c("33kV Transformer (GM)", "Transformador 34kV (GM)", "66kV Transformer (GM)")}. The default setting is
 #' \code{tipo_transformador = "66kV Transformer (GM)"}
-#' @param año_de_fabricación Numerico. La vida útil normal esperada depende
+#' @param año_de_fabricación Númerico. La vida útil normal esperada depende
 #' del año de fabricación, véase la página 107 del cuadro 20 de CNAIM (2021).
 #' @inheritParams duty_factor_transformer_33_66kv
 #' @inheritParams location_factor
@@ -84,8 +84,8 @@
 #' \code{diverter_braids = c("No deterioration", "Superficial/minor deterioration", "Some Deterioration",
 #' "Substantial Deterioration", "Default")}. See page 134, table 92
 #' in CNAIM (2021)
-#' @param corrosion_category_index Integer.
-#' Specify the corrosion index category, 1-5.
+#' @param categoria_indice_corrosion Integer.
+#' Especifique la categoria del indice de corrosión en el rango 1-5.
 #' @param moisture Numeric. the amount of moisture given in (ppm) See page 162, table 203 in CNAIM (2021).
 #' @param acidity Numeric. the amount of acidicy given in (mg KOH/g) See page 162, table 204 in CNAIM (2021).
 #' @param bd_strength Numeric. the amount of breakdown strength given in (kV) See page 162, table 205 in CNAIM (2021).
@@ -105,10 +105,10 @@
 #' año_de_fabricación = 1980,
 #' utilización = "Default",
 #' nro_taps = "Default",
-#' placement = "Default",
-#' altitude_m = "Default",
-#' distance_from_coast_km = "Default",
-#' corrosion_category_index = "Default",
+#' emplazamiento = "Default",
+#' altura_m = "Default",
+#' distancia_costa_km = "Default",
+#' categoria_indice_corrosion = "Default",
 #' age_tf = 43,
 #' age_tc = 43,
 #' partial_discharge_tf = "Default",
@@ -144,10 +144,10 @@ pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)
                                     año_de_fabricación,
                                     utilización = "Default",
                                     nro_taps = "Default",
-                                    placement = "Default",
-                                    altitude_m = "Default",
-                                    distance_from_coast_km = "Default",
-                                    corrosion_category_index = "Default",
+                                    emplazamiento = "Default",
+                                    altura_m = "Default",
+                                    distancia_costa_km = "Default",
+                                    categoria_indice_corrosion = "Default",
                                     age_tf,
                                     age_tc,
                                     partial_discharge_tf = "Default",
@@ -268,12 +268,13 @@ print(dato_cualquiera_2)
   cat("factor de utilización TP:", duty_factor_tf)
   cat("factor de utilización Ctap:", duty_factor_tc)
 
-  # Location factor ----------------------------------------------------
-  location_factor_transformer <- location_factor(placement,
-                                                 altitude_m,
-                                                 distance_from_coast_km,
-                                                 corrosion_category_index,
+  # factor de localización----------------------------------------------------
+  location_factor_transformer <- location_factor(emplazamiento,
+                                                 altura_m,
+                                                 distancia_costa_km,
+                                                 categoria_indice_corrosion,
                                                  asset_type = tipo_transformador)
+  cat("factor de localización Ctap:", location_factor_transformer)
 
   # Expected life for transformer ------------------------------
   expected_life_years_tf <- expected_life(normal_expected_life =
