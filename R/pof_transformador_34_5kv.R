@@ -493,25 +493,25 @@ print(tipo_transformador)
               "Tapchanger") ])
 
 
-  # Transformer ------------OJO-----oci_ehv_tf_tanque_principal_cond--------------------------------------------
+  # Transformer ------------OJO------------------------------------------------
 
   # Condicion observada del tanque principal
-  oci_ehv_tf_tanque_principal_cond <-
-    gb_ref_taken$oci_ehv_tf_tanque_principal_cond
+  oci_ehv_tf_main_tank_cond <-
+    gb_ref_taken$oci_ehv_tf_main_tank_cond
 
   Oi_collar_tanque_principal <-
-    oci_ehv_tf_tanque_principal_cond$`Condition Input Collar`[which(
-      oci_ehv_tf_tanque_principal_cond$`Condition Criteria: Observed Condition` ==
+    oci_ehv_tf_main_tank_cond$`Condition Input Collar`[which(
+      oci_ehv_tf_main_tank_cond$`Condition Criteria: Observed Condition` ==
         tanque_principal)]
 
   Oi_cap_tanque_principal <-
-    oci_ehv_tf_tanque_principal_cond$`Condition Input Cap`[which(
-      oci_ehv_tf_tanque_principal_cond$`Condition Criteria: Observed Condition` ==
+    oci_ehv_tf_main_tank_cond$`Condition Input Cap`[which(
+      oci_ehv_tf_main_tank_cond$`Condition Criteria: Observed Condition` ==
         tanque_principal)]
 
   Oi_factor_tanque_principal <-
-    oci_ehv_tf_tanque_principal_cond$`Condition Input Factor`[which(
-      oci_ehv_tf_tanque_principal_cond$`Condition Criteria: Observed Condition` ==
+    oci_ehv_tf_main_tank_cond$`Condition Input Factor`[which(
+      oci_ehv_tf_main_tank_cond$`Condition Criteria: Observed Condition` ==
         tanque_principal)]
 
   cat("Factor de condicion del tanque principal:", Oi_factor_tanque_principal)
@@ -539,9 +539,9 @@ print(tipo_transformador)
 
   cat("Factor de Condicion de los ventiladores y radiador:", Oi_factor_ventiladores_radiador)
 
-  # Condicion observada del Pasatapas OJO ___ oci_ehv_tf__cond
+  # Condicion observada del Pasatapas
 
-  oci_ehv_tf__cond <-
+  oci_ehv_tf_bushings_cond <-
     gb_ref_taken$oci_ehv_tf_bushings_cond
 
   Oi_collar_pasatapas <-
