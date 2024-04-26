@@ -46,18 +46,18 @@
 #' in CNAIM (2021).
 #' @param pasatapas String. Indicating the observed condition of the
 #' pasatapas. Options:
-#' \code{pasatapas = c("Superficial/minor deterioration", "Some Deterioration",
-#' "Substantial Deterioration", "Default")}. See page 131, table 85
+#' \code{pasatapas = c("Deterioro superficial/leve", "Cierto deterioro",
+#' "Deterioro sustancial", "Default")}. See page 131, table 85
 #' in CNAIM (2021).
-#' @param kiosk String. Indicating the observed condition of the
-#' kiosk. Options:
-#' \code{kiosk = c("Superficial/minor deterioration", "Some Deterioration",
-#' "Substantial Deterioration", "Default")}. See page 132, table 86
+#' @param quiosco String. Indicating the observed condition of the
+#' quiosco. Options:
+#' \code{quiosco = c("Deterioro superficial/leve", "Cierto deterioro",
+#' "Deterioro sustancial", "Default")}. See page 132, table 86
 #' in CNAIM (2021).
-#' @param cable_boxes String. Indicating the observed condition of the
+#' @param Caja_cables String. Indicating the observed condition of the
 #' cable boxes. Options:
-#' \code{cable_boxes = c("No Deterioration","Superficial/minor deterioration", "Some Deterioration",
-#' "Substantial Deterioration", "Default")}. See page 132, table 87
+#' \code{Caja_cables = c("Sin deterioro","Deterioro superficial/leve", "Cierto deterioro",
+#' "Deterioro sustancial", "Default")}. See page 132, table 87
 #' in CNAIM (2021).
 #' @param external_tap String. Indicating the observed external condition of the
 #'  tapchanger. Options:
@@ -117,8 +117,8 @@
 #' tanque_principal = "Default",
 #' ventiladores_radiador = "Default",
 #' pasatapas = "Default",
-#' kiosk = "Default",
-#' cable_boxes = "Default",
+#' quiosco = "Default",
+#' Caja_cables = "Default",
 #' external_tap = "Default",
 #' internal_tap = "Default",
 #' mechnism_cond = "Default",
@@ -156,8 +156,8 @@ pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)
                                     tanque_principal = "Default",
                                     ventiladores_radiador = "Default",
                                     pasatapas = "Default",
-                                    kiosk = "Default",
-                                    cable_boxes = "Default",
+                                    quiosco = "Default",
+                                    Caja_cables = "Default",
                                     external_tap = "Default",
                                     internal_tap = "Default",
                                     mechnism_cond = "Default",
@@ -493,7 +493,7 @@ print(tipo_transformador)
               "Tapchanger") ])
 
 
-  # Transformer ------------OJO------------------------------------------------
+  # Transformer ------------------------------------------------------------
 
   # Condicion observada del tanque principal
   oci_ehv_tf_main_tank_cond <-
@@ -561,45 +561,48 @@ print(tipo_transformador)
 
   cat("Factor de Condicion de los pasatapas:", Oi_factor_pasatapas)
 
-  # Kiosk
+  # condición del quiosco
 
   oci_ehv_tf_kiosk_cond <-
     gb_ref_taken$oci_ehv_tf_kiosk_cond
 
-  Oi_collar_kiosk <-
+  Oi_collar_quiosco <-
     oci_ehv_tf_kiosk_cond$`Condition Input Collar`[which(
       oci_ehv_tf_kiosk_cond$`Condition Criteria: Observed Condition` ==
-        kiosk)]
+        quiosco)]
 
-  Oi_cap_kiosk <-
+  Oi_cap_quiosco <-
     oci_ehv_tf_kiosk_cond$`Condition Input Cap`[which(
       oci_ehv_tf_kiosk_cond$`Condition Criteria: Observed Condition` ==
-        kiosk)]
+        quiosco)]
 
-  Oi_factor_kiosk <-
+  Oi_factor_quiosco <-
     oci_ehv_tf_kiosk_cond$`Condition Input Factor`[which(
       oci_ehv_tf_kiosk_cond$`Condition Criteria: Observed Condition` ==
-        kiosk)]
+        quiosco)]
+  cat("Factor de Condicion del quiosco:", Oi_factor_quiosco)
 
 
-  # Cable box
+  # Condicion de la caja de cables
   oci_ehv_tf_cable_boxes_cond <-
     gb_ref_taken$oci_ehv_tf_cable_boxes_cond
 
-  Oi_collar_cable_boxes <-
+  Oi_collar_Caja_cables <-
     oci_ehv_tf_cable_boxes_cond$`Condition Input Collar`[which(
       oci_ehv_tf_cable_boxes_cond$`Condition Criteria: Observed Condition` ==
-        cable_boxes)]
+        Caja_cables)]
 
-  Oi_cap_cable_boxes <-
+  Oi_cap_Caja_cables <-
     oci_ehv_tf_cable_boxes_cond$`Condition Input Cap`[which(
       oci_ehv_tf_cable_boxes_cond$`Condition Criteria: Observed Condition` ==
-        cable_boxes)]
+        Caja_cables)]
 
-  Oi_factor_cable_boxes <-
+  Oi_factor_Caja_cables <-
     oci_ehv_tf_cable_boxes_cond$`Condition Input Factor`[which(
       oci_ehv_tf_cable_boxes_cond$`Condition Criteria: Observed Condition` ==
-        cable_boxes)]
+        Caja_cables)]
+
+  cat("Factor de Condicion de la caja de cables:", Oi_factor_Caja_cables)
 
 
   # Tapchanger --------------------------------------------------------------
@@ -708,8 +711,8 @@ print(tipo_transformador)
   factors_tf_obs <- c(Oi_factor_tanque_principal,
                       Oi_factor_ventiladores_radiador,
                       Oi_factor_pasatapas,
-                      Oi_factor_kiosk,
-                      Oi_factor_cable_boxes)
+                      Oi_factor_quiosco,
+                      Oi_factor_Caja_cables)
 
   observed_condition_factor_tf <- mmi(factors_tf_obs,
                                       factor_divider_1_tf_obs,
@@ -738,8 +741,8 @@ print(tipo_transformador)
   caps_tf_obs <- c(Oi_cap_tanque_principal,
                    Oi_cap_ventiladores_radiador,
                    Oi_cap_pasatapas,
-                   Oi_cap_kiosk,
-                   Oi_cap_cable_boxes)
+                   Oi_cap_quiosco,
+                   Oi_cap_Caja_cables)
 
   observed_condition_cap_tf <- min(caps_tf_obs)
 
@@ -760,8 +763,8 @@ print(tipo_transformador)
   collars_tf_obs <- c(Oi_collar_tanque_principal,
                       Oi_collar_ventiladores_radiador,
                       Oi_collar_pasatapas,
-                      Oi_collar_kiosk,
-                      Oi_collar_cable_boxes)
+                      Oi_collar_quiosco,
+                      Oi_collar_Caja_cables)
 
   observed_condition_collar_tf <- max(collars_tf_obs)
 
