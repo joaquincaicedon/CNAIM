@@ -366,7 +366,7 @@ print(tipo_transformador)
       mci_hv_tf_partial_discharge$
         `Condition Criteria: Partial Discharge Test Result` ==
         descarga_parcial_TP)]
-
+  cat("Descargas parciales en el transformador:", ci_factor_descarga_parcial_TP)
 
   # Descargas parciales en el cambiador de taps ------------------------------------------------
   mci_hv_tf_descarga_parcial_CT <-
@@ -390,7 +390,7 @@ print(tipo_transformador)
         `Condition Criteria: Partial Discharge Test Result` ==
         descarga_parcial_CT)]
 
-
+  cat("Descargas parciales en el cambiador de tap:", ci_factor_descarga_parcial_CT)
   # Temperature readings ----------------------------------------------------
   mci_hv_tf_temp_readings <-
     gb_ref_taken$mci_ehv_tf_temp_readings
