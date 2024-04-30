@@ -815,7 +815,7 @@ print(tipo_transformador)
   # Modificador por analisis de furanos -------------------------------------------------------
   ffa_test_mod <- ffa_test_modifier(furfuraldehído)
 
-  cat("Modificador por analisis de furanos:",  ffa_test_mod)
+  # cat("Modificador por analisis de furanos:",  ffa_test_mod)
   # Health score factor ---------------------------------------------------
 
   health_score_factor_for_tf <-  gb_ref_taken$health_score_factor_for_tf
