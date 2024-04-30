@@ -186,7 +186,8 @@ print(edad_CT)
                                             normal_expected_life_tc,
                                           duty_factor_tc,
                                           location_factor_transformer)
-
+print(normal_expected_life_tc,duty_factor_tc,location_factor_transformer)
+print(expected_life_years_tc)
   # b1 (Initial Ageing Rate) ------------------------------------------------
   b1_tf <- beta_1(expected_life_years_tf)
   b1_tc <- beta_1(expected_life_years_tc)
