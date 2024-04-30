@@ -643,7 +643,7 @@ print(tipo_transformador)
   cat("Factor de condicion interna del cambiador de taps:", Oi_factor_interno_tap)
 
   # Factor de condicion del mecanismo de control del cambiador de taps:
-  oci_ehv_tf_ddrive_mechnism_cond <-
+  oci_ehv_tf_drive_mechnism_cond <-
     gb_ref_taken$oci_ehv_tf_drive_mechnism_cond
 
   Oi_collar_Condicion_mecanismo <-
