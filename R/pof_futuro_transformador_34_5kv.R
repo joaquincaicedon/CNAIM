@@ -98,6 +98,7 @@ pof_futuro_transformador_34_5kv <- function(tipo_transformador = "66kV Transform
                                            Factor_confiabilidad = "Default",
                                            año_final_simulacion = 100,
                                            gb_ref_given = NULL) {
+print(edad_CT)
 
   `Asset Register Category` = `Health Index Asset Category` =
     `Generic Term...1` = `Generic Term...2` = `Functional Failure Category` =
@@ -840,8 +841,8 @@ pof_futuro_transformador_34_5kv <- function(tipo_transformador = "66kV Transform
                    health_score_modifier_tc$health_score_cap_tc,
                    health_score_modifier_tc$health_score_collar_tc,
                    reliability_factor = Factor_confiabilidad)
-
-
+print(current_health_score_tf)
+print(current_health_score_tc)
   b2_tf <- beta_2(current_health_score_tf, age = edad_TP)
   b2_tc <- beta_2(current_health_score_tc, age = edad_CT)
 
