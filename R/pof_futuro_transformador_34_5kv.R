@@ -841,8 +841,7 @@ print(edad_CT)
                    health_score_modifier_tc$health_score_cap_tc,
                    health_score_modifier_tc$health_score_collar_tc,
                    reliability_factor = Factor_confiabilidad)
-print(current_health_score_tf)
-print(current_health_score_tc)
+
   b2_tf <- beta_2(current_health_score_tf, age = edad_TP)
   b2_tc <- beta_2(current_health_score_tc, age = edad_CT)
 
@@ -860,7 +859,9 @@ print(current_health_score_tc)
   } else {
     ageing_reduction_factor_tf <- 1.5
   }
-
+print(b2_tc)
+print(b1_tc)
+print(current_health_score_tc)
   # Tapchanger
   if (b2_tc > 2*b1_tc){
     b2_tc <- b1_tc*2
