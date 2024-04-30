@@ -98,7 +98,7 @@ pof_futuro_transformador_34_5kv <- function(tipo_transformador = "66kV Transform
                                            Factor_confiabilidad = "Default",
                                            año_final_simulacion = 100,
                                            gb_ref_given = NULL) {
-print(edad_CT)
+
 
   `Asset Register Category` = `Health Index Asset Category` =
     `Generic Term...1` = `Generic Term...2` = `Functional Failure Category` =
@@ -186,7 +186,9 @@ print(edad_CT)
                                             normal_expected_life_tc,
                                           duty_factor_tc,
                                           location_factor_transformer)
-print(normal_expected_life_tc,duty_factor_tc,location_factor_transformer)
+print(normal_expected_life_tc)
+print(duty_factor_tc
+print(location_factor_transformer)
 print(expected_life_years_tc)
   # b1 (Initial Ageing Rate) ------------------------------------------------
   b1_tf <- beta_1(expected_life_years_tf)
