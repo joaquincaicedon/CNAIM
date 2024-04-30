@@ -187,7 +187,7 @@ pof_futuro_transformador_34_5kv <- function(tipo_transformador = "66kV Transform
                                           duty_factor_tc,
                                           location_factor_transformer)
 print(normal_expected_life_tc)
-print(duty_factor_tc
+print(duty_factor_tc)
 print(location_factor_transformer)
 print(expected_life_years_tc)
   # b1 (Initial Ageing Rate) ------------------------------------------------
