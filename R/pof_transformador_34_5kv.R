@@ -795,7 +795,7 @@ print(tipo_transformador)
   oil_test_mod <- oil_test_modifier(humedad,
                                     acidez,
                                     Rigidez_dielectrica)
-  cat("Modificador relacionado con las pruebas en el aceite :",  oil_test_mod)
+  cat("Modificador relacionado con las pruebas en el aceite:", oil_test_mod)
 
 
   # DGA test modifier -------------------------------------------------------
