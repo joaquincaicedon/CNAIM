@@ -16,79 +16,74 @@
 #' @inheritParams duty_factor_transformer_33_66kv
 #' @inheritParams location_factor
 #' @inheritParams current_health
-#' @param edad_TP Numeric. The current age in years
-#' of the transformer.
-#' @param edad_CT Numeric. The current age in years
-#' of the tapchanger
-#' @param descarga_parcial_TP String. Indicating the
-#' level of partial discharge in the transformer.
+#' @param edad_TP Numerico. Edad actual del transformador en años.
+#' @param edad_CT Numerico. Edad actual del cambiador de taps en años.
+#' @param descarga_parcial_TP Texto. Indica el nivel de descarga parciales.
 #' Options:
 #' \code{descarga_parcial_TP = c("Baja", "Media", "Alta (No Confirmada)",
-#'  "Alta (Confirmada)", "Default")}. See page 154, table 173 in CNAIM (2021).
+#'  "Alta (Confirmada)", "Default")}. Ver página 154, tabla 173 en CNAIM (2021).
 #' @param descarga_parcial_CT String. Indicating the
 #' level of partial discharge in the tapchanger
 #' Options:
 #' \code{descarga_parcial_CT = c("Baja", "Media", "Alta (No Confirmada)",
-#'  "Alta (Confirmada)", "Default")}. See page 155, table 175 in CNAIM (2021).
+#'  "Alta (Confirmada)", "Default")}. Ver página 155, tabla 175 en CNAIM (2021).
 #' @param Temperatura_lectura String. Indicating the criticality.
 #' Options:
 #' \code{Temperatura_lectura = c("Normal", "Moderadamente alta",
-#' "Muy alta", "Default")}. See page 154, table 174 in CNAIM (2021).
+#' "Muy alta", "Default")}. Ver página 154, tabla 174 en CNAIM (2021).
 #' @param tanque_principal String. Indicating the observed condition of the
 #' main tank. Options:
 #' \code{tanque_principal = c("Deterioro superficial/leve", "Cierto deterioro",
-#' "Deterioro sustancial", "Default")}. See page 131, table 83
-#' in CNAIM (2021).
+#' "Deterioro sustancial", "Default")}. Ver página 131, tabla 83
+#' en CNAIM (2021).
 #' @param ventiladores_radiador Texto indicando el estado observado de los enfriadores/radiadores.
 #'  Opciones:
 #' \code{ventiladores_radiador = c("Deterioro superficial/leve", "Cierto deterioro",
-#' "Deterioro sustancial", "Default")}. See page 131, table 84
-#' in CNAIM (2021).
-#' @param pasatapas String. Indicating the observed condition of the
+#' "Deterioro sustancial", "Default")}. Ver página 131, tabla 84
+#' en CNAIM (2021).
+#' @param pasatapas Texto. Indicando la condición observada del
 #' pasatapas. Options:
 #' \code{pasatapas = c("Deterioro superficial/leve", "Cierto deterioro",
-#' "Deterioro sustancial", "Default")}. See page 131, table 85
-#' in CNAIM (2021).
-#' @param quiosco String. Indicating the observed condition of the
-#' quiosco. Options:
+#' "Deterioro sustancial", "Default")}. Ver página 131, tabla 85
+#' en CNAIM (2021).
+#' @param quiosco String. Indicando la condición observada del quiosco. Options:
 #' \code{quiosco = c("Deterioro superficial/leve", "Cierto deterioro",
-#' "Deterioro sustancial", "Default")}. See page 132, table 86
-#' in CNAIM (2021).
-#' @param Caja_cables String. Indicating the observed condition of the
-#' cable boxes. Options:
+#' "Deterioro sustancial", "Default")}. Ver página 132, tabla 86
+#' en CNAIM (2021).
+#' @param Caja_cables String. Indicando la condicion observada de la caja de cables. Opciones:
 #' \code{Caja_cables = c("Sin deterioro","Deterioro superficial/leve", "Cierto deterioro",
-#' "Deterioro sustancial", "Default")}. See page 132, table 87
-#' in CNAIM (2021).
-#' @param external_tap String. Indicating the observed external condition of the
-#'  tapchanger. Options:
-#' \code{external_tap = c("Superficial/minor deterioration", "Some Deterioration",
-#' "Substantial Deterioration", "Default")}. See page 133, table 88
-#' in CNAIM (2021).
-#' @param internal_tap String. Indicating the observed internal condition of the
-#'  tapchanger. Options:
-#' \code{internal_tap = c("Superficial/minor deterioration", "Some Deterioration",
-#' "Substantial Deterioration", "Default")}. See page 133, table 89
-#' in CNAIM (2021).
-#' @param mechnism_cond String. Indicating the observed condition of the
-#'  drive mechnism. Options:
-#' \code{mechnism_cond = c("No deterioration", "Superficial/minor deterioration", "Some Deterioration",
-#' "Substantial Deterioration", "Default")}. See page 133, table 90
-#' in CNAIM (2021).
-#' @param diverter_contacts String. Indicating the observed condition of the
-#' selector and diverter contacts. Options:
-#' \code{diverter_contacts = c("No deterioration", "Superficial/minor deterioration", "Some Deterioration",
-#' "Substantial Deterioration", "Default")}. See page 133, table 91
-#' in CNAIM (2021).
-#' @param diverter_braids String. Indicating the observed condition of the
-#' selector and diverter braids. Options:
-#' \code{diverter_braids = c("No deterioration", "Superficial/minor deterioration", "Some Deterioration",
-#' "Substantial Deterioration", "Default")}. See page 134, table 92
-#' in CNAIM (2021)
+#' "Deterioro sustancial", "Default")}. Ver página 132, tabla 87
+#' en CNAIM (2021).
+#' @param externo_tap Texto indicando la condición externa observada del
+#' cambiador de tomas. Opciones:
+#' \code{externo_tap = c("Deterioro superficial/leve", "Cierto deterioro",
+#' "Deterioro sustancial", "Default")}. Ver la tabla 88 de la página 133
+#' en CNAIM (2021).
+#' @param interno_tap Texto indicando la condición interna observada del
+#'  de tomas. Opciones:
+#' \code{interno_tap = c("Deterioro superficial/leve", "Cierto deterioro",
+#' "Deterioro sustancial", "Default")}. Ver la tabla 89 de la página 133
+#' en CNAIM (2021).
+#' @param Condicion_mecanismo Texto que indica la condición observada del mecanismo de
+#' accionamiento del OLTC. Opciones:
+#' \code{Condicion_mecanismo = c("Sin deterioro", "Deterioro superficial/leve", "Cierto deterioro",
+#' "Deterioro sustancial", "Default")}. Ver página 133, tabla 90
+#' en CNAIM (2021).
+#' @param Contactos_derivador Texto con la indicación del estado observado de los
+#' contactos del selector y del derivador de taps. Opciones:
+#' \code{Contactos_derivador = c("Sin deterioro", "Deterioro superficial/leve", "Cierto deterioro",
+#' "Deterioro sustancial", "Default")}. Ver página 133, tabla 91
+#' en CNAIM (2021).
+#' @param Trenzas_derivador Texto que indica el estado observado de las trenzas
+#'  de derivador. Opciones:
+#' \code{Trenzas_derivador = c("Sin deterioro", "Deterioro superficial/leve", "Cierto deterioro",
+#' "Deterioro sustancial", "Default")}. Ver página 134, tabla 92
+#' en CNAIM (2021)
 #' @param categoria_indice_corrosion Integer.
 #' Especifique la categoria del indice de corrosión en el rango 1-5.
-#' @param moisture Numeric. the amount of moisture given in (ppm) See page 162, table 203 in CNAIM (2021).
-#' @param acidity Numeric. the amount of acidicy given in (mg KOH/g) See page 162, table 204 in CNAIM (2021).
-#' @param bd_strength Numeric. the amount of breakdown strength given in (kV) See page 162, table 205 in CNAIM (2021).
+#' @param humedad Numérico. La cantidad de humedad dada en (ppm).  Ver página 162, tabla 203 en CNAIM (2021).
+#' @param acidez Numerico. La cantidad de acidez dada en (mg KOH/g) Ver página 162, tabla 204 en CNAIM (2021).
+#' @param Rigidez_dielectrica Numerico. valor de rigidez dielectrica dada en (kV) Ver página 162, tabla 205 en CNAIM (2021).
 #' @inheritParams oil_test_modifier
 #' @inheritParams dga_test_modifier
 #' @inheritParams ffa_test_modifier
@@ -119,26 +114,26 @@
 #' pasatapas = "Default",
 #' quiosco = "Default",
 #' Caja_cables = "Default",
-#' external_tap = "Default",
-#' internal_tap = "Default",
-#' mechnism_cond = "Default",
-#' diverter_contacts = "Default",
-#' diverter_braids = "Default",
-#' moisture = "Default",
-#' acidity = "Default",
-#' bd_strength = "Default",
-#' hydrogen = "Default",
-#' methane = "Default",
-#' ethylene = "Default",
-#' ethane = "Default",
-#' acetylene = "Default",
-#' hydrogen_pre = "Default",
-#' methane_pre = "Default",
-#' ethylene_pre = "Default",
-#' ethane_pre = "Default",
-#' acetylene_pre = "Default",
-#' furfuraldehyde = "Default",
-#' reliability_factor = "Default")
+#' externo_tap = "Default",
+#' interno_tap = "Default",
+#' Condicion_mecanismo = "Default",
+#' Contactos_derivador = "Default",
+#' Trenzas_derivador = "Default",
+#' humedad = "Default",
+#' acidez = "Default",
+#' Rigidez_dielectrica = "Default",
+#' hidrógeno = "Default",
+#' metano = "Default",
+#' etileno = "Default",
+#' etano = "Default",
+#' acetileno = "Default",
+#' hidrógeno_pre = "Default",
+#' metano_pre = "Default",
+#' etileno_pre = "Default",
+#' etano_pre = "Default",
+#' acetileno_pre = "Default",
+#' furfuraldehído = "Default",
+#' Factor_confiabilidad = "Default")
 
 pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)",
                                     año_de_fabricación,
@@ -158,26 +153,26 @@ pof_transformador_34_5kv <- function(tipo_transformador = "66kV Transformer (GM)
                                     pasatapas = "Default",
                                     quiosco = "Default",
                                     Caja_cables = "Default",
-                                    external_tap = "Default",
-                                    internal_tap = "Default",
-                                    mechnism_cond = "Default",
-                                    diverter_contacts = "Default",
-                                    diverter_braids = "Default",
-                                    moisture = "Default",
-                                    acidity = "Default",
-                                    bd_strength = "Default",
-                                    hydrogen = "Default",
-                                    methane = "Default",
-                                    ethylene = "Default",
-                                    ethane = "Default",
-                                    acetylene = "Default",
-                                    hydrogen_pre = "Default",
-                                    methane_pre = "Default",
-                                    ethylene_pre = "Default",
-                                    ethane_pre = "Default",
-                                    acetylene_pre = "Default",
-                                    furfuraldehyde = "Default",
-                                    reliability_factor = "Default",
+                                    externo_tap = "Default",
+                                    interno_tap = "Default",
+                                    Condicion_mecanismo = "Default",
+                                    Contactos_derivador = "Default",
+                                    Trenzas_derivador = "Default",
+                                    humedad = "Default",
+                                    acidez = "Default",
+                                    Rigidez_dielectrica = "Default",
+                                    hidrógeno = "Default",
+                                    metano = "Default",
+                                    etileno = "Default",
+                                    etano = "Default",
+                                    acetileno = "Default",
+                                    hidrógeno_pre = "Default",
+                                    metano_pre = "Default",
+                                    etileno_pre = "Default",
+                                    etano_pre = "Default",
+                                    acetileno_pre = "Default",
+                                    furfuraldehído = "Default",
+                                    Factor_confiabilidad = "Default",
                                     gb_ref_given = NULL) {
 print(tipo_transformador)
   `Asset Register Category` = `Health Index Asset Category` =
@@ -192,7 +187,7 @@ print(tipo_transformador)
     gb_ref_taken <- gb_ref_given
   }
 
-   # Ref. table Categorisation of Assets and Generic Terms for Assets  --
+   # Ref. tabla Categorisation of Assets and Generic Terms for Assets  --
 
   asset_category <- gb_ref_taken$categorisation_of_assets %>%
     dplyr::filter(`Asset Register Category` == tipo_transformador) %>%
@@ -301,9 +296,9 @@ print(tipo_transformador)
   # Health Score Cap is 10, implying no overriding
   # of the Health Score. However, in some instances
   # these parameters are set to other values in the
-  # Health Score Modifier calibration tables.
-  # These overriding values are shown in Table 35 to Table 202
-  # and Table 207 in Appendix B.
+  # Health Score Modifier calibration tablas.
+  # These overriding values are shown in tabla 35 to tabla 202
+  # and tabla 207 in Appendix B.
 
   # Measured condition inputs ---------------------------------------------
   mcm_mmi_cal_df <-
@@ -607,103 +602,107 @@ print(tipo_transformador)
 
   # Tapchanger --------------------------------------------------------------
 
-  # External condition
+  # Condicion externa del cambiador de taps
   oci_ehv_tf_tapchanger_ext_cond <-
     gb_ref_taken$oci_ehv_tf_tapchanger_ext_cond
 
-  Oi_collar_external_tap <-
+  Oi_collar_externo_tap <-
     oci_ehv_tf_tapchanger_ext_cond$`Condition Input Collar`[which(
       oci_ehv_tf_tapchanger_ext_cond$`Condition Criteria: Observed Condition` ==
-        external_tap)]
+        externo_tap)]
 
-  Oi_cap_external_tap <-
+  Oi_cap_externo_tap <-
     oci_ehv_tf_tapchanger_ext_cond$`Condition Input Cap`[which(
       oci_ehv_tf_tapchanger_ext_cond$`Condition Criteria: Observed Condition` ==
-        external_tap)]
+        externo_tap)]
 
-  Oi_factor_external_tap <-
+  Oi_factor_externo_tap <-
     oci_ehv_tf_tapchanger_ext_cond$`Condition Input Factor`[which(
       oci_ehv_tf_tapchanger_ext_cond$`Condition Criteria: Observed Condition` ==
-        external_tap)]
+        externo_tap)]
+  cat("Factor de condicion externa del cambiador de taps:", Oi_factor_externo_tap)
 
-
-  # Internal condition
+  # Factor de condicion interna del cambiador de taps:
   oci_ehv_tf_int_cond <-
     gb_ref_taken$oci_ehv_tf_int_cond
 
-  Oi_collar_internal_tap <-
+  Oi_collar_interno_tap <-
     oci_ehv_tf_int_cond$`Condition Input Collar`[which(
       oci_ehv_tf_int_cond$`Condition Criteria: Observed Condition` ==
-        internal_tap)]
+        interno_tap)]
 
-  Oi_cap_internal_tap <-
+  Oi_cap_interno_tap <-
     oci_ehv_tf_int_cond$`Condition Input Cap`[which(
       oci_ehv_tf_int_cond$`Condition Criteria: Observed Condition` ==
-        internal_tap)]
+        interno_tap)]
 
-  Oi_factor_internal_tap <-
+  Oi_factor_interno_tap <-
     oci_ehv_tf_int_cond$`Condition Input Factor`[which(
       oci_ehv_tf_int_cond$`Condition Criteria: Observed Condition` ==
-        internal_tap)]
+        interno_tap)]
+  cat("Factor de condicion interna del cambiador de taps:", Oi_factor_interno_tap)
 
-  # Drive mechanism
-  oci_ehv_tf_drive_mechnism_cond <-
+  # Factor de condicion del mecanismo de control del cambiador de taps:
+  oci_ehv_tf_ddrive_mechnism_cond <-
     gb_ref_taken$oci_ehv_tf_drive_mechnism_cond
 
-  Oi_collar_mechnism_cond <-
+  Oi_collar_Condicion_mecanismo <-
     oci_ehv_tf_drive_mechnism_cond$`Condition Input Collar`[which(
       oci_ehv_tf_drive_mechnism_cond$`Condition Criteria: Observed Condition` ==
-        mechnism_cond)]
+        Condicion_mecanismo)]
 
-  Oi_cap_mechnism_cond <-
+  Oi_cap_Condicion_mecanismo <-
     oci_ehv_tf_drive_mechnism_cond$`Condition Input Cap`[which(
       oci_ehv_tf_drive_mechnism_cond$`Condition Criteria: Observed Condition` ==
-        mechnism_cond)]
+        Condicion_mecanismo)]
 
-  Oi_factor_mechnism_cond <-
+  Oi_factor_Condicion_mecanismo <-
     oci_ehv_tf_drive_mechnism_cond$`Condition Input Factor`[which(
       oci_ehv_tf_drive_mechnism_cond$`Condition Criteria: Observed Condition` ==
-        mechnism_cond)]
+        Condicion_mecanismo)]
 
-  # Selecter diverter contacts
+  cat("Factor de condicion del mecanismo de control del cambiador de taps:", Oi_factor_Condicion_mecanismo)
+
+  # Condicion de los contactos de derivador de taps
   oci_ehv_tf_cond_select_divrter_cst <-
     gb_ref_taken$oci_ehv_tf_cond_select_div_cts
 
-  Oi_collar_diverter_contacts <-
+  Oi_collar_Contactos_derivador <-
     oci_ehv_tf_cond_select_divrter_cst$`Condition Input Collar`[which(
       oci_ehv_tf_cond_select_divrter_cst$`Condition Criteria: Observed Condition` ==
-        diverter_contacts)]
+        Contactos_derivador)]
 
-  Oi_cap_diverter_contacts <-
+  Oi_cap_Contactos_derivador <-
     oci_ehv_tf_cond_select_divrter_cst$`Condition Input Cap`[which(
       oci_ehv_tf_cond_select_divrter_cst$`Condition Criteria: Observed Condition` ==
-        diverter_contacts)]
+        Contactos_derivador)]
 
-  Oi_factor_diverter_contacts <-
+  Oi_factor_Contactos_derivador <-
     oci_ehv_tf_cond_select_divrter_cst$`Condition Input Factor`[which(
       oci_ehv_tf_cond_select_divrter_cst$`Condition Criteria: Observed Condition` ==
-        diverter_contacts)]
+        Contactos_derivador)]
 
+  cat("Factor de Condicion de los contactos de derivador de taps:", Oi_factor_Contactos_derivador)
 
-  # Selecter diverter braids
+  # Condicion de las trenzas del derivador
   oci_ehv_tf_cond_select_divrter_brd <-
     gb_ref_taken$oci_ehv_tf_cond_select_div_brd
 
-  Oi_collar_diverter_braids <-
+  Oi_collar_Trenzas_derivador <-
     oci_ehv_tf_cond_select_divrter_brd$`Condition Input Collar`[which(
       oci_ehv_tf_cond_select_divrter_brd$`Condition Criteria: Observed Condition` ==
-        diverter_braids)]
+        Trenzas_derivador)]
 
-  Oi_cap_diverter_braids <-
+  Oi_cap_Trenzas_derivador <-
     oci_ehv_tf_cond_select_divrter_brd$`Condition Input Cap`[which(
       oci_ehv_tf_cond_select_divrter_brd$`Condition Criteria: Observed Condition` ==
-        diverter_braids)]
+        Trenzas_derivador)]
 
-  Oi_factor_diverter_braids <-
+  Oi_factor_Trenzas_derivador <-
     oci_ehv_tf_cond_select_divrter_brd$`Condition Input Factor`[which(
       oci_ehv_tf_cond_select_divrter_brd$`Condition Criteria: Observed Condition` ==
-        diverter_braids)]
-
+        Trenzas_derivador)]
+  cat("Factor de Condicion de las trenzas del derivador:", Oi_factor_Trenzas_derivador)
 
   # Observed condition factor --------------------------------------
 
@@ -722,11 +721,11 @@ print(tipo_transformador)
 
   # Tapchanger
 
-  factors_tc_obs <- c(Oi_factor_external_tap,
-                      Oi_factor_internal_tap,
-                      Oi_factor_mechnism_cond,
-                      Oi_factor_diverter_contacts,
-                      Oi_factor_diverter_braids)
+  factors_tc_obs <- c(Oi_factor_externo_tap,
+                      Oi_factor_interno_tap,
+                      Oi_factor_Condicion_mecanismo,
+                      Oi_factor_Contactos_derivador,
+                      Oi_factor_Trenzas_derivador)
 
   observed_condition_factor_tc <- mmi(factors_tc_obs,
                                       factor_divider_1_tc_obs,
@@ -748,11 +747,11 @@ print(tipo_transformador)
 
   # Tapchanger
 
-  caps_tc_obs <- c(Oi_cap_external_tap,
-                   Oi_cap_internal_tap,
-                   Oi_cap_mechnism_cond,
-                   Oi_cap_diverter_contacts,
-                   Oi_cap_diverter_braids)
+  caps_tc_obs <- c(Oi_cap_externo_tap,
+                   Oi_cap_interno_tap,
+                   Oi_cap_Condicion_mecanismo,
+                   Oi_cap_Contactos_derivador,
+                   Oi_cap_Trenzas_derivador)
 
   observed_condition_cap_tc <- min(caps_tc_obs)
 
@@ -770,11 +769,11 @@ print(tipo_transformador)
 
   # Tapchanger
 
-  collars_tc_obs <- c(Oi_collar_external_tap,
-                      Oi_collar_internal_tap,
-                      Oi_collar_mechnism_cond,
-                      Oi_collar_diverter_contacts,
-                      Oi_collar_diverter_braids)
+  collars_tc_obs <- c(Oi_collar_externo_tap,
+                      Oi_collar_interno_tap,
+                      Oi_collar_Condicion_mecanismo,
+                      Oi_collar_Contactos_derivador,
+                      Oi_collar_Trenzas_derivador)
 
   observed_condition_collar_tc <- max(collars_tc_obs)
 
@@ -793,24 +792,30 @@ print(tipo_transformador)
 
 
   # Oil test modifier -------------------------------------------------------
-  oil_test_mod <- oil_test_modifier(moisture,
-                                    acidity,
-                                    bd_strength)
+  oil_test_mod <- oil_test_modifier(humedad,
+                                    acidez,
+                                    Rigidez_dielectrica)
+  cat("Modificador relacionado con las pruebas en el aceite :",  oil_test_mod)
+
 
   # DGA test modifier -------------------------------------------------------
-  dga_test_mod <- dga_test_modifier(hydrogen,
-                                    methane,
-                                    ethylene,
-                                    ethane,
-                                    acetylene,
-                                    hydrogen_pre,
-                                    methane_pre,
-                                    ethylene_pre,
-                                    ethane_pre,
-                                    acetylene_pre)
-  # FFA test modifier -------------------------------------------------------
-  ffa_test_mod <- ffa_test_modifier(furfuraldehyde)
+  dga_test_mod <- dga_test_modifier(hidrógeno,
+                                    metano,
+                                    etileno,
+                                    etano,
+                                    acetileno,
+                                    hidrógeno_pre,
+                                    metano_pre,
+                                    etileno_pre,
+                                    etano_pre,
+                                    acetileno_pre)
 
+  cat("Modificador relacionado con DGA:",  dga_test_mod)
+
+  # Modificador por analisis de furanos -------------------------------------------------------
+  ffa_test_mod <- ffa_test_modifier(furfuraldehído)
+
+  cat("Modificador por analisis de furanos:",  ffa_test_mod)
   # Health score factor ---------------------------------------------------
 
   health_score_factor_for_tf <-  gb_ref_taken$health_score_factor_for_tf
@@ -921,12 +926,12 @@ print(tipo_transformador)
                        health_score_modifier_tf$health_score_factor_tf,
                        health_score_modifier_tf$health_score_cap_tf,
                        health_score_modifier_tf$health_score_collar,
-                       reliability_factor = reliability_factor),
+                       reliability_factor = Factor_confiabilidad),
         current_health(initial_health_score_tf,
                        health_score_modifier_tc$health_score_factor_tc,
                        health_score_modifier_tc$health_score_cap_tc,
                        health_score_modifier_tc$health_score_collar_tc,
-                       reliability_factor = reliability_factor))
+                       reliability_factor = Factor_confiabilidad))
 
   # Probability of failure for the 6.6/11 kV transformer today -----------------
   probability_of_failure <- k *
