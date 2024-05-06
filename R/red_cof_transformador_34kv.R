@@ -47,6 +47,8 @@ red_cof_transformador_34kv<- function(tf_asset_category,
     load_factor_asset_category <- "66kV Transformer"
   if(tf_asset_category == "33kV Transformer (GM)")
     load_factor_asset_category <- "33kV Transformer (GM)"
+  if(tf_asset_category == "Transformador 34kV (GM)")
+    load_factor_asset_category <- "Transformador 34kV (GM)"
 
 
   ref_nw_perf_cost_fail_ehv_df <- gb_ref_taken$ref_nw_perf_cost_of_fail_ehv
