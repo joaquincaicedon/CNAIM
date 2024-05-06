@@ -80,21 +80,21 @@ financiero_cof_transformador_34kv <- function(tf_asset_category,
                                                  asset_category)
 
   if (access_factor_criteria == "Type A") {
-    access_finacial_factor <-
+    access_financial_factor <-
       access_financial_factors_tf$
       `Access Factor: Type A Criteria - Normal Access ( & Default Value)`
   }
   else if (access_factor_criteria == "Type B") {
-    access_finacial_factor <-
+    access_financial_factor <-
       access_financial_factors_tf$`Access Factor: Type B Criteria - Constrained Access or Confined Working Space`
   }  else if (access_factor_criteria == "Type C") {
-    access_finacial_factor <-
+    access_financial_factor <-
       access_financial_factors_tf$`Access Factor: Type C Criteria - Underground substation`
   }
 
 print(access_financial_factor)
   # Financial consequences factor -------------------------------------------
-  fc_factor <- type_financial_factor * access_finacial_factor
+  fc_factor <- type_financial_factor * access_financial_factor
 
   # Financial consequences of failure ---------------------------------------
   return(fc_factor * fcost)
