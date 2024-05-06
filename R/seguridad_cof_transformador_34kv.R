@@ -1,9 +1,12 @@
-#' @title Safety cost of Failure for 30/10kv and 60/10kv Transformer
+#' @title Safety cost of Failure for Transformer
 #' @description This function calculates safety consequences of failure
-#' Outputted in COL.
-#' @param tf_asset_category String The type of Transformer
-#' Options: \code{tf_asset_category = c("30kV Transformer (GM)",
-#' "60kV Transformer (GM)")}.
+#' (cf. section 7.3, page 79, CNAIM, 2021). Safety consequences
+#' of failure is used in
+#' the derivation of consequences of failure see \code{\link{cof}}().
+#' @param tf_asset_category String The type of Transformer asset category
+#' Options: \code{tf_asset_category = c("6.6/11kV Transformer (GM)",
+#' "20kV Transformer (GM)", "33kV Transformer (GM)", "66kV Transformer (GM) "
+#' "132kV Transformer (GM) ")}.
 #' @param location_risk String Type Financial factor criteria for Transformer
 #' (cf. section D1.2.1, page 178, CNAIM, 2021).
 #' Options: \code{location_risk = c("Low", "Medium", "High")}.
@@ -16,26 +19,18 @@
 #' \code{type_risk = "Medium"}.
 #' @param gb_ref_given optional parameter to use custom reference values
 #' @return Numeric. Safety consequences of failure for Transformers
+#' @source DNO Common Network Asset Indices Methodology (CNAIM),
+#' Health & Criticality - Version 2.1, 2021:
+#' \url{https://www.ofgem.gov.uk/sites/default/files/docs/2021/04/dno_common_network_asset_indices_methodology_v2.1_final_01-04-2021.pdf}
 #' @export
 #' @examples
-#' seguridad_cof_transformador_34kv(tf_asset_category = "30kV Transformer (GM)",
+#' safety_cof_transformers(tf_asset_category = "33kV Transformer (GM)",
 #' location_risk = "Default",
 #' type_risk = "Default")
 seguridad_cof_transformador_34kv <- function(tf_asset_category,
-                                           location_risk,
-                                           type_risk,
-                                           gb_ref_given = NULL) {
-
-  GBP_to_COL <- 1
-  if (tf_asset_category == "30kV Transformer (GM)" ) {
-    tf_asset_category <- "33kV Transformer (GM)"
-  } else if (tf_asset_category == "60kV Transformer (GM)" ) {
-    tf_asset_category <- "66kV Transformer (GM)"
-  } else {
-    tf_asset_category <- NULL
-    warning("Wrong input, please go to CNAIM.io for more documentation")
-  }
-
+                                   location_risk,
+                                   type_risk,
+                                   gb_ref_given = NULL){
   `Asset Register Category` = `Health Index Asset Category` = `Asset Category` = NULL
 
   if(is.null(gb_ref_given)){
@@ -73,5 +68,5 @@ seguridad_cof_transformador_34kv <- function(tf_asset_category,
   # Safety consequence of failure -------------------------------------------
   safety_cof <- safety_consequence_factor * scost
 
-  return(safety_cof * GBP_to_COL)
+  return(safety_cof)
 }

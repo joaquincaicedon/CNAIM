@@ -1,37 +1,35 @@
-#' @title Environmental cost of Failure for 30/10kV and 60/10kV Transformers
+#' @title Environmental cost of Failure for Transformers
 #' @description This function calculates environmental consequences of failure
-#' Outputted in COL.
-#' @param tf_asset_category String The type of Transformer
-#' Options: \code{tf_asset_category = c("30kV Transformer (GM)",
-#' "60kV Transformer (GM)")}.
+#' (cf. section 7.3, page 79, CNAIM, 2021). Environmental consequences
+#' of failure is used in
+#' the derivation of consequences of failure see \code{\link{cof}}().#' @return Numeric. Financial consequences of failure for LV switchgear
+#' @param tf_asset_category String The type of Transformer asset category
+#' Options: \code{tf_asset_category = c("6.6/11kV Transformer (GM)",
+#' "20kV Transformer (GM)", "33kV Transformer (GM)", "66kV Transformer (GM) "
+#' "132kV Transformer (GM) ")}.
 #' @param prox_water Numeric. Specify the proximity to a water course in meters.
 #' A setting of \code{"Default"} will result in a proximity factor of 1. Thus
 #' assume the proximity to a water course is between 80m and 120m
+#' (cf. table 231, page 188, CNAIM, 2021).
 #' @param bunded String. Options: \code{bunded = c("Yes", "No", "Default")}.
 #' A setting of \code{"Default"} will result in a bunding factor of 1.
 #' @param size_kva_mva Numeric The MVA KVA rating for the transformer
+#' @param size_conversion String The size conversion for the transformer
 #' @param gb_ref_given optional parameter to use custom reference values
+#' @source DNO Common Network Asset Indices Methodology (CNAIM),
+#' Health & Criticality - Version 1.1, 2017:
+#' \url{https://www.ofgem.gov.uk/sites/default/files/docs/2021/04/dno_common_network_asset_indices_methodology_v2.1_final_01-04-2021.pdf}
 #' @export
 #' @examples
-#' ambiental_cof_transformer_34kv(tf_asset_category = "30kV Transformer (GM)",
-#' prox_water = 95, bunded = "Yes", size_kva_mva = 20)
+#' environmental_cof_transformers(tf_asset_category = "33kV Transformer (GM)",
+#' prox_water = 95, bunded = "Yes", size_kva_mva = 20, size_conversion = "33/20kV")
 ambiental_cof_transformador_34kv <- function(tf_asset_category,
-                                                  prox_water, bunded,
-                                                  size_kva_mva = NULL,
-                                                  gb_ref_given = NULL) {
-
-  GBP_to_COL <- 1
-  if (tf_asset_category == "30kV Transformer (GM)" ) {
-    tf_asset_category <- "33kV Transformer (GM)"
-    size_conversion <- "33/11 or 6.6kV"
-  } else if (tf_asset_category == "60kV Transformer (GM)" ) {
-    tf_asset_category <- "66kV Transformer (GM)"
-    size_conversion <- "66/11 or 6.6kV"
-  } else {
-    size_conversion <- NULL
-    tf_asset_category <- NULL
-    warning("Wrong input, please go to CNAIM.io for more documentation")
-  }
+                                     prox_water, bunded,
+                                     size_kva_mva = NULL,
+                                     size_conversion = NULL,
+                                     gb_ref_given = NULL){
+  `Asset Register Category` = `Health Index Asset Category` = `Asset Category` =
+    `Type environment factor` = `Size` = `Lower` = `Upper` = NULL
 
   if(is.null(gb_ref_given)){
     gb_ref_taken <- gb_ref
@@ -39,9 +37,6 @@ ambiental_cof_transformador_34kv <- function(tf_asset_category,
     check_gb_ref_given(gb_ref_given)
     gb_ref_taken <- gb_ref_given
   }
-
-  `Asset Register Category` = `Health Index Asset Category` = `Asset Category` =
-    `Type environment factor` = `Size` = `Lower` = `Upper` = NULL
 
   asset_category <- gb_ref_taken$categorisation_of_assets %>%
     dplyr::filter(`Asset Register Category` == tf_asset_category) %>%
@@ -125,5 +120,6 @@ ambiental_cof_transformador_34kv <- function(tf_asset_category,
 
   # Environmental consequences ----------------------------------------------
   environmental_cof <- environmental_consequences_factor * ecost
-  return(environmental_cof * GBP_to_COL)
+  return(environmental_cof)
 }
+
