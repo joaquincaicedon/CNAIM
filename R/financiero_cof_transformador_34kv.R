@@ -48,7 +48,7 @@ financiero_cof_transformador_34kv <- function(tf_asset_category,
 
   # Reference financial cost of failure -------------------------------------
   fcost <- reference_costs_of_failure_tf$`Financial - (GBP)`
-  Print(fcost)
+  print(fcost)
   # Type financial factor ---------------------------------------------------
   type_financial_factors <- gb_ref_taken$type_financial_factors
 
