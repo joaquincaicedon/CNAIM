@@ -92,7 +92,7 @@ financiero_cof_transformador_34kv <- function(tf_asset_category,
       access_financial_factors_tf$`Access Factor: Type C Criteria - Underground substation`
   }
 
-print(access_financial_factors)
+print(access_financial_factor)
   # Financial consequences factor -------------------------------------------
   fc_factor <- type_financial_factor * access_finacial_factor
 
