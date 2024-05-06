@@ -7,13 +7,13 @@
 #' Options: \code{tf_asset_category = c("6.6/11kV Transformer (GM)",
 #' "20kV Transformer (GM)", "33kV Transformer (GM)", "66kV Transformer (GM) "
 #' "132kV Transformer (GM) ")}.
-#' @param location_risk String Type Financial factor criteria for Transformer
-#' (cf. section D1.2.1, page 178, CNAIM, 2021).
+#' @param location_risk String Type of location risk factor criteria for Transformer
+#' (cf. section D.2.2, page 183, CNAIM, 2021).
 #' Options: \code{location_risk = c("Low", "Medium", "High")}.
 #' The default setting is
 #' \code{location_risk = "Medium"}.
-#' @param type_risk String. Asses Financial factor criteria for Transformer
-#' setting (cf. table 221, page 180, CNAIM, 2021).
+#' @param type_risk String Type of type of risk rating criteria for Transformer
+#' (cf. section D.2.2, page 183, CNAIM, 2021)
 #' Options: \code{type_risk = c("Low", "Medium", "High")}.
 #' The default setting is
 #' \code{type_risk = "Medium"}.
