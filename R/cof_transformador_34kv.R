@@ -39,9 +39,10 @@ cof_transformador_34kv <- function(tipo_TP, Sn, Rtransfor, acceso, riesgo_loc, r
   network <- red_cof_transformador_34kv(tf_asset_category = tipo_TP, actual_load_mva = carga_actual, secure = red_segura)
 
   COF <- finance + safety + environmental + network
+  cat("COF Financiero:", finance, "; COF Seguridad:", safety, "; COF Ambiental:", environmental, "; COF red:", network, "y COF total:", COF)
 
 
   return(finance + safety + environmental + network)
 
-  cat("COF Financiero:", finance, "; COF Seguridad:", safety, "; COF Ambiental:", environmental, "; COF red:", network, "y COF total:", COF)
+
 }
