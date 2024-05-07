@@ -8,13 +8,9 @@ read_excel_allsheets <- function(filename, tibble = FALSE) {
   x
 }
 
-#table_data <- read_excel_allsheets("C:/Users/Andres/Documents/GitHub/CNAIM/data-raw/excel-spreadsheets/table_data.xlsx", tibble=T)
-#table_index <- read_excel_allsheets("C:/Users/Andres/Documents/GitHub/CNAIM/data-raw/excel-spreadsheets/table_index.xlsx", tibble=T)
-# Se debe instalar libreria here
-library(here)
-table_data <- read_excel_allsheets(here("GitHub/CNAIM/data-raw/excel-spreadsheets/","table_data.xlsx"), tibble=T)
-table_index <- read_excel_allsheets(here("GitHub/CNAIM/data-raw/excel-spreadsheets/","table_index.xlsx"), tibble=T)
-              
+table_data <- read_excel_allsheets("C:/Users/Andres/Documents/GitHub/CNAIM/data-raw/excel-spreadsheets/table_data.xlsx", tibble=T)
+table_index <- read_excel_allsheets("C:/Users/Andres/Documents/GitHub/CNAIM/data-raw/excel-spreadsheets/table_index.xlsx", tibble=T)
+
 tables <- list()
 navne  <- names(table_index)
 table_index <- table_index$`1 to 241`
@@ -52,8 +48,6 @@ for (t in names(gb_ref)){
 }
 
 # Import example matrix data ----------------------------------------------
-#example_risk_matrix <- readRDS('C:/Users/Andres/Documents/GitHub/CNAIM/data-raw/matrix_data_structure.rds')
-#save(gb_ref, example_risk_matrix, file = "C:/Users/Andres/Documents/GitHub/CNAIM/R/sysdata.rda")
+example_risk_matrix <- readRDS('C:/Users/Andres/Documents/GitHub/CNAIM/data-raw/matrix_data_structure.rds')
 
-example_risk_matrix <- readRDS(here("GitHub/CNAIM/data-raw/","matrix_data_structure.rds"))
-save(gb_ref, example_risk_matrix, file = here("GitHub/CNAIM/R/","sysdata.rda"))  
+save(gb_ref, example_risk_matrix, file = "C:/Users/Andres/Documents/GitHub/CNAIM/R/sysdata.rda")
