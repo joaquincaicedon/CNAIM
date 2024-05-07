@@ -30,15 +30,18 @@ cof_transformador_34kv <- function(tipo_TP, Sn, Rtransfor, acceso, riesgo_loc, r
                                                access_factor_criteria = acceso)
 
 
-  safety <- seguridad_cof_transformador_34kv(tf_asset_category = tipo_TP, location_risk = riesgo_loc,type_risk = riesgo_tipo)
+  safety <- seguridad_cof_transformador_34kv(tf_asset_category = tipo_TP, location_risk = riesgo_loc, type_risk = riesgo_tipo)
 
 
 
   environmental <-  ambiental_cof_transformador_34kv(tf_asset_category = tipo_TP, prox_water = dist_agua, bunded = acotado, size_kva_mva = Sn)
 
-  network <- red_cof_transformador_34kv(tf_asset_category = tipo_TP,
-                                        actual_load_mva = carga_actual, secure = red_segura)
+  network <- red_cof_transformador_34kv(tf_asset_category = tipo_TP, actual_load_mva = carga_actual, secure = red_segura)
+
+  COF <- finance + safety + environmental + network
 
 
   return(finance + safety + environmental + network)
+
+  cat("COF Financiero:", finance, "; COF Seguridad:", safety, "; COF Ambiental:", environmental, "; COF red:", network, "y COF total:", COF)
 }
