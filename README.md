@@ -68,3 +68,5 @@ SOFTWARE.
 
 [cnaim.io]: https://www.cnaim.io/
 [Utiligize]: https://www.utiligize.com/
+
+V1: Joaquín Caicedo - 21/05/2024
