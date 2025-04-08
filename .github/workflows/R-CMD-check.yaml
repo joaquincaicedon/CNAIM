@@ -19,7 +19,7 @@ jobs:
       matrix:
         config:
           - {
-              os: ubuntu-20.04,
+              os: ubuntu-latest,
               r: release,
               rspm: 'https://packagemanager.rstudio.com/cran/__linux__/focal/latest'
             }
