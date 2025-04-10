@@ -50,4 +50,4 @@ for (t in names(gb_ref)){
 # Import example matrix data ----------------------------------------------
 example_risk_matrix <- readRDS('matrix_data_structure.rds')
 
-save(gb_ref, example_risk_matrix, file = "D:GitHub/CNAIM/R/sysdata.rda")
+save(gb_ref, example_risk_matrix, file = "D:/GitHub/CNAIM/R/sysdata.rda")
