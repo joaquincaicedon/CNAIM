@@ -204,6 +204,7 @@
 #'                              enfriamiento_motor = "Default",
 #'                              lubricación_motor = "Default",
 #'                              aire_motor = "Default",
+#'                              turbocompresores_motor = "Default",
 #'                              culatas_motor = "Default",
 #'                              filtro_motor = "Default",
 #'                              cubierta_alternador = "Default", 
@@ -237,6 +238,7 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
                                          enfriamiento_motor = "Default",
                                          lubricación_motor = "Default",
                                          aire_motor = "Default",
+                                         turbocompresores_motor = "Default",
                                          culatas_motor = "Default",
                                          filtro_motor = "Default",
                                          cubierta_alternador = "Default", 
@@ -370,20 +372,63 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
       which(mcm_mmi_cal_df$Subcomponent == "Alternador")
     ])
 
-  # CONDICIONES MEDIDAS DEL MOTOR ----------------------------------------
-  # Rendimiento del motor ------------------------------------------------
-  # Velocidad del motor en rpm -------------------------------------------
-  # Consumo de combustible del motor -------------------------------------
-  # Operación del freno del motor ----------------------------------------
+  # CONDICIONES MEDIDAS DEL MOTOR -------------------------------------------
+  # 1. Rendimiento del motor ------------------------------------------------
+  mci_hv_tf_partial_discharge <-
+    gb_ref_taken$mci_ehv_tf_main_tf_prtl_dis
 
-  # CONDICIONES MEDIDAS DEL ALTERNADOR -----------------------------------
-  # Resistencia de aislamiento del alternador ----------------------------
-  # Descargas parciales en el alternador ---------------------------------
-  # Secuencia de fases del alternador ------------------------------------
-  # Vibraciones en el alternador -----------------------------------------
-  # Pérdidas en el alternador --------------------------------------------
-  # Temperatura de arrollamiento del alternador --------------------------
-  
+  ci_factor_partial_discharge_tf <-
+    mci_hv_tf_partial_discharge$`Condition Input Factor`[which(
+      mci_hv_tf_partial_discharge$
+        `Condition Criteria: Partial Discharge Test Result` ==
+        partial_discharge_tf)]
+
+  ci_cap_partial_discharge_tf <-
+    mci_hv_tf_partial_discharge$`Condition Input Cap`[which(
+      mci_hv_tf_partial_discharge$
+        `Condition Criteria: Partial Discharge Test Result` ==
+        partial_discharge_tf)]
+
+  ci_collar_partial_discharge_tf <-
+    mci_hv_tf_partial_discharge$`Condition Input Collar`[which(
+      mci_hv_tf_partial_discharge$
+        `Condition Criteria: Partial Discharge Test Result` ==
+        partial_discharge_tf)]
+
+  # 2. Velocidad del motor en rpm -------------------------------------------
+  # 3. Consumo de combustible del motor -------------------------------------
+  # 4. Operación del freno del motor ----------------------------------------
+
+  # CONDICIONES MEDIDAS DEL ALTERNADOR --------------------------------------
+  # 1. Resistencia de aislamiento del alternador ----------------------------
+  # 2. Descargas parciales en el alternador ---------------------------------
+  # 3. Secuencia de fases del alternador ------------------------------------
+  # 4. Vibraciones en el alternador -----------------------------------------
+  # 5. Pérdidas en el alternador --------------------------------------------
+  # 6. Temperatura de arrollamiento del alternador --------------------------
+
+  # Factor de condición medida ----------------------------------------------
+
+  # CONDICIONES OBSERVADAS DEL MOTOR ----------------------------------------
+  # 1. Cubierta del motor ---------------------------------------------------
+  # 2. Rodamientos del motor ------------------------------------------------
+  # 3. Sistema de combustible del motor -------------------------------------
+  # 4. Sistema de enfriamiento del motor ------------------------------------
+  # 5. Sistema de lubricación del motor -------------------------------------
+  # 6. Sistema de inducción de aire del motor -------------------------------
+  # 7. Turbocompresores del motor -------------------------------------------
+  # 8. Culatas de cilíndros del motor ---------------------------------------
+  # 9. Filtro del motor -----------------------------------------------------
+
+  # CONDICIONES OBSERVADAS DEL ALTERNADOR -----------------------------------
+  # 1. Cubierta del alternador ----------------------------------------------
+  # 2. Aislamiento del alternador -------------------------------------------
+  # 3. Cables y caja de terminales del alternador ---------------------------
+  # 4. Rotor del alternador -------------------------------------------------
+  # 5. Estator del alternador -----------------------------------------------
+
+  # Factor de condición observada -------------------------------------------
+
   mci_hv_tf_partial_discharge <-
     gb_ref_taken$mci_ehv_tf_main_tf_prtl_dis
 
