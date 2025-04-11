@@ -6,7 +6,7 @@
 #' Véase, por ejemplo, \code{\link{expected_life}}(). Para obtener 
 #' información más general sobre la derivación del factor de trabajo, 
 #' consulte la sección 6.6 en la página 51 de CNAIM (2021).
-#' @param utilisation_pct Numérico. El porcentaje máximo de utilización 
+#' @param utilización_pct Numérico. El porcentaje máximo de utilización 
 #' en condiciones normales de funcionamiento.
 #' @param gb_ref_given Parámetro opcional para utilizar valores de 
 #' referencia personalizados
@@ -17,9 +17,9 @@
 #' Y adaptación de CNAIM para considerar grupos electrógenos diésel.
 #' @export
 #' @examples
-#' factor_trabajo_grupo_electrogeno_13_8kv(utilisation_pct = 95)
+#' factor_trabajo_grupo_electrogeno_13_8kv(utilización_pct = 95)
 
-factor_trabajo_grupo_electrogeno_13_8kv <- function(utilisation_pct = "Default",
+factor_trabajo_grupo_electrogeno_13_8kv <- function(utilización_pct = "Default",
                                                     gb_ref_given = NULL) {
 
   if(is.null(gb_ref_given)){
@@ -32,11 +32,11 @@ factor_trabajo_grupo_electrogeno_13_8kv <- function(utilisation_pct = "Default",
   duty_factor_table <- gb_ref_taken$factor_trabajo_tab_generador
 
   for (n in 1:nrow(duty_factor_table)){
-    if (utilisation_pct == 'Default'){
+    if (utilización_pct == 'Default'){
       duty_factor <- duty_factor_table$`Duty Factor`[nrow(duty_factor_table)]
       break
-    } else if (utilisation_pct > as.numeric(duty_factor_table$Lower[n]) &
-        utilisation_pct <= as.numeric(duty_factor_table$Upper[n])){
+    } else if (utilización_pct > as.numeric(duty_factor_table$Lower[n]) &
+        utilización_pct <= as.numeric(duty_factor_table$Upper[n])){
       duty_factor <- duty_factor_table$`Duty Factor`[n]
       break
     }

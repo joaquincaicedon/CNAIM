@@ -128,6 +128,7 @@
 
 pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Diésel 13.8kV",
                                          año_fabricación,
+                                         utilización_pct, 
                                          edad_motor, 
                                          edad_alternador,
                                          cubierta_motor = "Default",
@@ -195,9 +196,8 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
     dplyr::filter(`Functional Failure Category` ==
                     'HV Generador Diésel') %>% dplyr::select(`C-Value`) %>% dplyr::pull()
 
-  # Duty factor -------------------------------------------------------------
-  duty_factor_tf_11kv <- duty_factor_transformer_33_66kv(utilisation_pct,
-                                                         no_taps)
+  # Factor de trabajo -------------------------------------------------------------
+  factor_trabajo_GE <- factor_trabajo_grupo_electrogeno_13_8kv(utilisation_pct)
   duty_factor_tf <-
     duty_factor_tf_11kv$duty_factor[which(duty_factor_tf_11kv$category ==
                                             "transformer")]
