@@ -19,6 +19,70 @@
 #' @inheritParams current_health
 #' @param edad_motor Numérico. Edad actual del motor en años.
 #' @param edad_alternador Numérico. Edad actual del alternador en años.
+#' 
+#' CONDICIONES MEDIDAS ------------------------------------------------
+#' @param rendimiento_motor Texto. Indica la condición medida del 
+#' rendimiento del motor.
+#' Opciones:
+#' \code{rendimiento_motor = c("Óptimo", "Moderadamente degradado",
+#' "Severamente degradado", "Default")}. Ver tabla 202A en CNAIM (2021)
+#' modificada para incluir grupos electrógenos diésel.
+#' @param velocidad_rpm_motor Texto. Indica la condición medida de la 
+#' velocidad del motor en rpm.
+#' Opciones:
+#' \code{velocidad_rpm_motor = c("Estable", "Moderadamente desviada",
+#' "Severamente desviada", "Default")}. Ver tabla 202B en CNAIM (2021)
+#' modificada para incluir grupos electrógenos diésel.
+#' @param consumo_motor Texto. Indica la condición medida del 
+#' consumo de combustible del motor.
+#' Opciones:
+#' \code{consumo_motor = c("Óptimo", "Moderadamente aumentado",
+#' "Excesivamente aumentado", "Default")}. Ver tabla 202C en CNAIM (2021)
+#' modificada para incluir grupos electrógenos diésel.
+#' @param freno_motor Texto. Indica la condición medida de la 
+#' operación del freno del motor.
+#' Opciones:
+#' \code{freno_motor = c("Óptima", "Retardada moderadamente",
+#' "Averiada severamente", "Default")}. Ver tabla 202D en CNAIM (2021)
+#' modificada para incluir grupos electrógenos diésel.
+#' @param resistencia_aislamiento_alternador Texto. Indica la condición medida de 
+#' la resistencia de aislamiento del alternador.
+#' Opciones:
+#' \code{resistencia_aislamiento_alternador = c("Baja", "Media", "Alta (no confirmada)",
+#' "Alta (confirmada)", "Default")}. Ver tabla 202E en CNAIM (2021)
+#' modificada para incluir grupos electrógenos diésel.
+#' @param descargas_parciales_alternador Texto. Indica la condición medida de 
+#' las descargas parciales en el alternador.
+#' Opciones:
+#' \code{descargas_parciales_alternador = c("Baja", "Media", "Alta (no confirmada)",
+#' "Alta (confirmada)", "Default")}. Ver tabla 202F en CNAIM (2021)
+#' modificada para incluir grupos electrógenos diésel.
+#' @param secuencia_alternador Texto. Indica la condición medida de la 
+#' secuencia de fases del alternador.
+#' Opciones:
+#' \code{secuencia_alternador = c("Baja", "Media", "Alta (no confirmada)",
+#' "Alta (confirmada)", "Default")}. Ver tabla 202G en CNAIM (2021)
+#' modificada para incluir grupos electrógenos diésel.
+#' @param vibraciones_alternador Texto. Indica la condición medida de la
+#' presencia de vibraciones en el alternador.
+#' Opciones:
+#' \code{vibraciones_alternador = c("Baja", "Media", "Alta (no confirmada)",
+#' "Alta (confirmada)", "Default")}. Ver tabla 202H en CNAIM (2021)
+#' modificada para incluir grupos electrógenos diésel.
+#' @param pérdidas_alternador Texto. Indica la condición medida del 
+#' rendimiento del alternador.
+#' Opciones:
+#' \code{pérdidas_alternador = c("Baja", "Media", "Alta (no confirmada)",
+#' "Alta (confirmada)", "Default")}. Ver tabla 202I en CNAIM (2021)
+#' modificada para incluir grupos electrógenos diésel.
+#' @param temperatura_arrollamiento_alternador Texto. Indica la condición medida del 
+#' rendimiento del alternador.
+#' Opciones:
+#' \code{temperatura_arrollamiento_alternador = c("Normal", "Alta",
+#' "Muy alta", "Default")}. Ver tabla 202J en CNAIM (2021)
+#' modificada para incluir grupos electrógenos diésel.
+#' 
+#' CONDICIONES OBSERVADAS ----------------------------------------------
 #' @param cubierta_motor Texto. Indica la condición observada de la 
 #' cubierta de acero del motor.
 #' Opciones:
@@ -55,48 +119,55 @@
 #' \code{aire_motor = c("Deterioro específico/menor", "Cierto deterioro",
 #' "Deterioro sustancial", "Default")}. Ver tabla 143F en CNAIM (2021)
 #' modificada para incluir grupos electrógenos diésel.
+#' @param turbocompresores_motor Texto. Indica la condición observada de los 
+#' turbocompresores del motor.
+#' Opciones:
+#' \code{turbocompresores_motor = c("Deterioro específico/menor", "Cierto deterioro",
+#' "Deterioro sustancial", "Default")}. Ver tabla 143G en CNAIM (2021)
+#' modificada para incluir grupos electrógenos diésel.
 #' @param culatas_motor Texto. Indica la condición observada de 
 #' las culatas de cilíndros del motor.
 #' Opciones:
 #' \code{culatas_motor = c("Deterioro específico/menor", "Cierto deterioro",
-#' "Deterioro sustancial", "Default")}. Ver tabla 143G en CNAIM (2021)
+#' "Deterioro sustancial", "Default")}. Ver tabla 143H en CNAIM (2021)
 #' modificada para incluir grupos electrógenos diésel.
 #' @param filtro_motor Texto. Indica la condición observada del 
 #' filtro del motor.
 #' Opciones:
 #' \code{filtro_motor = c("Deterioro específico/menor", "Cierto deterioro",
-#' "Deterioro sustancial", "Default")}. Ver tabla 143H en CNAIM (2021)
-#' modificada para incluir grupos electrógenos diésel.
-#' @param cubierta_generador Texto. Indica la condición observada de la 
-#' cubierta del generador.
-#' Opciones:
-#' \code{cubierta_generador = c("Deterioro específico/menor", "Cierto deterioro",
 #' "Deterioro sustancial", "Default")}. Ver tabla 143I en CNAIM (2021)
 #' modificada para incluir grupos electrógenos diésel.
-#' @param aislamiento_generador Texto. Indica la condición observada del 
-#' aislamiento del generador.
+#' @param cubierta_alternador Texto. Indica la condición observada de la 
+#' cubierta del alternador.
 #' Opciones:
-#' \code{aislamiento_generador = c("Deterioro específico/menor", "Cierto deterioro",
+#' \code{cubierta_generador = c("Deterioro específico/menor", "Cierto deterioro",
 #' "Deterioro sustancial", "Default")}. Ver tabla 143J en CNAIM (2021)
 #' modificada para incluir grupos electrógenos diésel.
-#' @param cables_generador Texto. Indica la condición observada de los 
-#' cables y de la caja de terminales del generador.
+#' @param aislamiento_alternador Texto. Indica la condición observada del 
+#' aislamiento del alternador.
 #' Opciones:
-#' \code{cables_generador = c("Deterioro específico/menor", "Cierto deterioro",
+#' \code{aislamiento_generador = c("Deterioro específico/menor", "Cierto deterioro",
 #' "Deterioro sustancial", "Default")}. Ver tabla 143K en CNAIM (2021)
 #' modificada para incluir grupos electrógenos diésel.
-#' @param rotor_generador Texto. Indica la condición observada del 
-#' rotor del generador.
+#' @param cables_alternador Texto. Indica la condición observada de los 
+#' cables y de la caja de terminales del alternador.
+#' Opciones:
+#' \code{cables_generador = c("Deterioro específico/menor", "Cierto deterioro",
+#' "Deterioro sustancial", "Default")}. Ver tabla 143L en CNAIM (2021)
+#' modificada para incluir grupos electrógenos diésel.
+#' @param rotor_alternador Texto. Indica la condición observada del 
+#' rotor del alternador.
 #' Opciones:
 #' \code{rotor_generador = c("Deterioro específico/menor", "Cierto deterioro",
-#' "Deterioro sustancial", "Default")}. Ver tabla 143L en CNAIM (2021)
+#' "Deterioro sustancial", "Default")}. Ver tabla 143M en CNAIM (2021)
 #' modificada para incluir grupos electrógenos diésel.
-#' @param estator_generador Texto. Indica la condición observada del 
-#' estator del generador.
+#' @param estator_alternador Texto. Indica la condición observada del 
+#' estator del alternador.
 #' Opciones:
 #' \code{estator_generador = c("Deterioro específico/menor", "Cierto deterioro",
-#' "Deterioro sustancial", "Default")}. Ver tabla 143L en CNAIM (2021)
+#' "Deterioro sustancial", "Default")}. Ver tabla 143N en CNAIM (2021)
 #' modificada para incluir grupos electrógenos diésel.
+#' 
 #' @param gb_ref_given Parámetro opcional para utilizar valores de 
 #' referencia personalizados
 #' @return DataFrame. Probabilidad actual de falla por año y kilómetro, 
@@ -110,8 +181,23 @@
 #' # Probabilidad actual de falla de un grupo electrógeno diésel de 13.8 kV.
 #' pof_grupo_electrogeno_13_8kv(tipo_generador = "Grupo Electrógeno Diésel 13.8kV",
 #'                              año_fabricación = 2010,
+#'                              utilización_pct = "Default",
+#'                              emplazamiento = "Default",
+#'                              altitud_m = "Default",
+#'                              distancia_costa_km = "Default",
+#'                              indice_corrosion = "Default",
 #'                              edad_motor = 15, 
 #'                              edad_alternador = 15,
+#'                              rendimiento_motor = "Default",
+#'                              velocidad_rpm_motor = "Default",
+#'                              consumo_motor = "Default",
+#'                              freno_motor = "Default",
+#'                              resistencia_aislamiento_alternador = "Default",
+#'                              descargas_parciales_alternador = "Default",
+#'                              secuencia_alternador = "Default",
+#'                              vibraciones_alternador = "Default",
+#'                              pérdidas_alternador = "Default",
+#'                              temperatura_arrollamiento_alternador = "Default",
 #'                              cubierta_motor = "Default",
 #'                              rodamientos_motor = "Default",
 #'                              combustible_motor = "Default",
@@ -120,17 +206,31 @@
 #'                              aire_motor = "Default",
 #'                              culatas_motor = "Default",
 #'                              filtro_motor = "Default",
-#'                              cubierta_generador = "Default", 
-#'                              aislamiento_generador = "Default", 
-#'                              cables_generador = "Default", 
-#'                              rotor_generador = "Default", 
-#'                              estator_generador = "Default")
+#'                              cubierta_alternador = "Default", 
+#'                              aislamiento_alternador = "Default", 
+#'                              cables_alternador = "Default", 
+#'                              rotor_alternador = "Default", 
+#'                              estator_alternador = "Default")
 
 pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Diésel 13.8kV",
                                          año_fabricación,
-                                         utilización_pct, 
+                                         utilización_pct = "Default",
+                                         emplazamiento = "Default",
+                                         altitud_m = "Default",
+                                         distancia_costa_km = "Default",
+                                         indice_corrosion = "Default",
                                          edad_motor, 
                                          edad_alternador,
+                                         rendimiento_motor = "Default",
+                                         velocidad_rpm_motor = "Default",
+                                         consumo_motor = "Default",
+                                         freno_motor = "Default",
+                                         resistencia_aislamiento_alternador = "Default",
+                                         descargas_parciales_alternador = "Default",
+                                         secuencia_alternador = "Default",
+                                         vibraciones_alternador = "Default",
+                                         pérdidas_alternador = "Default",
+                                         temperatura_arrollamiento_alternador = "Default",
                                          cubierta_motor = "Default",
                                          rodamientos_motor = "Default",
                                          combustible_motor = "Default",
@@ -139,11 +239,11 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
                                          aire_motor = "Default",
                                          culatas_motor = "Default",
                                          filtro_motor = "Default",
-                                         cubierta_generador = "Default", 
-                                         aislamiento_generador = "Default", 
-                                         cables_generador = "Default", 
-                                         rotor_generador = "Default", 
-                                         estator_generador = "Default",
+                                         cubierta_alternador = "Default", 
+                                         aislamiento_alternador = "Default", 
+                                         cables_alternador = "Default", 
+                                         rotor_alternador = "Default", 
+                                         estator_alternador = "Default",
                                          gb_ref_given = NULL) {
 
   `Asset Register Category` = `Health Index Asset Category` =
@@ -174,15 +274,15 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
   
   # Vida útil normal esperada para el motor del grupo electrógeno diésel ------------------
 
-  normal_expected_life_tf <- gb_ref_taken$normal_expected_life %>%
-    dplyr::filter(`Asset Register  Category` == transformer_type & `Sub-division` ==
+  vida_normal_esperada_motor <- gb_ref_taken$normal_expected_life %>%
+    dplyr::filter(`Asset Register  Category` == tipo_generador & `Sub-division` ==
                     "Motor") %>%
     dplyr::pull()
 
   # Vida útil normal esperada para el alternador del grupo electrógeno diésel -----------------------------
 
-  normal_expected_life_tc <- gb_ref_taken$normal_expected_life %>%
-    dplyr::filter(`Asset Register  Category` == transformer_type & `Sub-division` ==
+  vida_normal_esperada_alternador <- gb_ref_taken$normal_expected_life %>%
+    dplyr::filter(`Asset Register  Category` == tipo_generador & `Sub-division` ==
                     "Alternador") %>%
     dplyr::pull()
 
@@ -197,92 +297,93 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
                     'HV Generador Diésel') %>% dplyr::select(`C-Value`) %>% dplyr::pull()
 
   # Factor de trabajo -------------------------------------------------------------
-  factor_trabajo_GE <- factor_trabajo_grupo_electrogeno_13_8kv(utilisation_pct)
-  duty_factor_tf <-
-    duty_factor_tf_11kv$duty_factor[which(duty_factor_tf_11kv$category ==
-                                            "transformer")]
-  duty_factor_tc <-
-    duty_factor_tf_11kv$duty_factor[which(duty_factor_tf_11kv$category ==
-                                            "tapchanger")]
+  factor_trabajo_GE <- factor_trabajo_grupo_electrogeno_13_8kv(utilización_pct)
 
+  # Factor de ubicación ----------------------------------------------------
+  factor_ubicación_GE <- location_factor(emplazamiento,
+                                         altitud_m,
+                                         distancia_costa_km,
+                                         indice_corrosion,
+                                         asset_type = tipo_generador)
 
-  # Location factor ----------------------------------------------------
-  location_factor_transformer <- location_factor(placement,
-                                                 altitude_m,
-                                                 distance_from_coast_km,
-                                                 corrosion_category_index,
-                                                 asset_type = transformer_type)
+  # Vida útil esperada para el motor del grupo electrógeno diésel ------------------------------
+  vida_esperada_años_motor <- expected_life(normal_expected_life = vida_normal_esperada_motor,
+                                            factor_trabajo_GE,
+                                            factor_ubicación_GE)
 
-  # Expected life for transformer ------------------------------
-  expected_life_years_tf <- expected_life(normal_expected_life =
-                                            normal_expected_life_tf,
-                                          duty_factor_tf,
-                                          location_factor_transformer)
+  # Vida útil esperada para el alternador del grupo electrógeno diésel ------------------------------
+  vida_esperada_años_alternador <- expected_life(normal_expected_life = vida_normal_esperada_alternador,
+                                                 factor_trabajo_GE,
+                                                 factor_ubicación_GE)
 
-  # Expected life for tapchanger ------------------------------
-  expected_life_years_tc <- expected_life(normal_expected_life =
-                                          normal_expected_life_tc,
-                                          duty_factor_tc,
-                                          location_factor_transformer)
+  # b1 (Tasa de envejecimiento inicial) ------------------------------------------------
+  b1_motor <- beta_1(vida_esperada_años_motor)
+  b1_alternador <- beta_1(vida_esperada_años_alternador)
 
-  # b1 (Initial Ageing Rate) ------------------------------------------------
-  b1_tf <- beta_1(expected_life_years_tf)
-  b1_tc <- beta_1(expected_life_years_tc)
+  # Puntaje de salud inicial ----------------------------------------------------
+  puntaje_salud_inicial_motor <- initial_health(b1_motor, edad_motor)
+  puntaje_salud_inicial_alternador <- initial_health(b1_alternador, edad_alternador)
 
-  # Initial health score ----------------------------------------------------
-  initial_health_score_tf <- initial_health(b1_tf, age_tf)
-  initial_health_score_tc <- initial_health(b1_tc, age_tc)
+  ## NOTA
+  # Típicamente, el límite inferior del puntaje de salud es 0.5 y
+  # el límite superior del puntaje de salud es 10, lo que implica que no hay
+  # anulación del puntaje de salud. Sin embargo, en algunos casos,
+  # estos parámetros se establecen en otros valores en las tablas de calibración
+  # del modificador del puntaje de salud.
+  # Estos valores de anulación se muestran en la Tabla 35 a la Tabla 202
+  # y en la Tabla 207 en el Apéndice B.
 
-  ## NOTE
-  # Typically, the Health Score Collar is 0.5 and
-  # Health Score Cap is 10, implying no overriding
-  # of the Health Score. However, in some instances
-  # these parameters are set to other values in the
-  # Health Score Modifier calibration tables.
-  # These overriding values are shown in Table 35 to Table 202
-  # and Table 207 in Appendix B.
-
-  # Measured condition inputs ---------------------------------------------
+  # Entradas de condición medida ---------------------------------------------
   mcm_mmi_cal_df <-
     gb_ref_taken$measured_cond_modifier_mmi_cal
 
   mcm_mmi_cal_df <-
-    mcm_mmi_cal_df[which(mcm_mmi_cal_df$`Asset Category` == "EHV Transformer (GM)"), ]
+    mcm_mmi_cal_df[which(mcm_mmi_cal_df$`Asset Category` == "HV Generador Diésel"), ]
 
-
-  factor_divider_1_tf <-
+  factor_divisor_1_motor <-
     as.numeric(mcm_mmi_cal_df$`Parameters for Combination Using MMI Technique - Factor Divider 1`[
-      which(mcm_mmi_cal_df$Subcomponent == "Main Transformer")
+      which(mcm_mmi_cal_df$Subcomponent == "Motor")
     ])
 
-  factor_divider_1_tc <-
+  factor_divisor_1_alternador <-
     as.numeric(mcm_mmi_cal_df$`Parameters for Combination Using MMI Technique - Factor Divider 1`[
-      which(mcm_mmi_cal_df$Subcomponent == "Tapchanger")
+      which(mcm_mmi_cal_df$Subcomponent == "Alternador")
     ])
 
-
-  factor_divider_2_tf <-
+  factor_divisor_2_motor <-
     as.numeric(mcm_mmi_cal_df$`Parameters for Combination Using MMI Technique - Factor Divider 2`[
-      which(mcm_mmi_cal_df$Subcomponent == "Main Transformer")
+      which(mcm_mmi_cal_df$Subcomponent == "Motor")
     ])
 
-  factor_divider_2_tc <-
+  factor_divisor_2_alternador <-
     as.numeric(mcm_mmi_cal_df$`Parameters for Combination Using MMI Technique - Factor Divider 2`[
-      which(mcm_mmi_cal_df$Subcomponent == "Tapchanger")
+      which(mcm_mmi_cal_df$Subcomponent == "Alternador")
     ])
 
-  max_no_combined_factors_tf <-
+  max_no_factores_comb_motor <-
     as.numeric(mcm_mmi_cal_df$`Parameters for Combination Using MMI Technique - Max. No. of Combined Factors`[
-      which(mcm_mmi_cal_df$Subcomponent == "Main Transformer")
+      which(mcm_mmi_cal_df$Subcomponent == "Motor")
     ])
 
-  max_no_combined_factors_tc <-
+  max_no_factores_comb_alternador <-
     as.numeric(mcm_mmi_cal_df$`Parameters for Combination Using MMI Technique - Max. No. of Combined Factors`[
-      which(mcm_mmi_cal_df$Subcomponent == "Tapchanger")
+      which(mcm_mmi_cal_df$Subcomponent == "Alternador")
     ])
 
+  # CONDICIONES MEDIDAS DEL MOTOR ----------------------------------------
+  # Rendimiento del motor ------------------------------------------------
+  # Velocidad del motor en rpm -------------------------------------------
+  # Consumo de combustible del motor -------------------------------------
+  # Operación del freno del motor ----------------------------------------
 
-  # Partial discharge transformer ----------------------------------------------
+  # CONDICIONES MEDIDAS DEL ALTERNADOR -----------------------------------
+  # Resistencia de aislamiento del alternador ----------------------------
+  # Descargas parciales en el alternador ---------------------------------
+  # Secuencia de fases del alternador ------------------------------------
+  # Vibraciones en el alternador -----------------------------------------
+  # Pérdidas en el alternador --------------------------------------------
+  # Temperatura de arrollamiento del alternador --------------------------
+  
   mci_hv_tf_partial_discharge <-
     gb_ref_taken$mci_ehv_tf_main_tf_prtl_dis
 
