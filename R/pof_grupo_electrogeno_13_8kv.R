@@ -371,11 +371,11 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
     as.numeric(mcm_mmi_cal_df$`Parameters for Combination Using MMI Technique - Max. No. of Combined Factors`[
       which(mcm_mmi_cal_df$Subcomponent == "Alternador")
     ])
-
+browser()
   # CONDICIONES MEDIDAS DEL MOTOR -------------------------------------------
   # 1. Rendimiento del motor ------------------------------------------------
-  mci_hv_tf_partial_discharge <-
-    gb_ref_taken$mci_ehv_tf_main_tf_prtl_dis
+  mci_hv_gen_die_rendimien_motor <-
+    gb_ref_taken$mci_hv_gen_die_rendimien_motor
 
   ci_factor_partial_discharge_tf <-
     mci_hv_tf_partial_discharge$`Condition Input Factor`[which(
