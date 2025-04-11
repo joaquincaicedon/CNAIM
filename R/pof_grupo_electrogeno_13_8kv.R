@@ -124,8 +124,7 @@
 #'                              aislamiento_generador = "Default", 
 #'                              cables_generador = "Default", 
 #'                              rotor_generador = "Default", 
-#'                              estator_generador = "Default",
-#'                              gb_ref_given = NULL)
+#'                              estator_generador = "Default")
 
 pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Diésel 13.8kV",
                                          año_fabricación,
@@ -158,10 +157,10 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
     gb_ref_taken <- gb_ref_given
   }
 
-  # Ref. table Categorisation of Assets and Generic Terms for Assets  --
+  # Ref. tabla de categorización de activos y términos genéricos para activos --
 
   asset_category <- gb_ref_taken$categorisation_of_assets %>%
-    dplyr::filter(`Asset Register Category` == transformer_type) %>%
+    dplyr::filter(`Asset Register Category` == tipo_generador) %>%
     dplyr::select(`Health Index Asset Category`) %>% dplyr::pull()
 
   generic_term_1 <- gb_ref_taken$generic_terms_for_assets %>%
@@ -171,37 +170,30 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
   generic_term_2 <- gb_ref_taken$generic_terms_for_assets %>%
     dplyr::filter(`Health Index Asset Category` == asset_category) %>%
     dplyr::select(`Generic Term...2`) %>% dplyr::pull()
-
-  # Normal expected life for transformer -----------------------------
-
-  if (year_of_manufacture < 1980) {
-    sub_division <- "Transformer - Pre 1980"
-  } else {
-    sub_division <- "Transformer - Post 1980"
-
-  }
+  
+  # Vida útil normal esperada para el motor del grupo electrógeno diésel ------------------
 
   normal_expected_life_tf <- gb_ref_taken$normal_expected_life %>%
     dplyr::filter(`Asset Register  Category` == transformer_type & `Sub-division` ==
-                    sub_division) %>%
+                    "Motor") %>%
     dplyr::pull()
 
-  # Normal expected life for tapchanger -----------------------------
+  # Vida útil normal esperada para el alternador del grupo electrógeno diésel -----------------------------
 
   normal_expected_life_tc <- gb_ref_taken$normal_expected_life %>%
     dplyr::filter(`Asset Register  Category` == transformer_type & `Sub-division` ==
-                    "Tapchanger") %>%
+                    "Alternador") %>%
     dplyr::pull()
 
-  # Constants C and K for PoF function --------------------------------------
+  # Constantes C y K para la función de probabilidad de falla --------------------------------------
   k <- gb_ref_taken$pof_curve_parameters %>%
     dplyr::filter(`Functional Failure Category` ==
-                    'EHV Transformer/ 132kV Transformer') %>% dplyr::select(`K-Value (%)`) %>%
+                    'HV Generador Diésel') %>% dplyr::select(`K-Value (%)`) %>%
     dplyr::pull()/100
 
   c <- gb_ref_taken$pof_curve_parameters %>%
     dplyr::filter(`Functional Failure Category` ==
-                    'EHV Transformer/ 132kV Transformer') %>% dplyr::select(`C-Value`) %>% dplyr::pull()
+                    'HV Generador Diésel') %>% dplyr::select(`C-Value`) %>% dplyr::pull()
 
   # Duty factor -------------------------------------------------------------
   duty_factor_tf_11kv <- duty_factor_transformer_33_66kv(utilisation_pct,
