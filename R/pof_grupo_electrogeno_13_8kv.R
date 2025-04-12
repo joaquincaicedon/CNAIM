@@ -371,29 +371,29 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
     as.numeric(mcm_mmi_cal_df$`Parameters for Combination Using MMI Technique - Max. No. of Combined Factors`[
       which(mcm_mmi_cal_df$Subcomponent == "Alternador")
     ])
-browser()
+
   # CONDICIONES MEDIDAS DEL MOTOR -------------------------------------------
   # 1. Rendimiento del motor ------------------------------------------------
   mci_hv_gen_die_rendimien_motor <-
     gb_ref_taken$mci_hv_gen_die_rendimien_motor
 
-  ci_factor_partial_discharge_tf <-
-    mci_hv_tf_partial_discharge$`Condition Input Factor`[which(
-      mci_hv_tf_partial_discharge$
-        `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge_tf)]
+  ci_factor_rendimien_motor <-
+     mci_hv_gen_die_rendimien_motor$`Factor de Condición de Entrada`[which(
+       mci_hv_gen_die_rendimien_motor$
+        `Criterios de condición: Rendimiento` ==
+        rendimiento_motor)]
 
-  ci_cap_partial_discharge_tf <-
-    mci_hv_tf_partial_discharge$`Condition Input Cap`[which(
-      mci_hv_tf_partial_discharge$
-        `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge_tf)]
+  ci_cap_rendimien_motor <-
+     mci_hv_gen_die_rendimien_motor$`Límite Superior`[which(
+       mci_hv_gen_die_rendimien_motor$
+        `Criterios de condición: Rendimiento` ==
+        rendimiento_motor)]
 
-  ci_collar_partial_discharge_tf <-
-    mci_hv_tf_partial_discharge$`Condition Input Collar`[which(
-      mci_hv_tf_partial_discharge$
-        `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge_tf)]
+  ci_collar_rendimien_motor <-
+     mci_hv_gen_die_rendimien_motor$`Límite Inferior`[which(
+       mci_hv_gen_die_rendimien_motor$
+        `Criterios de condición: Rendimiento` ==
+        rendimiento_motor)]
 
   # 2. Velocidad del motor en rpm -------------------------------------------
   # 3. Consumo de combustible del motor -------------------------------------
