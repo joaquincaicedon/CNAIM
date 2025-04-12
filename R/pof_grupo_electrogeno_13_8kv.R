@@ -380,19 +380,19 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
   ci_factor_rendimien_motor <-
      mci_hv_gen_die_rendimien_motor$`Factor de Condición de Entrada`[which(
        mci_hv_gen_die_rendimien_motor$
-        `Criterios de condición: Rendimiento` ==
+        `Criterios de Condición: Rendimiento` ==
         rendimiento_motor)]
 
   ci_cap_rendimien_motor <-
-     mci_hv_gen_die_rendimien_motor$`Límite Superior`[which(
+     mci_hv_gen_die_rendimien_motor$`Límite Superior de Condición de Entrada`[which(
        mci_hv_gen_die_rendimien_motor$
-        `Criterios de condición: Rendimiento` ==
+        `Criterios de Condición: Rendimiento` ==
         rendimiento_motor)]
 
   ci_collar_rendimien_motor <-
-     mci_hv_gen_die_rendimien_motor$`Límite Inferior`[which(
+     mci_hv_gen_die_rendimien_motor$`Límite Inferior de Condición de Entrada`[which(
        mci_hv_gen_die_rendimien_motor$
-        `Criterios de condición: Rendimiento` ==
+        `Criterios de Condición: Rendimiento` ==
         rendimiento_motor)]
 
   # 2. Velocidad del motor en rpm -------------------------------------------
