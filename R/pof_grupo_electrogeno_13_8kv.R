@@ -42,8 +42,8 @@
 #' @param freno_motor Texto. Indica la condición medida de la 
 #' operación del freno del motor.
 #' Opciones:
-#' \code{freno_motor = c("Óptima", "Retardada moderadamente",
-#' "Averiada severamente", "Default")}. Ver tabla 202D en CNAIM (2021)
+#' \code{freno_motor = c("Óptima", "Moderadamente retardada",
+#' "Severamente averiada", "Default")}. Ver tabla 202D en CNAIM (2021)
 #' modificada para incluir grupos electrógenos diésel.
 #' @param resistencia_aislamiento_alternador Texto. Indica la condición medida de 
 #' la resistencia de aislamiento del alternador.
