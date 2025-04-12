@@ -399,24 +399,24 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
   mci_hv_gen_die_velocidad_motor <-
     gb_ref_taken$mci_hv_gen_die_velocidad_motor
 
-  ci_factor_rendimien_motor <-
+  ci_factor_velocidad_motor <-
      mci_hv_gen_die_velocidad_motor$`Factor de Condición de Entrada`[which(
        mci_hv_gen_die_velocidad_motor$
         `Criterios de Condición: Velocidad` ==
         velocidad_rpm_motor)]
 
-  ci_cap_rendimien_motor <-
+  ci_cap_velocidad_motor <-
      mci_hv_gen_die_velocidad_motor$`Límite Superior de Condición de Entrada`[which(
        mci_hv_gen_die_velocidad_motor$
         `Criterios de Condición: Velocidad` ==
         velocidad_rpm_motor)]
 
-  ci_collar_rendimien_motor <-
+  ci_collar_velocidad_motor <-
      mci_hv_gen_die_velocidad_motor$`Límite Inferior de Condición de Entrada`[which(
        mci_hv_gen_die_velocidad_motor$
         `Criterios de Condición: Velocidad` ==
         velocidad_rpm_motor)]
-browser()
+
   # 3. Consumo de combustible del motor -------------------------------------
   # 4. Operación del freno del motor ----------------------------------------
 
