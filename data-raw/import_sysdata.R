@@ -8,8 +8,8 @@ read_excel_allsheets <- function(filename, tibble = FALSE) {
   x
 }
 
-table_data <- read_excel_allsheets("excel-spreadsheets/table_data.xlsx", tibble=T)
-table_index <- read_excel_allsheets("excel-spreadsheets/table_index.xlsx", tibble=T)
+table_data <- read_excel_allsheets("D:/GitHub/CNAIM/data-raw/excel-spreadsheets/table_data.xlsx", tibble=T)
+table_index <- read_excel_allsheets("D:/GitHub/CNAIM/data-raw/excel-spreadsheets/table_index.xlsx", tibble=T)
 
 tables <- list()
 navne  <- names(table_index)
@@ -48,6 +48,6 @@ for (t in names(gb_ref)){
 }
 
 # Import example matrix data ----------------------------------------------
-example_risk_matrix <- readRDS('matrix_data_structure.rds')
+example_risk_matrix <- readRDS('D:/GitHub/CNAIM/data-raw/matrix_data_structure.rds')
 
 save(gb_ref, example_risk_matrix, file = "D:/GitHub/CNAIM/R/sysdata.rda")
