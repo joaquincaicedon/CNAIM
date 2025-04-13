@@ -48,38 +48,38 @@
 #' @param resistencia_aislamiento_alternador Texto. Indica la condición medida de 
 #' la resistencia de aislamiento del alternador.
 #' Opciones:
-#' \code{resistencia_aislamiento_alternador = c("Baja", "Media", "Alta (no confirmada)",
-#' "Alta (confirmada)", "Default")}. Ver tabla 202E en CNAIM (2021)
+#' \code{resistencia_aislamiento_alternador = c("Excelente", "Buena", "Aceptable",
+#' "Deficiente", "Crítica", "Default")}. Ver tabla 202E en CNAIM (2021)
 #' modificada para incluir grupos electrógenos diésel.
 #' @param descargas_parciales_alternador Texto. Indica la condición medida de 
 #' las descargas parciales en el alternador.
 #' Opciones:
-#' \code{descargas_parciales_alternador = c("Baja", "Media", "Alta (no confirmada)",
-#' "Alta (confirmada)", "Default")}. Ver tabla 202F en CNAIM (2021)
+#' \code{descargas_parciales_alternador = c("Muy bajas", "Bajas", "Medias",
+#' "Altas", "Muy altas", "Default")}. Ver tabla 202F en CNAIM (2021)
 #' modificada para incluir grupos electrógenos diésel.
 #' @param secuencia_alternador Texto. Indica la condición medida de la 
 #' secuencia de fases del alternador.
 #' Opciones:
-#' \code{secuencia_alternador = c("Baja", "Media", "Alta (no confirmada)",
-#' "Alta (confirmada)", "Default")}. Ver tabla 202G en CNAIM (2021)
+#' \code{secuencia_alternador = c("Correcta", "Inestable", "Invertida",
+#' "Crítica", "Default")}. Ver tabla 202G en CNAIM (2021)
 #' modificada para incluir grupos electrógenos diésel.
 #' @param vibraciones_alternador Texto. Indica la condición medida de la
 #' presencia de vibraciones en el alternador.
 #' Opciones:
-#' \code{vibraciones_alternador = c("Baja", "Media", "Alta (no confirmada)",
-#' "Alta (confirmada)", "Default")}. Ver tabla 202H en CNAIM (2021)
+#' \code{vibraciones_alternador = c("Muy bajas", "Bajas", "Medias",
+#' "Altas", "Muy altas", "Default")}. Ver tabla 202H en CNAIM (2021)
 #' modificada para incluir grupos electrógenos diésel.
 #' @param pérdidas_alternador Texto. Indica la condición medida del 
 #' rendimiento del alternador.
 #' Opciones:
-#' \code{pérdidas_alternador = c("Baja", "Media", "Alta (no confirmada)",
-#' "Alta (confirmada)", "Default")}. Ver tabla 202I en CNAIM (2021)
+#' \code{pérdidas_alternador = c("Muy bajas", "Bajas", "Medias",
+#' "Altas", "Muy altas", "Default")}. Ver tabla 202I en CNAIM (2021)
 #' modificada para incluir grupos electrógenos diésel.
 #' @param temperatura_arrollamiento_alternador Texto. Indica la condición medida del 
 #' rendimiento del alternador.
 #' Opciones:
-#' \code{temperatura_arrollamiento_alternador = c("Normal", "Alta",
-#' "Muy alta", "Default")}. Ver tabla 202J en CNAIM (2021)
+#' \code{temperatura_arrollamiento_alternador = c("Muy baja", "Baja", "Media",
+#' "Alta", "Muy alta", "Default")}. Ver tabla 202J en CNAIM (2021)
 #' modificada para incluir grupos electrógenos diésel.
 #' 
 #' CONDICIONES OBSERVADAS ----------------------------------------------
