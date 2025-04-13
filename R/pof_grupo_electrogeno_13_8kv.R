@@ -418,15 +418,181 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
         velocidad_rpm_motor)]
 
   # 3. Consumo de combustible del motor -------------------------------------
+  mci_hv_gen_die_consumo_motor <-
+    gb_ref_taken$mci_hv_gen_die_consumo_motor
+
+  ci_factor_consumo_motor <-
+     mci_hv_gen_die_consumo_motor$`Factor de Condición de Entrada`[which(
+       mci_hv_gen_die_consumo_motor$
+        `Criterios de Condición: Consumo de Combustible` ==
+        consumo_motor)]
+
+  ci_cap_consumo_motor <-
+     mci_hv_gen_die_consumo_motor$`Límite Superior de Condición de Entrada`[which(
+       mci_hv_gen_die_consumo_motor$
+        `Criterios de Condición: Consumo de Combustible` ==
+        consumo_motor)]
+
+  ci_collar_consumo_motor <-
+     mci_hv_gen_die_consumo_motor$`Límite Inferior de Condición de Entrada`[which(
+       mci_hv_gen_die_consumo_motor$
+        `Criterios de Condición: Consumo de Combustible` ==
+        veloconsumo_motor)]
+
   # 4. Operación del freno del motor ----------------------------------------
+  mci_hv_gen_die_freno_motor <-
+    gb_ref_taken$mci_hv_gen_die_freno_motor
+
+  ci_factor_freno_motor <-
+     mci_hv_gen_die_freno_motor$`Factor de Condición de Entrada`[which(
+       mci_hv_gen_die_freno_motor$
+        `Criterios de Condición: Operación del Freno` ==
+        freno_motor)]
+
+  ci_cap_freno_motor <-
+     mci_hv_gen_die_freno_motor$`Límite Superior de Condición de Entrada`[which(
+       mci_hv_gen_die_freno_motor$
+        `Criterios de Condición: Operación del Freno` ==
+        freno_motor)]
+
+  ci_collar_freno_motor <-
+     mci_hv_gen_die_freno_motor$`Límite Inferior de Condición de Entrada`[which(
+       mci_hv_gen_die_freno_motor$
+        `Criterios de Condición: Operación del Freno` ==
+        freno_motor)]
 
   # CONDICIONES MEDIDAS DEL ALTERNADOR --------------------------------------
   # 1. Resistencia de aislamiento del alternador ----------------------------
+  mci_hv_gen_die_resistencia_aislamiento_alternador <-
+    gb_ref_taken$mci_hv_gen_die_resistencia_aislamiento_alternador
+
+  ci_factor_resistencia_aislamiento_alternador <-
+     mci_hv_gen_die_resistencia_aislamiento_alternador$`Factor de Condición de Entrada`[which(
+       mci_hv_gen_die_resistencia_aislamiento_alternador$
+        `Criterios de Condición: Resistencia de Aislamiento` ==
+        resistencia_aislamiento_alternador)]
+
+  ci_cap_resistencia_aislamiento_alternador <-
+     mci_hv_gen_die_resistencia_aislamiento_alternador$`Límite Superior de Condición de Entrada`[which(
+       mci_hv_gen_die_resistencia_aislamiento_alternador$
+        `Criterios de Condición: Resistencia de Aislamiento` ==
+        resistencia_aislamiento_alternador)]
+
+  ci_collar_resistencia_aislamiento_alternador <-
+     mci_hv_gen_die_resistencia_aislamiento_alternador$`Límite Inferior de Condición de Entrada`[which(
+       mci_hv_gen_die_resistencia_aislamiento_alternador$
+        `Criterios de Condición: Resistencia de Aislamiento` ==
+        resistencia_aislamiento_alternador)]
+
   # 2. Descargas parciales en el alternador ---------------------------------
+  mci_hv_gen_die_descargas_parciales_alternador <-
+    gb_ref_taken$mci_hv_gen_die_descargas_parciales_alternador
+
+  ci_factor_descargas_parciales_alternador <-
+     mci_hv_gen_die_descargas_parciales_alternador$`Factor de Condición de Entrada`[which(
+       mci_hv_gen_die_descargas_parciales_alternador$
+        `Criterios de Condición: Descargas Parciales` ==
+        descargas_parciales_alternador)]
+
+  ci_cap_descargas_parciales_alternador <-
+     mci_hv_gen_die_descargas_parciales_alternador$`Límite Superior de Condición de Entrada`[which(
+       mci_hv_gen_die_descargas_parciales_alternador$
+        `Criterios de Condición: Descargas Parciales` ==
+        descargas_parciales_alternador)]
+
+  ci_collar_descargas_parciales_alternador <-
+     mci_hv_gen_die_descargas_parciales_alternador$`Límite Inferior de Condición de Entrada`[which(
+       mci_hv_gen_die_descargas_parciales_alternador$
+        `Criterios de Condición: Descargas Parciales` ==
+        descargas_parciales_alternador)]
+
   # 3. Secuencia de fases del alternador ------------------------------------
+  mci_hv_gen_die_secuencia_alternador <-
+    gb_ref_taken$mci_hv_gen_die_secuencia_alternador
+
+  ci_factor_secuencia_alternador <-
+     mci_hv_gen_die_secuencia_alternador$`Factor de Condición de Entrada`[which(
+       mci_hv_gen_die_secuencia_alternador$
+        `Criterios de Condición: Secuencia de Fases` ==
+        secuencia_alternador)]
+
+  ci_cap_secuencia_alternador <-
+     mci_hv_gen_die_secuencia_alternador$`Límite Superior de Condición de Entrada`[which(
+       mci_hv_gen_die_secuencia_alternador$
+        `Criterios de Condición: Secuencia de Fases` ==
+        secuencia_alternador)]
+
+  ci_collar_secuencia_alternador <-
+     mci_hv_gen_die_secuencia_alternador$`Límite Inferior de Condición de Entrada`[which(
+       mci_hv_gen_die_secuencia_alternador$
+        `Criterios de Condición: Secuencia de Fases` ==
+        secuencia_alternador)]
+
   # 4. Vibraciones en el alternador -----------------------------------------
+  mci_hv_gen_die_vibraciones_alternador <-
+    gb_ref_taken$mci_hv_gen_die_vibraciones_alternador
+
+  ci_factor_vibraciones_alternador <-
+     mci_hv_gen_die_vibraciones_alternador$`Factor de Condición de Entrada`[which(
+       mci_hv_gen_die_vibraciones_alternador$
+        `Criterios de Condición: Vibraciones` ==
+        vibraciones_alternador)]
+
+  ci_cap_vibraciones_alternador <-
+     mci_hv_gen_die_vibraciones_alternador$`Límite Superior de Condición de Entrada`[which(
+       mci_hv_gen_die_vibraciones_alternador$
+        `Criterios de Condición: Vibraciones` ==
+        vibraciones_alternador)]
+
+  ci_collar_vibraciones_alternador <-
+     mci_hv_gen_die_vibraciones_alternador$`Límite Inferior de Condición de Entrada`[which(
+       mci_hv_gen_die_vibraciones_alternador$
+        `Criterios de Condición: Vibraciones` ==
+        vibraciones_alternador)]
+
   # 5. Pérdidas en el alternador --------------------------------------------
+  mci_hv_gen_die_pérdidas_alternador <-
+    gb_ref_taken$mci_hv_gen_die_pérdidas_alternador
+
+  ci_factor_pérdidas_alternador <-
+     mci_hv_gen_die_pérdidas_alternador$`Factor de Condición de Entrada`[which(
+       mci_hv_gen_die_pérdidas_alternador$
+        `Criterios de Condición: Pérdidas` ==
+        pérdidas_alternador)]
+
+  ci_cap_pérdidas_alternador <-
+     mci_hv_gen_die_pérdidas_alternador$`Límite Superior de Condición de Entrada`[which(
+       mci_hv_gen_die_pérdidas_alternador$
+        `Criterios de Condición: Pérdidas` ==
+        pérdidas_alternador)]
+
+  ci_collar_pérdidas_alternador <-
+     mci_hv_gen_die_pérdidas_alternador$`Límite Inferior de Condición de Entrada`[which(
+       mci_hv_gen_die_pérdidas_alternador$
+        `Criterios de Condición: Pérdidas` ==
+        pérdidas_alternador)]
+
   # 6. Temperatura de arrollamiento del alternador --------------------------
+  mci_hv_gen_die_temperatura_arrollamiento_alternador <-
+    gb_ref_taken$mci_hv_gen_die_temperatura_arrollamiento_alternador
+
+  ci_factor_temperatura_arrollamiento_alternador <-
+     mci_hv_gen_die_temperatura_arrollamiento_alternador$`Factor de Condición de Entrada`[which(
+       mci_hv_gen_die_temperatura_arrollamiento_alternador$
+        `Criterios de Condición: Temperatura` ==
+        temperatura_arrollamiento_alternador)]
+
+  ci_cap_temperatura_arrollamiento_alternador <-
+     mci_hv_gen_die_temperatura_arrollamiento_alternador$`Límite Superior de Condición de Entrada`[which(
+       mci_hv_gen_die_temperatura_arrollamiento_alternador$
+        `Criterios de Condición: Temperatura` ==
+        temperatura_arrollamiento_alternador)]
+
+  ci_collar_temperatura_arrollamiento_alternador <-
+     mci_hv_gen_die_temperatura_arrollamiento_alternador$`Límite Inferior de Condición de Entrada`[which(
+       mci_hv_gen_die_temperatura_arrollamiento_alternador$
+        `Criterios de Condición: Temperatura` ==
+        temperatura_arrollamiento_alternador)]
 
   # Factor de condición medida ----------------------------------------------
 
