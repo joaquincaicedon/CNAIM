@@ -595,9 +595,131 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
         temperatura_arrollamiento_alternador)]
 
   # Factor de condición medida ----------------------------------------------
+  factores_motor <- c(ci_factor_rendimien_motor,
+                      ci_factor_velocidad_motor,
+                      ci_factor_consumo_motor,
+                      ci_factor_freno_motor)
+
+  factor_condición_medida_motor <- mmi(factores_motor,
+                                       factor_divisor_1_motor,
+                                       factor_divisor_2_motor,
+                                       max_no_factores_comb_motor)
+
+  factores_alternador <- c(ci_factor_resistencia_aislamiento_alternador,
+                           ci_factor_descargas_parciales_alternador,
+                           ci_factor_secuencia_alternador,
+                           ci_factor_vibraciones_alternador,
+                           ci_factor_pérdidas_alternador,
+                           ci_factor_temperatura_arrollamiento_alternador)
+
+  factor_condición_medida_alternador <- mmi(factores_alternador,
+                                            factor_divisor_1_alternador,
+                                            factor_divisor_2_alternador,
+                                            max_no_factores_comb_alternador)
+  
+  # Límite superior de la condición medida ----------------------------------
+  caps_motor <- c(ci_cap_rendimien_motor,
+                  ci_cap_velocidad_motor,
+                  ci_cap_consumo_motor,
+                  ci_cap_freno_motor)
+
+  cap_condición_medida_motor <- min(caps_motor)
+
+  caps_alternador <- c(ci_cap_resistencia_aislamiento_alternador,
+                       ci_cap_descargas_parciales_alternador,
+                       ci_cap_secuencia_alternador,
+                       ci_cap_vibraciones_alternador,
+                       ci_cap_pérdidas_alternador,
+                       ci_cap_temperatura_arrollamiento_alternador)
+
+  cap_condición_medida_alternador <- min(caps_alternador)
+  
+  # Límite inferior de la condición medida ----------------------------------
+  collars_motor <- c(ci_collar_rendimien_motor,
+                     ci_collar_velocidad_motor,
+                     ci_collar_consumo_motor,
+                     ci_collar_freno_motor)
+
+  collar_condición_medida_motor <- max(collars_motor)
+
+  collars_alternador <- c(ci_collar_resistencia_aislamiento_alternador,
+                          ci_collar_descargas_parciales_alternador,
+                          ci_collar_secuencia_alternador,
+                          ci_collar_vibraciones_alternador,
+                          ci_collar_pérdidas_alternador,
+                          ci_collar_temperatura_arrollamiento_alternador)
+
+  collar_condición_medida_alternador <- max(collars_alternador)
+
+  # Modificador de la condición medida --------------------------------------
+  measured_condition_modifier_tf <- data.frame(measured_condition_factor_tf,
+                                               measured_condition_cap_tf,
+                                               measured_condition_collar_tf)
+
+  measured_condition_modifier_tc <- data.frame(measured_condition_factor_tc,
+                                               measured_condition_cap_tc,
+                                               measured_condition_collar_tc)
+
+  # Entradas de condición observada -----------------------------------------
+  oci_mmi_cal_df <-
+    gb_ref_taken$observed_cond_modifier_mmi_cal
+
+  oci_mmi_cal_df <-
+    oci_mmi_cal_df[which(oci_mmi_cal_df$`Asset Category` == "HV Generador Diésel"), ]
+
+  factor_divisor_1_motor_obs <-
+    as.numeric(oci_mmi_cal_df$`Parameters for Combination Using MMI Technique - Factor Divider 1`[
+      which(oci_mmi_cal_df$Subcomponent == "Motor")
+    ])
+
+  factor_divisor_1_alternador_obs <-
+    as.numeric(oci_mmi_cal_df$`Parameters for Combination Using MMI Technique - Factor Divider 1`[
+      which(oci_mmi_cal_df$Subcomponent == "Alternador")
+    ])
+
+  factor_divisor_2_motor_obs <-
+    as.numeric(oci_mmi_cal_df$`Parameters for Combination Using MMI Technique - Factor Divider 2`[
+      which(mcm_mmi_cal_df$Subcomponent == "Motor")
+    ])
+
+  factor_divisor_2_alternador_obs <-
+    as.numeric(oci_mmi_cal_df$`Parameters for Combination Using MMI Technique - Factor Divider 2`[
+      which(oci_mmi_cal_df$Subcomponent == "Alternador")
+    ])
+
+  max_no_factores_comb_motor_obs <-
+    as.numeric(oci_mmi_cal_df$`Parameters for Combination Using MMI Technique - Max. No. of Combined Factors`[
+      which(oci_mmi_cal_df$Subcomponent == "Motor")
+    ])
+
+  max_no_factores_comb_alternador_obs <-
+    as.numeric(oci_mmi_cal_df$`Parameters for Combination Using MMI Technique - Max. No. of Combined Factors`[
+      which(oci_mmi_cal_df$Subcomponent == "Alternador")
+    ])
 
   # CONDICIONES OBSERVADAS DEL MOTOR ----------------------------------------
   # 1. Cubierta del motor ---------------------------------------------------
+  oci_hv_gen_die_cubierta_motor <-
+    gb_ref_taken$oci_hv_gen_die_cubierta_motor
+
+  oi_factor_cubierta_motor <-
+     oci_hv_gen_die_cubierta_motor$`Factor de Condición de Entrada`[which(
+       oci_hv_gen_die_cubierta_motor$
+        `Criterios de Condición: Condición Observada` ==
+        cubierta_motor)]
+
+  oi_cap_cubierta_motor <-
+     mci_hv_gen_die_cubierta_motor$`Límite Superior de Condición de Entrada`[which(
+       mci_hv_gen_die_cubierta_motor$
+        `Criterios de Condición: Condición Observada` ==
+        cubierta_motor)]
+
+  oi_collar_cubierta_motor <-
+     mci_hv_gen_die_cubierta_motor$`Límite Inferior de Condición de Entrada`[which(
+       mci_hv_gen_die_cubierta_motor$
+        `Criterios de Condición: Condición Observada` ==
+        cubierta_motor)]
+
   # 2. Rodamientos del motor ------------------------------------------------
   # 3. Sistema de combustible del motor -------------------------------------
   # 4. Sistema de enfriamiento del motor ------------------------------------
@@ -615,458 +737,11 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
   # 5. Estator del alternador -----------------------------------------------
 
   # Factor de condición observada -------------------------------------------
+  # Límite superior de la condición observada -------------------------------
+  # Límite inferior de la condición observada -------------------------------
+  # Modificador de la condición observada -----------------------------------
 
-  mci_hv_tf_partial_discharge <-
-    gb_ref_taken$mci_ehv_tf_main_tf_prtl_dis
 
-  ci_factor_partial_discharge_tf <-
-    mci_hv_tf_partial_discharge$`Condition Input Factor`[which(
-      mci_hv_tf_partial_discharge$
-        `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge_tf)]
-
-  ci_cap_partial_discharge_tf <-
-    mci_hv_tf_partial_discharge$`Condition Input Cap`[which(
-      mci_hv_tf_partial_discharge$
-        `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge_tf)]
-
-  ci_collar_partial_discharge_tf <-
-    mci_hv_tf_partial_discharge$`Condition Input Collar`[which(
-      mci_hv_tf_partial_discharge$
-        `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge_tf)]
-
-
-  # Partial discharge tapchanger ------------------------------------------------
-  mci_hv_tf_partial_discharge_tc <-
-    gb_ref_taken$mci_ehv_tf_tapchngr_prtl_dis
-
-  ci_factor_partial_discharge_tc <-
-    mci_hv_tf_partial_discharge_tc$`Condition Input Factor`[which(
-      mci_hv_tf_partial_discharge_tc$
-        `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge_tc)]
-
-  ci_cap_partial_discharge_tc <-
-    mci_hv_tf_partial_discharge_tc$`Condition Input Cap`[which(
-      mci_hv_tf_partial_discharge_tc$
-        `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge_tc)]
-
-  ci_collar_partial_discharge_tc <-
-    mci_hv_tf_partial_discharge_tc$`Condition Input Collar`[which(
-      mci_hv_tf_partial_discharge_tc$
-        `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge_tc)]
-
-
-  # Temperature readings ----------------------------------------------------
-  mci_hv_tf_temp_readings <-
-    gb_ref_taken$mci_ehv_tf_temp_readings
-
-  ci_factor_temp_reading <-
-    mci_hv_tf_temp_readings$`Condition Input Factor`[which(
-      mci_hv_tf_temp_readings$
-        `Condition Criteria: Temperature Reading` ==
-        temperature_reading)]
-
-  ci_cap_temp_reading <-
-    mci_hv_tf_temp_readings$`Condition Input Cap`[which(
-      mci_hv_tf_temp_readings$
-        `Condition Criteria: Temperature Reading` ==
-        temperature_reading)]
-
-  ci_collar_temp_reading <-
-    mci_hv_tf_temp_readings$`Condition Input Collar`[which(
-      mci_hv_tf_temp_readings$
-        `Condition Criteria: Temperature Reading` ==
-        temperature_reading)]
-
-  # measured condition factor -----------------------------------------------
-  factors_tf <- c(ci_factor_partial_discharge_tf,
-                  ci_factor_temp_reading)
-
-  measured_condition_factor_tf <- mmi(factors_tf,
-                                      factor_divider_1_tf,
-                                      factor_divider_2_tf,
-                                      max_no_combined_factors_tf)
-
-
-  measured_condition_factor_tc <- mmi(ci_factor_partial_discharge_tc,
-                                      factor_divider_1_tc,
-                                      factor_divider_2_tc,
-                                      max_no_combined_factors_tc)
-
-  # Measured condition cap --------------------------------------------------
-  caps_tf <- c(ci_cap_partial_discharge_tf,
-               ci_cap_temp_reading)
-  measured_condition_cap_tf <- min(caps_tf)
-
-
-  measured_condition_cap_tc <- ci_cap_partial_discharge_tc
-
-  # Measured condition collar -----------------------------------------------
-  collars_tf <- c(ci_collar_partial_discharge_tf,
-                  ci_collar_temp_reading)
-  measured_condition_collar_tf <- max(collars_tf)
-
-  measured_condition_collar_tc <- ci_collar_partial_discharge_tc
-
-  # Measured condition modifier ---------------------------------------------
-  measured_condition_modifier_tf <- data.frame(measured_condition_factor_tf,
-                                               measured_condition_cap_tf,
-                                               measured_condition_collar_tf)
-
-  measured_condition_modifier_tc <- data.frame(measured_condition_factor_tc,
-                                               measured_condition_cap_tc,
-                                               measured_condition_collar_tc)
-
-  # Observed condition inputs ---------------------------------------------
-  oci_mmi_cal_df <-
-    gb_ref_taken$observed_cond_modifier_mmi_cal %>%
-    dplyr::filter(`Asset Category` == "EHV Transformer (GM)")
-
-  factor_divider_1_tf_obs <-
-    as.numeric(oci_mmi_cal_df$`Parameters for Combination Using MMI Technique - Factor Divider 1`[
-      which(oci_mmi_cal_df$Subcomponent ==
-              "Main Transformer") ])
-
-  factor_divider_1_tc_obs <-
-    as.numeric(oci_mmi_cal_df$`Parameters for Combination Using MMI Technique - Factor Divider 1`[
-      which(oci_mmi_cal_df$Subcomponent ==
-              "Tapchanger") ])
-
-  factor_divider_2_tf_obs <-
-    as.numeric(oci_mmi_cal_df$`Parameters for Combination Using MMI Technique - Factor Divider 2`[
-      which(oci_mmi_cal_df$Subcomponent ==
-              "Main Transformer") ])
-
-  factor_divider_2_tc_obs <-
-    as.numeric(oci_mmi_cal_df$`Parameters for Combination Using MMI Technique - Factor Divider 2`[
-      which(oci_mmi_cal_df$Subcomponent ==
-              "Tapchanger") ])
-
-
-  max_no_combined_factors_tf_obs <-
-    as.numeric(oci_mmi_cal_df$`Parameters for Combination Using MMI Technique - Max. No. of Combined Factors`[
-      which(oci_mmi_cal_df$Subcomponent ==
-              "Main Transformer") ])
-
-  max_no_combined_factors_tc_obs <-
-    as.numeric(oci_mmi_cal_df$`Parameters for Combination Using MMI Technique - Max. No. of Combined Factors`[
-      which(oci_mmi_cal_df$Subcomponent ==
-              "Tapchanger") ])
-
-
-  # Transformer -------------------------------------------------------------
-
-  # Main tank condition
-  oci_ehv_tf_main_tank_cond <-
-    gb_ref_taken$oci_ehv_tf_main_tank_cond
-
-  Oi_collar_main_tank <-
-    oci_ehv_tf_main_tank_cond$`Condition Input Collar`[which(
-      oci_ehv_tf_main_tank_cond$`Condition Criteria: Observed Condition` ==
-        main_tank)]
-
-  Oi_cap_main_tank <-
-    oci_ehv_tf_main_tank_cond$`Condition Input Cap`[which(
-      oci_ehv_tf_main_tank_cond$`Condition Criteria: Observed Condition` ==
-        main_tank)]
-
-  Oi_factor_main_tank <-
-    oci_ehv_tf_main_tank_cond$`Condition Input Factor`[which(
-      oci_ehv_tf_main_tank_cond$`Condition Criteria: Observed Condition` ==
-        main_tank)]
-
-  # Coolers/Radiator condition
-
-  oci_ehv_tf_cooler_radiatr_cond <-
-    gb_ref_taken$oci_ehv_tf_cooler_radiatr_cond
-
-  Oi_collar_coolers_radiator <-
-    oci_ehv_tf_cooler_radiatr_cond$`Condition Input Collar`[which(
-      oci_ehv_tf_cooler_radiatr_cond$`Condition Criteria: Observed Condition` ==
-        coolers_radiator)]
-
-  Oi_cap_coolers_radiator <-
-    oci_ehv_tf_cooler_radiatr_cond$`Condition Input Cap`[which(
-      oci_ehv_tf_cooler_radiatr_cond$`Condition Criteria: Observed Condition` ==
-        coolers_radiator)]
-
-  Oi_factor_coolers_radiator <-
-    oci_ehv_tf_cooler_radiatr_cond$`Condition Input Factor`[which(
-      oci_ehv_tf_cooler_radiatr_cond$`Condition Criteria: Observed Condition` ==
-        coolers_radiator)]
-
-
-  # Bushings
-
-  oci_ehv_tf_bushings_cond <-
-    gb_ref_taken$oci_ehv_tf_bushings_cond
-
-  Oi_collar_bushings <-
-    oci_ehv_tf_bushings_cond$`Condition Input Collar`[which(
-      oci_ehv_tf_bushings_cond$`Condition Criteria: Observed Condition` ==
-        bushings)]
-
-  Oi_cap_bushings <-
-    oci_ehv_tf_bushings_cond$`Condition Input Cap`[which(
-      oci_ehv_tf_bushings_cond$`Condition Criteria: Observed Condition` ==
-        bushings)]
-
-  Oi_factor_bushings <-
-    oci_ehv_tf_bushings_cond$`Condition Input Factor`[which(
-      oci_ehv_tf_bushings_cond$`Condition Criteria: Observed Condition` ==
-        bushings)]
-
-  # Kiosk
-
-  oci_ehv_tf_kiosk_cond <-
-    gb_ref_taken$oci_ehv_tf_kiosk_cond
-
-  Oi_collar_kiosk <-
-    oci_ehv_tf_kiosk_cond$`Condition Input Collar`[which(
-      oci_ehv_tf_kiosk_cond$`Condition Criteria: Observed Condition` ==
-        kiosk)]
-
-  Oi_cap_kiosk <-
-    oci_ehv_tf_kiosk_cond$`Condition Input Cap`[which(
-      oci_ehv_tf_kiosk_cond$`Condition Criteria: Observed Condition` ==
-        kiosk)]
-
-  Oi_factor_kiosk <-
-    oci_ehv_tf_kiosk_cond$`Condition Input Factor`[which(
-      oci_ehv_tf_kiosk_cond$`Condition Criteria: Observed Condition` ==
-        kiosk)]
-
-
-  # Cable box
-  oci_ehv_tf_cable_boxes_cond <-
-    gb_ref_taken$oci_ehv_tf_cable_boxes_cond
-
-  Oi_collar_cable_boxes <-
-    oci_ehv_tf_cable_boxes_cond$`Condition Input Collar`[which(
-      oci_ehv_tf_cable_boxes_cond$`Condition Criteria: Observed Condition` ==
-        cable_boxes)]
-
-  Oi_cap_cable_boxes <-
-    oci_ehv_tf_cable_boxes_cond$`Condition Input Cap`[which(
-      oci_ehv_tf_cable_boxes_cond$`Condition Criteria: Observed Condition` ==
-        cable_boxes)]
-
-  Oi_factor_cable_boxes <-
-    oci_ehv_tf_cable_boxes_cond$`Condition Input Factor`[which(
-      oci_ehv_tf_cable_boxes_cond$`Condition Criteria: Observed Condition` ==
-        cable_boxes)]
-
-
-  # Tapchanger --------------------------------------------------------------
-
-  # External condition
-  oci_ehv_tf_tapchanger_ext_cond <-
-    gb_ref_taken$oci_ehv_tf_tapchanger_ext_cond
-
-  Oi_collar_external_tap <-
-    oci_ehv_tf_tapchanger_ext_cond$`Condition Input Collar`[which(
-      oci_ehv_tf_tapchanger_ext_cond$`Condition Criteria: Observed Condition` ==
-        external_tap)]
-
-  Oi_cap_external_tap <-
-    oci_ehv_tf_tapchanger_ext_cond$`Condition Input Cap`[which(
-      oci_ehv_tf_tapchanger_ext_cond$`Condition Criteria: Observed Condition` ==
-        external_tap)]
-
-  Oi_factor_external_tap <-
-    oci_ehv_tf_tapchanger_ext_cond$`Condition Input Factor`[which(
-      oci_ehv_tf_tapchanger_ext_cond$`Condition Criteria: Observed Condition` ==
-        external_tap)]
-
-
-  # Internal condition
-  oci_ehv_tf_int_cond <-
-    gb_ref_taken$oci_ehv_tf_int_cond
-
-  Oi_collar_internal_tap <-
-    oci_ehv_tf_int_cond$`Condition Input Collar`[which(
-      oci_ehv_tf_int_cond$`Condition Criteria: Observed Condition` ==
-        internal_tap)]
-
-  Oi_cap_internal_tap <-
-    oci_ehv_tf_int_cond$`Condition Input Cap`[which(
-      oci_ehv_tf_int_cond$`Condition Criteria: Observed Condition` ==
-        internal_tap)]
-
-  Oi_factor_internal_tap <-
-    oci_ehv_tf_int_cond$`Condition Input Factor`[which(
-      oci_ehv_tf_int_cond$`Condition Criteria: Observed Condition` ==
-        internal_tap)]
-
-  # Drive mechanism
-  oci_ehv_tf_drive_mechnism_cond <-
-    gb_ref_taken$oci_ehv_tf_drive_mechnism_cond
-
-  Oi_collar_mechnism_cond <-
-    oci_ehv_tf_drive_mechnism_cond$`Condition Input Collar`[which(
-      oci_ehv_tf_drive_mechnism_cond$`Condition Criteria: Observed Condition` ==
-        mechnism_cond)]
-
-  Oi_cap_mechnism_cond <-
-    oci_ehv_tf_drive_mechnism_cond$`Condition Input Cap`[which(
-      oci_ehv_tf_drive_mechnism_cond$`Condition Criteria: Observed Condition` ==
-        mechnism_cond)]
-
-  Oi_factor_mechnism_cond <-
-    oci_ehv_tf_drive_mechnism_cond$`Condition Input Factor`[which(
-      oci_ehv_tf_drive_mechnism_cond$`Condition Criteria: Observed Condition` ==
-        mechnism_cond)]
-
-  # Selecter diverter contacts
-  oci_ehv_tf_cond_select_divrter_cst <-
-    gb_ref_taken$oci_ehv_tf_cond_select_div_cts
-
-  Oi_collar_diverter_contacts <-
-    oci_ehv_tf_cond_select_divrter_cst$`Condition Input Collar`[which(
-      oci_ehv_tf_cond_select_divrter_cst$`Condition Criteria: Observed Condition` ==
-        diverter_contacts)]
-
-  Oi_cap_diverter_contacts <-
-    oci_ehv_tf_cond_select_divrter_cst$`Condition Input Cap`[which(
-      oci_ehv_tf_cond_select_divrter_cst$`Condition Criteria: Observed Condition` ==
-        diverter_contacts)]
-
-  Oi_factor_diverter_contacts <-
-    oci_ehv_tf_cond_select_divrter_cst$`Condition Input Factor`[which(
-      oci_ehv_tf_cond_select_divrter_cst$`Condition Criteria: Observed Condition` ==
-        diverter_contacts)]
-
-
-  # Selecter diverter braids
-  oci_ehv_tf_cond_select_divrter_brd <-
-    gb_ref_taken$oci_ehv_tf_cond_select_div_brd
-
-  Oi_collar_diverter_braids <-
-    oci_ehv_tf_cond_select_divrter_brd$`Condition Input Collar`[which(
-      oci_ehv_tf_cond_select_divrter_brd$`Condition Criteria: Observed Condition` ==
-        diverter_braids)]
-
-  Oi_cap_diverter_braids <-
-    oci_ehv_tf_cond_select_divrter_brd$`Condition Input Cap`[which(
-      oci_ehv_tf_cond_select_divrter_brd$`Condition Criteria: Observed Condition` ==
-        diverter_braids)]
-
-  Oi_factor_diverter_braids <-
-    oci_ehv_tf_cond_select_divrter_brd$`Condition Input Factor`[which(
-      oci_ehv_tf_cond_select_divrter_brd$`Condition Criteria: Observed Condition` ==
-        diverter_braids)]
-
-
-  # Observed condition factor --------------------------------------
-
-  # Transformer
-  factors_tf_obs <- c(Oi_factor_main_tank,
-                      Oi_factor_coolers_radiator,
-                      Oi_factor_bushings,
-                      Oi_factor_kiosk,
-                      Oi_factor_cable_boxes)
-
-  observed_condition_factor_tf <- mmi(factors_tf_obs,
-                                      factor_divider_1_tf_obs,
-                                      factor_divider_2_tf_obs,
-                                      max_no_combined_factors_tf_obs)
-
-
-  # Tapchanger
-
-  factors_tc_obs <- c(Oi_factor_external_tap,
-                      Oi_factor_internal_tap,
-                      Oi_factor_mechnism_cond,
-                      Oi_factor_diverter_contacts,
-                      Oi_factor_diverter_braids)
-
-  observed_condition_factor_tc <- mmi(factors_tc_obs,
-                                      factor_divider_1_tc_obs,
-                                      factor_divider_2_tc_obs,
-                                      max_no_combined_factors_tc_obs)
-
-
-
-  # Observed condition cap -----------------------------------------
-
-  # Transformer
-  caps_tf_obs <- c(Oi_cap_main_tank,
-                   Oi_cap_coolers_radiator,
-                   Oi_cap_bushings,
-                   Oi_cap_kiosk,
-                   Oi_cap_cable_boxes)
-
-  observed_condition_cap_tf <- min(caps_tf_obs)
-
-  # Tapchanger
-
-  caps_tc_obs <- c(Oi_cap_external_tap,
-                   Oi_cap_internal_tap,
-                   Oi_cap_mechnism_cond,
-                   Oi_cap_diverter_contacts,
-                   Oi_cap_diverter_braids)
-
-  observed_condition_cap_tc <- min(caps_tc_obs)
-
-
-  # Observed condition collar ---------------------------------------
-
-  # Transformer
-  collars_tf_obs <- c(Oi_collar_main_tank,
-                      Oi_collar_coolers_radiator,
-                      Oi_collar_bushings,
-                      Oi_collar_kiosk,
-                      Oi_collar_cable_boxes)
-
-  observed_condition_collar_tf <- max(collars_tf_obs)
-
-  # Tapchanger
-
-  collars_tc_obs <- c(Oi_collar_external_tap,
-                      Oi_collar_internal_tap,
-                      Oi_collar_mechnism_cond,
-                      Oi_collar_diverter_contacts,
-                      Oi_collar_diverter_braids)
-
-  observed_condition_collar_tc <- max(collars_tc_obs)
-
-
-  # Observed condition modifier ---------------------------------------------
-
-  # Transformer
-  observed_condition_modifier_tf <- data.frame(observed_condition_factor_tf,
-                                               observed_condition_cap_tf,
-                                               observed_condition_collar_tf)
-
-  # Tapchanger
-  observed_condition_modifier_tc <- data.frame(observed_condition_factor_tc,
-                                               observed_condition_cap_tc,
-                                               observed_condition_collar_tc)
-
-
-  # Oil test modifier -------------------------------------------------------
-  oil_test_mod <- oil_test_modifier(moisture,
-                                    acidity,
-                                    bd_strength)
-
-  # DGA test modifier -------------------------------------------------------
-  dga_test_mod <- dga_test_modifier(hydrogen,
-                                    methane,
-                                    ethylene,
-                                    ethane,
-                                    acetylene,
-                                    hydrogen_pre,
-                                    methane_pre,
-                                    ethylene_pre,
-                                    ethane_pre,
-                                    acetylene_pre)
-  # FFA test modifier -------------------------------------------------------
-  ffa_test_mod <- ffa_test_modifier(furfuraldehyde)
 
   # Health score factor ---------------------------------------------------
 
