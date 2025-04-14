@@ -660,9 +660,6 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
                                                        cap_condición_medida_alternador,
                                                        collar_condición_medida_alternador)
 
-
-browser()
-
   # Entradas de condición observada -----------------------------------------
   oci_mmi_cal_df <-
     gb_ref_taken$observed_cond_modifier_mmi_cal
@@ -682,7 +679,7 @@ browser()
 
   factor_divisor_2_motor_obs <-
     as.numeric(oci_mmi_cal_df$`Parameters for Combination Using MMI Technique - Factor Divider 2`[
-      which(mcm_mmi_cal_df$Subcomponent == "Motor")
+      which(oci_mmi_cal_df$Subcomponent == "Motor")
     ])
 
   factor_divisor_2_alternador_obs <-
@@ -724,25 +721,369 @@ browser()
         cubierta_motor)]
 
   # 2. Rodamientos del motor ------------------------------------------------
+  oci_hv_gen_die_rodamientos_motor <-
+    gb_ref_taken$oci_hv_gen_die_rodamien_motor
+
+  oi_factor_rodamientos_motor <-
+     oci_hv_gen_die_rodamientos_motor$`Factor de Condición de Entrada`[which(
+       oci_hv_gen_die_rodamientos_motor$
+        `Criterios de Condición: Condición Observada` ==
+        rodamientos_motor)]
+
+  oi_cap_rodamientos_motor <-
+     oci_hv_gen_die_rodamientos_motor$`Límite Superior de Condición de Entrada`[which(
+       oci_hv_gen_die_rodamientos_motor$
+        `Criterios de Condición: Condición Observada` ==
+        rodamientos_motor)]
+
+  oi_collar_rodamientos_motor <-
+     oci_hv_gen_die_rodamientos_motor$`Límite Inferior de Condición de Entrada`[which(
+       oci_hv_gen_die_rodamientos_motor$
+        `Criterios de Condición: Condición Observada` ==
+        rodamientos_motor)]
+
   # 3. Sistema de combustible del motor -------------------------------------
+  oci_hv_gen_die_combustible_motor <-
+    gb_ref_taken$oci_hv_gen_die_combust_motor
+
+  oi_factor_combustible_motor <-
+     oci_hv_gen_die_combustible_motor$`Factor de Condición de Entrada`[which(
+       oci_hv_gen_die_combustible_motor$
+        `Criterios de Condición: Condición Observada` ==
+        combustible_motor)]
+
+  oi_cap_combustible_motor <-
+     oci_hv_gen_die_combustible_motor$`Límite Superior de Condición de Entrada`[which(
+       oci_hv_gen_die_combustible_motor$
+        `Criterios de Condición: Condición Observada` ==
+        combustible_motor)]
+
+  oi_collar_combustible_motor <-
+     oci_hv_gen_die_combustible_motor$`Límite Inferior de Condición de Entrada`[which(
+       oci_hv_gen_die_combustible_motor$
+        `Criterios de Condición: Condición Observada` ==
+        combustible_motor)]
+
   # 4. Sistema de enfriamiento del motor ------------------------------------
+  oci_hv_gen_die_enfriamiento_motor <-
+    gb_ref_taken$oci_hv_gen_die_enfriamie_motor
+
+  oi_factor_enfriamiento_motor <-
+     oci_hv_gen_die_enfriamiento_motor$`Factor de Condición de Entrada`[which(
+       oci_hv_gen_die_enfriamiento_motor$
+        `Criterios de Condición: Condición Observada` ==
+        enfriamiento_motor)]
+
+  oi_cap_enfriamiento_motor <-
+     oci_hv_gen_die_enfriamiento_motor$`Límite Superior de Condición de Entrada`[which(
+       oci_hv_gen_die_enfriamiento_motor$
+        `Criterios de Condición: Condición Observada` ==
+        enfriamiento_motor)]
+
+  oi_collar_enfriamiento_motor <-
+     oci_hv_gen_die_enfriamiento_motor$`Límite Inferior de Condición de Entrada`[which(
+       oci_hv_gen_die_enfriamiento_motor$
+        `Criterios de Condición: Condición Observada` ==
+        enfriamiento_motor)]
+
   # 5. Sistema de lubricación del motor -------------------------------------
+  oci_hv_gen_die_lubricacion_motor <-
+    gb_ref_taken$oci_hv_gen_die_lubricac_motor
+  
+  oi_factor_lubricacion_motor <-
+     oci_hv_gen_die_lubricacion_motor$`Factor de Condición de Entrada`[which(
+       oci_hv_gen_die_lubricacion_motor$
+        `Criterios de Condición: Condición Observada` ==
+        lubricación_motor)]
+
+  oi_cap_lubricacion_motor <-
+     oci_hv_gen_die_lubricacion_motor$`Límite Superior de Condición de Entrada`[which(
+       oci_hv_gen_die_lubricacion_motor$
+        `Criterios de Condición: Condición Observada` ==
+        lubricación_motor)]
+
+  oi_collar_lubricacion_motor <-
+     oci_hv_gen_die_lubricacion_motor$`Límite Inferior de Condición de Entrada`[which(
+       oci_hv_gen_die_lubricacion_motor$
+        `Criterios de Condición: Condición Observada` ==
+        lubricación_motor)]
+
   # 6. Sistema de inducción de aire del motor -------------------------------
+  oci_hv_gen_die_aire_motor <-
+    gb_ref_taken$oci_hv_gen_die_aire_motor
+
+  oi_factor_aire_motor <-
+     oci_hv_gen_die_aire_motor$`Factor de Condición de Entrada`[which(
+       oci_hv_gen_die_aire_motor$
+        `Criterios de Condición: Condición Observada` ==
+        aire_motor)]
+
+  oi_cap_aire_motor <-
+     oci_hv_gen_die_aire_motor$`Límite Superior de Condición de Entrada`[which(
+       oci_hv_gen_die_aire_motor$
+        `Criterios de Condición: Condición Observada` ==
+        aire_motor)]
+
+  oi_collar_aire_motor <-
+     oci_hv_gen_die_aire_motor$`Límite Inferior de Condición de Entrada`[which(
+       oci_hv_gen_die_aire_motor$
+        `Criterios de Condición: Condición Observada` ==
+        aire_motor)]
+
   # 7. Turbocompresores del motor -------------------------------------------
+  oci_hv_gen_die_turbocompresores_motor <-
+    gb_ref_taken$oci_hv_gen_die_turbocomp_motor
+
+  oi_factor_turbocompresores_motor <-
+     oci_hv_gen_die_turbocompresores_motor$`Factor de Condición de Entrada`[which(
+       oci_hv_gen_die_turbocompresores_motor$
+        `Criterios de Condición: Condición Observada` ==
+        turbocompresores_motor)]
+        
+  oi_cap_turbocompresores_motor <-
+     oci_hv_gen_die_turbocompresores_motor$`Límite Superior de Condición de Entrada`[which(
+       oci_hv_gen_die_turbocompresores_motor$
+        `Criterios de Condición: Condición Observada` ==
+        turbocompresores_motor)]
+
+  oi_collar_turbocompresores_motor <-
+     oci_hv_gen_die_turbocompresores_motor$`Límite Inferior de Condición de Entrada`[which(
+       oci_hv_gen_die_turbocompresores_motor$
+        `Criterios de Condición: Condición Observada` ==
+        turbocompresores_motor)]
+
   # 8. Culatas de cilíndros del motor ---------------------------------------
+  oci_hv_gen_die_culatas_motor <-
+    gb_ref_taken$oci_hv_gen_die_culatas_motor
+
+  oi_factor_culatas_motor <-
+     oci_hv_gen_die_culatas_motor$`Factor de Condición de Entrada`[which(
+       oci_hv_gen_die_culatas_motor$
+        `Criterios de Condición: Condición Observada` ==
+        culatas_motor)]
+
+  oi_cap_culatas_motor <-
+     oci_hv_gen_die_culatas_motor$`Límite Superior de Condición de Entrada`[which(
+       oci_hv_gen_die_culatas_motor$
+        `Criterios de Condición: Condición Observada` ==
+        culatas_motor)]
+
+  oi_collar_culatas_motor <-
+     oci_hv_gen_die_culatas_motor$`Límite Inferior de Condición de Entrada`[which(
+       oci_hv_gen_die_culatas_motor$
+        `Criterios de Condición: Condición Observada` ==
+        culatas_motor)]
+
   # 9. Filtro del motor -----------------------------------------------------
+  oci_hv_gen_die_filtro_motor <-
+    gb_ref_taken$oci_hv_gen_die_filtro_motor
+
+  oi_factor_filtro_motor <-
+     oci_hv_gen_die_filtro_motor$`Factor de Condición de Entrada`[which(
+       oci_hv_gen_die_filtro_motor$
+        `Criterios de Condición: Condición Observada` ==
+        filtro_motor)]
+
+  oi_cap_filtro_motor <-
+     oci_hv_gen_die_filtro_motor$`Límite Superior de Condición de Entrada`[which(
+       oci_hv_gen_die_filtro_motor$
+        `Criterios de Condición: Condición Observada` ==
+        filtro_motor)]
+
+  oi_collar_filtro_motor <-
+     oci_hv_gen_die_filtro_motor$`Límite Inferior de Condición de Entrada`[which(
+       oci_hv_gen_die_filtro_motor$
+        `Criterios de Condición: Condición Observada` ==
+        filtro_motor)]
 
   # CONDICIONES OBSERVADAS DEL ALTERNADOR -----------------------------------
   # 1. Cubierta del alternador ----------------------------------------------
+  oci_hv_gen_die_cubierta_alternador <-
+    gb_ref_taken$oci_hv_gen_die_cubierta_altern
+
+  oi_factor_cubierta_alternador <-
+     oci_hv_gen_die_cubierta_alternador$`Factor de Condición de Entrada`[which(
+       oci_hv_gen_die_cubierta_alternador$
+        `Criterios de Condición: Condición Observada` ==
+        cubierta_alternador)]
+
+  oi_cap_cubierta_alternador <-
+     oci_hv_gen_die_cubierta_alternador$`Límite Superior de Condición de Entrada`[which(
+       oci_hv_gen_die_cubierta_alternador$
+        `Criterios de Condición: Condición Observada` ==
+        cubierta_alternador)]
+
+  oi_collar_cubierta_alternador <-
+     oci_hv_gen_die_cubierta_alternador$`Límite Inferior de Condición de Entrada`[which(
+       oci_hv_gen_die_cubierta_alternador$
+        `Criterios de Condición: Condición Observada` ==
+        cubierta_alternador)]
+
   # 2. Aislamiento del alternador -------------------------------------------
+  oci_hv_gen_die_aislamiento_alternador <-
+    gb_ref_taken$oci_hv_gen_die_aislamie_altern
+
+  oi_factor_aislamiento_alternador <-
+     oci_hv_gen_die_aislamiento_alternador$`Factor de Condición de Entrada`[which(
+       oci_hv_gen_die_aislamiento_alternador$
+        `Criterios de Condición: Condición Observada` ==
+        aislamiento_alternador)]
+
+  oi_cap_aislamiento_alternador <-
+     oci_hv_gen_die_aislamiento_alternador$`Límite Superior de Condición de Entrada`[which(
+       oci_hv_gen_die_aislamiento_alternador$
+        `Criterios de Condición: Condición Observada` ==
+        aislamiento_alternador)]
+
+  oi_collar_aislamiento_alternador <-
+     oci_hv_gen_die_aislamiento_alternador$`Límite Inferior de Condición de Entrada`[which(
+       oci_hv_gen_die_aislamiento_alternador$
+        `Criterios de Condición: Condición Observada` ==
+        aislamiento_alternador)]
+
   # 3. Cables y caja de terminales del alternador ---------------------------
+  oci_hv_gen_die_cables_alternador <-
+    gb_ref_taken$oci_hv_gen_die_cables_altern
+
+  oi_factor_cables_alternador <-
+     oci_hv_gen_die_cables_alternador$`Factor de Condición de Entrada`[which(
+       oci_hv_gen_die_cables_alternador$
+        `Criterios de Condición: Condición Observada` ==
+        cables_alternador)]
+
+  oi_cap_cables_alternador <-
+     oci_hv_gen_die_cables_alternador$`Límite Superior de Condición de Entrada`[which(
+       oci_hv_gen_die_cables_alternador$
+        `Criterios de Condición: Condición Observada` ==
+        cables_alternador)]
+
+  oi_collar_cables_alternador <-
+     oci_hv_gen_die_cables_alternador$`Límite Inferior de Condición de Entrada`[which(
+       oci_hv_gen_die_cables_alternador$
+        `Criterios de Condición: Condición Observada` ==
+        cables_alternador)]
+
   # 4. Rotor del alternador -------------------------------------------------
+  oci_hv_gen_die_rotor_alternador <-
+    gb_ref_taken$oci_hv_gen_die_rotor_altern
+
+  oi_factor_rotor_alternador <-
+     oci_hv_gen_die_rotor_alternador$`Factor de Condición de Entrada`[which(
+       oci_hv_gen_die_rotor_alternador$
+        `Criterios de Condición: Condición Observada` ==
+        rotor_alternador)]
+
+  oi_cap_rotor_alternador <-
+     oci_hv_gen_die_rotor_alternador$`Límite Superior de Condición de Entrada`[which(
+       oci_hv_gen_die_rotor_alternador$
+        `Criterios de Condición: Condición Observada` ==
+        rotor_alternador)]
+
+  oi_collar_rotor_alternador <-
+     oci_hv_gen_die_rotor_alternador$`Límite Inferior de Condición de Entrada`[which(
+       oci_hv_gen_die_rotor_alternador$
+        `Criterios de Condición: Condición Observada` ==
+        rotor_alternador)]
+
   # 5. Estator del alternador -----------------------------------------------
+  oci_hv_gen_die_estator_alternador <-
+    gb_ref_taken$oci_hv_gen_die_estator_altern
+
+  oi_factor_estator_alternador <-
+     oci_hv_gen_die_estator_alternador$`Factor de Condición de Entrada`[which(
+       oci_hv_gen_die_estator_alternador$
+        `Criterios de Condición: Condición Observada` ==
+        estator_alternador)]
+
+  oi_cap_estator_alternador <-
+     oci_hv_gen_die_estator_alternador$`Límite Superior de Condición de Entrada`[which(
+       oci_hv_gen_die_estator_alternador$
+        `Criterios de Condición: Condición Observada` ==
+        estator_alternador)]
+
+  oi_collar_estator_alternador <-
+     oci_hv_gen_die_estator_alternador$`Límite Inferior de Condición de Entrada`[which(
+       oci_hv_gen_die_estator_alternador$
+        `Criterios de Condición: Condición Observada` ==
+        estator_alternador)]
 
   # Factor de condición observada -------------------------------------------
+  factores_motor_obs <- c(oi_factor_cubierta_motor,
+                          oi_factor_rodamientos_motor,
+                          oi_factor_combustible_motor,
+                          oi_factor_enfriamiento_motor,
+                          oi_factor_lubricacion_motor,
+                          oi_factor_aire_motor,
+                          oi_factor_turbocompresores_motor,
+                          oi_factor_culatas_motor,
+                          oi_factor_filtro_motor)
+
+  factor_condición_observada_motor <- mmi(factores_motor_obs,
+                                          factor_divisor_1_motor_obs,
+                                          factor_divisor_2_motor_obs,
+                                          max_no_factores_comb_motor_obs)
+
+  factores_alternador_obs <- c(oi_factor_cubierta_alternador,
+                               oi_factor_aislamiento_alternador,
+                               oi_factor_cables_alternador,
+                               oi_factor_rotor_alternador,
+                               oi_factor_estator_alternador)
+
+  factor_condición_observada_alternador <- mmi(factores_alternador_obs,
+                                               factor_divisor_1_alternador_obs,
+                                               factor_divisor_2_alternador_obs,
+                                               max_no_factores_comb_alternador_obs)
+
   # Límite superior de la condición observada -------------------------------
+  caps_motor_obs <- c(oi_cap_cubierta_motor,
+                      oi_cap_rodamientos_motor,
+                      oi_cap_combustible_motor,
+                      oi_cap_enfriamiento_motor,
+                      oi_cap_lubricacion_motor,
+                      oi_cap_aire_motor,
+                      oi_cap_turbocompresores_motor,
+                      oi_cap_culatas_motor,
+                      oi_cap_filtro_motor)
+
+  cap_condición_observada_motor <- min(caps_motor_obs)
+
+  caps_alternador_obs <- c(oi_cap_cubierta_alternador,
+                           oi_cap_aislamiento_alternador,
+                           oi_cap_cables_alternador,
+                           oi_cap_rotor_alternador,
+                           oi_cap_estator_alternador)
+
+  cap_condición_observada_alternador <- min(caps_alternador_obs)
+
   # Límite inferior de la condición observada -------------------------------
+  collars_motor_obs <- c(oi_collar_cubierta_motor,
+                         oi_collar_rodamientos_motor,
+                         oi_collar_combustible_motor,
+                         oi_collar_enfriamiento_motor,
+                         oi_collar_lubricacion_motor,
+                         oi_collar_aire_motor,
+                         oi_collar_turbocompresores_motor,
+                         oi_collar_culatas_motor,
+                         oi_collar_filtro_motor)
+
+  collar_condición_observada_motor <- max(collars_motor_obs)
+
+  collars_alternador_obs <- c(oi_collar_cubierta_alternador,
+                              oi_collar_aislamiento_alternador,
+                              oi_collar_cables_alternador,
+                              oi_collar_rotor_alternador,
+                              oi_collar_estator_alternador)
+
+  collar_condición_observada_alternador <- max(collars_alternador_obs)
+
   # Modificador de la condición observada -----------------------------------
+  observed_condition_modifier_motor <- data.frame(factor_condición_observada_motor,
+                                                  cap_condición_observada_motor,
+                                                  collar_condición_observada_motor)
+
+  observed_condition_modifier_alternador <- data.frame(factor_condición_observada_alternador,
+                                                       cap_condición_observada_alternador,
+                                                       collar_condición_observada_alternador)
 
 
 
