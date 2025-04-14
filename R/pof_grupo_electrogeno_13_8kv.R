@@ -709,14 +709,14 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
         cubierta_motor)]
 
   oi_cap_cubierta_motor <-
-     mci_hv_gen_die_cubierta_motor$`Límite Superior de Condición de Entrada`[which(
-       mci_hv_gen_die_cubierta_motor$
+     oci_hv_gen_die_cubierta_motor$`Límite Superior de Condición de Entrada`[which(
+       oci_hv_gen_die_cubierta_motor$
         `Criterios de Condición: Condición Observada` ==
         cubierta_motor)]
 
   oi_collar_cubierta_motor <-
-     mci_hv_gen_die_cubierta_motor$`Límite Inferior de Condición de Entrada`[which(
-       mci_hv_gen_die_cubierta_motor$
+     oci_hv_gen_die_cubierta_motor$`Límite Inferior de Condición de Entrada`[which(
+       oci_hv_gen_die_cubierta_motor$
         `Criterios de Condición: Condición Observada` ==
         cubierta_motor)]
 
@@ -1084,8 +1084,6 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
   observed_condition_modifier_alternador <- data.frame(factor_condición_observada_alternador,
                                                        cap_condición_observada_alternador,
                                                        collar_condición_observada_alternador)
-
-
 
   # Health score factor ---------------------------------------------------
 
