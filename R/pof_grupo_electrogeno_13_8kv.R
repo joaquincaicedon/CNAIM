@@ -374,24 +374,24 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
 
   # CONDICIONES MEDIDAS DEL MOTOR -------------------------------------------
   # 1. Rendimiento del motor ------------------------------------------------
-  mci_hv_gen_die_rendimien_motor <-
+  mci_hv_gen_die_rendimiento_motor <-
     gb_ref_taken$mci_hv_gen_die_rendimien_motor
 
-  ci_factor_rendimien_motor <-
-     mci_hv_gen_die_rendimien_motor$`Factor de Condición de Entrada`[which(
-       mci_hv_gen_die_rendimien_motor$
+  ci_factor_rendimiento_motor <-
+     mci_hv_gen_die_rendimiento_motor$`Factor de Condición de Entrada`[which(
+       mci_hv_gen_die_rendimiento_motor$
         `Criterios de Condición: Rendimiento` ==
         rendimiento_motor)]
 
-  ci_cap_rendimien_motor <-
-     mci_hv_gen_die_rendimien_motor$`Límite Superior de Condición de Entrada`[which(
-       mci_hv_gen_die_rendimien_motor$
+  ci_cap_rendimiento_motor <-
+     mci_hv_gen_die_rendimiento_motor$`Límite Superior de Condición de Entrada`[which(
+       mci_hv_gen_die_rendimiento_motor$
         `Criterios de Condición: Rendimiento` ==
         rendimiento_motor)]
 
-  ci_collar_rendimien_motor <-
-     mci_hv_gen_die_rendimien_motor$`Límite Inferior de Condición de Entrada`[which(
-       mci_hv_gen_die_rendimien_motor$
+  ci_collar_rendimiento_motor <-
+     mci_hv_gen_die_rendimiento_motor$`Límite Inferior de Condición de Entrada`[which(
+       mci_hv_gen_die_rendimiento_motor$
         `Criterios de Condición: Rendimiento` ==
         rendimiento_motor)]
 
@@ -437,7 +437,7 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
      mci_hv_gen_die_consumo_motor$`Límite Inferior de Condición de Entrada`[which(
        mci_hv_gen_die_consumo_motor$
         `Criterios de Condición: Consumo de Combustible` ==
-        veloconsumo_motor)]
+        consumo_motor)]
 
   # 4. Operación del freno del motor ----------------------------------------
   mci_hv_gen_die_freno_motor <-
@@ -464,7 +464,7 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
   # CONDICIONES MEDIDAS DEL ALTERNADOR --------------------------------------
   # 1. Resistencia de aislamiento del alternador ----------------------------
   mci_hv_gen_die_resistencia_aislamiento_alternador <-
-    gb_ref_taken$mci_hv_gen_die_resistencia_aislamiento_alternador
+    gb_ref_taken$mci_hv_gen_die_aislamie_altern
 
   ci_factor_resistencia_aislamiento_alternador <-
      mci_hv_gen_die_resistencia_aislamiento_alternador$`Factor de Condición de Entrada`[which(
@@ -486,7 +486,7 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
 
   # 2. Descargas parciales en el alternador ---------------------------------
   mci_hv_gen_die_descargas_parciales_alternador <-
-    gb_ref_taken$mci_hv_gen_die_descargas_parciales_alternador
+    gb_ref_taken$mci_hv_gen_die_descarga_altern
 
   ci_factor_descargas_parciales_alternador <-
      mci_hv_gen_die_descargas_parciales_alternador$`Factor de Condición de Entrada`[which(
@@ -508,7 +508,7 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
 
   # 3. Secuencia de fases del alternador ------------------------------------
   mci_hv_gen_die_secuencia_alternador <-
-    gb_ref_taken$mci_hv_gen_die_secuencia_alternador
+    gb_ref_taken$mci_hv_gen_die_secuen_altern
 
   ci_factor_secuencia_alternador <-
      mci_hv_gen_die_secuencia_alternador$`Factor de Condición de Entrada`[which(
@@ -530,7 +530,7 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
 
   # 4. Vibraciones en el alternador -----------------------------------------
   mci_hv_gen_die_vibraciones_alternador <-
-    gb_ref_taken$mci_hv_gen_die_vibraciones_alternador
+    gb_ref_taken$mci_hv_gen_die_vibrac_altern
 
   ci_factor_vibraciones_alternador <-
      mci_hv_gen_die_vibraciones_alternador$`Factor de Condición de Entrada`[which(
@@ -552,7 +552,7 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
 
   # 5. Pérdidas en el alternador --------------------------------------------
   mci_hv_gen_die_pérdidas_alternador <-
-    gb_ref_taken$mci_hv_gen_die_pérdidas_alternador
+    gb_ref_taken$mci_hv_gen_die_perdidas_altern
 
   ci_factor_pérdidas_alternador <-
      mci_hv_gen_die_pérdidas_alternador$`Factor de Condición de Entrada`[which(
@@ -574,7 +574,7 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
 
   # 6. Temperatura de arrollamiento del alternador --------------------------
   mci_hv_gen_die_temperatura_arrollamiento_alternador <-
-    gb_ref_taken$mci_hv_gen_die_temperatura_arrollamiento_alternador
+    gb_ref_taken$mci_hv_gen_die_temperat_altern
 
   ci_factor_temperatura_arrollamiento_alternador <-
      mci_hv_gen_die_temperatura_arrollamiento_alternador$`Factor de Condición de Entrada`[which(
@@ -595,7 +595,7 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
         temperatura_arrollamiento_alternador)]
 
   # Factor de condición medida ----------------------------------------------
-  factores_motor <- c(ci_factor_rendimien_motor,
+  factores_motor <- c(ci_factor_rendimiento_motor,
                       ci_factor_velocidad_motor,
                       ci_factor_consumo_motor,
                       ci_factor_freno_motor)
@@ -618,7 +618,7 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
                                             max_no_factores_comb_alternador)
   
   # Límite superior de la condición medida ----------------------------------
-  caps_motor <- c(ci_cap_rendimien_motor,
+  caps_motor <- c(ci_cap_rendimiento_motor,
                   ci_cap_velocidad_motor,
                   ci_cap_consumo_motor,
                   ci_cap_freno_motor)
@@ -635,7 +635,7 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
   cap_condición_medida_alternador <- min(caps_alternador)
   
   # Límite inferior de la condición medida ----------------------------------
-  collars_motor <- c(ci_collar_rendimien_motor,
+  collars_motor <- c(ci_collar_rendimiento_motor,
                      ci_collar_velocidad_motor,
                      ci_collar_consumo_motor,
                      ci_collar_freno_motor)
@@ -652,13 +652,16 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
   collar_condición_medida_alternador <- max(collars_alternador)
 
   # Modificador de la condición medida --------------------------------------
-  measured_condition_modifier_tf <- data.frame(measured_condition_factor_tf,
-                                               measured_condition_cap_tf,
-                                               measured_condition_collar_tf)
+  measured_condition_modifier_motor <- data.frame(factor_condición_medida_motor,
+                                                  cap_condición_medida_motor,
+                                                  collar_condición_medida_motor)
 
-  measured_condition_modifier_tc <- data.frame(measured_condition_factor_tc,
-                                               measured_condition_cap_tc,
-                                               measured_condition_collar_tc)
+  measured_condition_modifier_alternador <- data.frame(factor_condición_medida_alternador,
+                                                       cap_condición_medida_alternador,
+                                                       collar_condición_medida_alternador)
+
+
+browser()
 
   # Entradas de condición observada -----------------------------------------
   oci_mmi_cal_df <-
