@@ -211,7 +211,8 @@
 #'                              aislamiento_alternador = "Default", 
 #'                              cables_alternador = "Default", 
 #'                              rotor_alternador = "Default", 
-#'                              estator_alternador = "Default")
+#'                              estator_alternador = "Default",
+#'                              factor_confiabilidad = "Default")
 
 pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Diésel 13.8kV",
                                          año_fabricación,
@@ -246,6 +247,7 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
                                          cables_alternador = "Default", 
                                          rotor_alternador = "Default", 
                                          estator_alternador = "Default",
+                                         factor_confiabilidad = "Default",
                                          gb_ref_given = NULL) {
 
   `Asset Register Category` = `Health Index Asset Category` =
@@ -652,13 +654,13 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
   collar_condición_medida_alternador <- max(collars_alternador)
 
   # Modificador de la condición medida --------------------------------------
-  measured_condition_modifier_motor <- data.frame(factor_condición_medida_motor,
-                                                  cap_condición_medida_motor,
-                                                  collar_condición_medida_motor)
+  modificador_condición_medida_motor <- data.frame(factor_condición_medida_motor,
+                                                   cap_condición_medida_motor,
+                                                   collar_condición_medida_motor)
 
-  measured_condition_modifier_alternador <- data.frame(factor_condición_medida_alternador,
-                                                       cap_condición_medida_alternador,
-                                                       collar_condición_medida_alternador)
+  modificador_condición_medida_alternador <- data.frame(factor_condición_medida_alternador,
+                                                        cap_condición_medida_alternador,
+                                                        collar_condición_medida_alternador)
 
   # Entradas de condición observada -----------------------------------------
   oci_mmi_cal_df <-
@@ -1077,136 +1079,68 @@ pof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
   collar_condición_observada_alternador <- max(collars_alternador_obs)
 
   # Modificador de la condición observada -----------------------------------
-  observed_condition_modifier_motor <- data.frame(factor_condición_observada_motor,
-                                                  cap_condición_observada_motor,
-                                                  collar_condición_observada_motor)
+  modificador_condición_observada_motor <- data.frame(factor_condición_observada_motor,
+                                                      cap_condición_observada_motor,
+                                                      collar_condición_observada_motor)
 
-  observed_condition_modifier_alternador <- data.frame(factor_condición_observada_alternador,
-                                                       cap_condición_observada_alternador,
-                                                       collar_condición_observada_alternador)
+  modificador_condición_observada_alternador <- data.frame(factor_condición_observada_alternador,
+                                                           cap_condición_observada_alternador,
+                                                           collar_condición_observada_alternador)
 
-  # Health score factor ---------------------------------------------------
+  # Factor de puntaje de salud del motor ------------------------------------
+  factor_puntaje_salud_motor <-
+    health_score_excl_ehv_132kv_tf(factor_condición_observada_motor,
+                                   factor_condición_medida_motor)
+  
+  # Límite superior del puntaje de salud del motor --------------------------
+  cap_puntaje_salud_motor <- min(cap_condición_observada_motor,
+                                 cap_condición_medida_motor)
 
-  health_score_factor_for_tf <-  gb_ref_taken$health_score_factor_for_tf
-  health_score_factor_tapchanger <-  gb_ref_taken$health_score_factor_tapchanger
+  # Límite inferior del puntaje de salud del motor --------------------------
+  collar_puntaje_salud_motor <- min(collar_condición_observada_motor,
+                                    collar_condición_medida_motor)
+  
+  # Modificador de puntuación de salud del motor ----------------------------
+  modificador_puntuación_salud_motor <- data.frame(factor_puntaje_salud_motor,
+                                                   cap_puntaje_salud_motor,
+                                                   collar_puntaje_salud_motor)
 
+  # Factor de puntaje de salud del alternador -------------------------------
+  factor_puntaje_salud_alternador <-
+    health_score_excl_ehv_132kv_tf(factor_condición_observada_alternador,
+                                   factor_condición_medida_alternador)
+  
+  # Límite superior del puntaje de salud del alternador ---------------------
+  cap_puntaje_salud_alternador <- min(cap_condición_observada_alternador,
+                                      cap_condición_medida_alternador)
 
-  # Transformer
+  # Límite inferior del puntaje de salud del alternador ---------------------
+  collar_puntaje_salud_alternador <- min(collar_condición_observada_alternador,
+                                         collar_condición_medida_alternador)
 
-  factor_divider_1_tf_health <-
-    health_score_factor_for_tf$`Parameters for Combination Using MMI Technique - Factor Divider 1`
+  # Modificador de puntuación de salud del alternador -----------------------
+  modificador_puntuación_salud_alternador <- data.frame(factor_puntaje_salud_alternador,
+                                                        cap_puntaje_salud_alternador,
+                                                        collar_puntaje_salud_alternador)
 
-  factor_divider_2_tf_health <-
-    health_score_factor_for_tf$`Parameters for Combination Using MMI Technique - Factor Divider 2`
+  # Puntuación de salud actual del grupo electrógeno ------------------------ 
+  puntaje_salud_actual <-
+    max(current_health(puntaje_salud_inicial_motor,
+                       modificador_puntuación_salud_motor$factor_puntaje_salud_motor,
+                       modificador_puntuación_salud_motor$cap_puntaje_salud_motor,
+                       modificador_puntuación_salud_motor$collar_puntaje_salud_motor,
+                       reliability_factor = factor_confiabilidad),
+        current_health(puntaje_salud_inicial_alternador,
+                       modificador_puntuación_salud_alternador$factor_puntaje_salud_alternador,
+                       modificador_puntuación_salud_alternador$cap_puntaje_salud_alternador,
+                       modificador_puntuación_salud_alternador$collar_puntaje_salud_alternador,
+                       reliability_factor = factor_confiabilidad))
 
-  max_no_combined_factors_tf_health <-
-    health_score_factor_for_tf$`Parameters for Combination Using MMI Technique - Max. No. of Condition Factors`
+  # Probabilidad de falla (Probability of failure - PoF) actual para el frupo electrógeno
+  probabilidad_falla <- k *
+    (1 + (c * puntaje_salud_actual) +
+       (((c * puntaje_salud_actual)^2) / factorial(2)) +
+       (((c * puntaje_salud_actual)^3) / factorial(3)))
 
-  # Tapchanger
-  factor_divider_1_tc_health <-
-    health_score_factor_tapchanger$`Parameters for Combination Using MMI Technique - Factor Divider 1`
-
-  factor_divider_2_tc_health <-
-    health_score_factor_tapchanger$`Parameters for Combination Using MMI Technique - Factor Divider 2`
-
-  max_no_combined_factors_tc_health <-
-    health_score_factor_tapchanger$`Parameters for Combination Using MMI Technique - Max. No. of Condition Factors`
-
-
-  # Health score modifier -----------------------------------------------------
-
-  # Transformer
-  obs_tf_factor <- observed_condition_modifier_tf$observed_condition_factor_tf
-  mea_tf_factor <- measured_condition_modifier_tf$measured_condition_factor_tf
-  oil_factor <- oil_test_mod$oil_condition_factor
-  dga_factor <- dga_test_mod$dga_test_factor
-  ffa_factor <- ffa_test_mod$ffa_test_factor
-
-  factors_tf_health <- c(obs_tf_factor,
-                         mea_tf_factor,
-                         oil_factor,
-                         dga_factor,
-                         ffa_factor)
-
-  health_score_factor_tf <- mmi(factors_tf_health,
-                                factor_divider_1_tf_health,
-                                factor_divider_2_tf_health,
-                                max_no_combined_factors_tf_health)
-  # tapchanger
-  obs_tc_factor <- observed_condition_modifier_tc$observed_condition_factor_tc
-  mea_tc_factor <- measured_condition_modifier_tc$measured_condition_factor_tc
-
-
-  factors_tc_health <- c(obs_tc_factor,
-                         mea_tc_factor,
-                         oil_factor)
-
-
-  health_score_factor_tc <- mmi(factors_tc_health,
-                                factor_divider_1_tc_health,
-                                factor_divider_2_tc_health,
-                                max_no_combined_factors_tc_health)
-
-  # Health score cap --------------------------------------------------------
-
-  # Transformer
-  health_score_cap_tf <- min(observed_condition_modifier_tf$observed_condition_cap_tf,
-                             measured_condition_modifier_tf$measured_condition_cap_tf,
-                             oil_test_mod$oil_condition_cap,
-                             dga_test_mod$dga_test_cap,
-                             ffa_test_mod$ffa_test_cap)
-
-  # Tapchanger
-  health_score_cap_tc <- min(observed_condition_modifier_tc$observed_condition_cap_tc,
-                             measured_condition_modifier_tc$measured_condition_cap_tc,
-                             oil_test_mod$oil_condition_cap)
-
-
-  # Health score collar -----------------------------------------------------
-  # Transformer
-  health_score_collar_tf <- max(observed_condition_modifier_tf$observed_condition_collar_tf,
-                                measured_condition_modifier_tf$measured_condition_collar_tf,
-                                oil_test_mod$oil_condition_collar,
-                                dga_test_mod$dga_test_collar,
-                                ffa_test_mod$ffa_test_collar)
-
-  # Tapchanger
-  health_score_collar_tc <- max(observed_condition_modifier_tc$observed_condition_collar_tc,
-                                measured_condition_modifier_tc$measured_condition_collar_tc,
-                                oil_test_mod$oil_condition_collar)
-
-  # Health score modifier ---------------------------------------------------
-
-  # transformer
-  health_score_modifier_tf <- data.frame(health_score_factor_tf,
-                                         health_score_cap_tf,
-                                         health_score_collar_tf)
-  # Tapchanger
-  health_score_modifier_tc <- data.frame(health_score_factor_tc,
-                                         health_score_cap_tc,
-                                         health_score_collar_tc)
-
-  # Current health score ----------------------------------------------------
-
-  # Transformer
-
-  current_health_score <-
-    max(current_health(initial_health_score_tf,
-                       health_score_modifier_tf$health_score_factor_tf,
-                       health_score_modifier_tf$health_score_cap_tf,
-                       health_score_modifier_tf$health_score_collar,
-                       reliability_factor = reliability_factor),
-        current_health(initial_health_score_tf,
-                       health_score_modifier_tc$health_score_factor_tc,
-                       health_score_modifier_tc$health_score_cap_tc,
-                       health_score_modifier_tc$health_score_collar_tc,
-                       reliability_factor = reliability_factor))
-
-  # Probability of failure for the 6.6/11 kV transformer today -----------------
-  probability_of_failure <- k *
-    (1 + (c * current_health_score) +
-       (((c * current_health_score)^2) / factorial(2)) +
-       (((c * current_health_score)^3) / factorial(3)))
-
-  return(data.frame(pof = probability_of_failure, chs = current_health_score))
+  return(data.frame(pof = probabilidad_falla, chs = puntaje_salud_actual))
 }
