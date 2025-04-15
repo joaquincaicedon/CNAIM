@@ -20,20 +20,20 @@
 #'                              prox_water = 50, bunded = "No",
 #'                              no_customers = 500, kva_per_customer = 1)
 
-
 cof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Diésel 13.8kV",
+                                         nivel_tensión,
                                          MVA,
                                          acceso,
-                                         riesgo_tipo,
                                          riesgo_ubicación,
+                                         riesgo_tipo,
                                          distancia_agua,
                                          acotado,
                                          carga_actual,
                                          red_segura,
                                          gb_ref_given = NULL) {
 
-  financiero <- financiero_cof_grupo_electrogeno_13_8kv(tf_asset_category = tipo_generador,
-                                                        type_financial_factor_size = "",
+  financiero <- financiero_cof_grupo_electrogeno_13_8kv(tipo_generador = tipo_generador,
+                                                        type_financial_factor_size = nivel_tensión,
                                                         type_financial_factor_kva_mva = MVA,
                                                         access_factor_criteria = acceso)
 
