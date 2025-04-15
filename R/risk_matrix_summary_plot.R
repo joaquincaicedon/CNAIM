@@ -29,8 +29,8 @@ risk_matrix_summary_plot <- function(risk_data_matrix,
 
   risk_matrix <- r2d3::r2d3(
     data = jsonlite::toJSON(adj_mat_2),
-    script = "javascript/src/matrix_upper_level_nonlinear.js",
-    dependencies = "javascript/src/matrix_d3script_nonlinear_aa.js",
+    script = "D:/GitHub/CNAIM/javascript/src/matrix_upper_level_nonlinear.js",
+    dependencies = "D:/GitHub/CNAIM/javascript/src/matrix_d3script_nonlinear_aa.js",
     container = "div"
   )
 

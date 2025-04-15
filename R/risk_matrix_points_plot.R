@@ -16,8 +16,8 @@ risk_matrix_points_plot <- function(risk_data_matrix,
 
   risk_matrix <- r2d3::r2d3(
     data = jsonlite::toJSON(adj_mat_1),
-    script = "javascript/src/matrix_upper_level_circles.js",
-    dependencies = "javascript/src/matrix_d3script_circles_aa.js",
+    script = "D:/GitHub/CNAIM/javascript/src/matrix_upper_level_circles.js",
+    dependencies = "D:/GitHub/CNAIM/javascript/src/matrix_d3script_circles_aa.js",
     container = "div"
   )
 
