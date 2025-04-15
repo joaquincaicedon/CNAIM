@@ -123,4 +123,3 @@ ambiental_cof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Elect
   environmental_cof <- environmental_consequences_factor * ecost
   return(environmental_cof)
 }
-
