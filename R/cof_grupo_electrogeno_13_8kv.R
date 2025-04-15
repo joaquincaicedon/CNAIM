@@ -42,9 +42,9 @@ cof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
                                                 type_risk = riesgo_tipo)
 
   ambiental <- ambiental_cof_transformador_34kv(tf_asset_category = tipo_generador,
-                                                 prox_water = distancia_agua,
-                                                 bunded = acotado,
-                                                 size_kva_mva = MVA)
+                                                prox_water = distancia_agua,
+                                                bunded = acotado,
+                                                size_kva_mva = MVA)
 
   red <- red_cof_transformador_34kv(tf_asset_category = tipo_generador,
                                     actual_load_mva = carga_actual,
