@@ -16,7 +16,7 @@
 #' @examples
 #' # Consecuencias de falla para un grupo electrógeno diésel de 13.8 kV
 #' cof_grupo_electrogeno_13_8kv(tipo_generador = "Grupo Electrógeno Diésel 13.8kV",
-#'                              nivel_tensión = 13.8kV,
+#'                              nivel_tensión = "13.8kV",
 #'                              MVA = 15,
 #'                              acceso = "Tipo A",
 #'                              riesgo_ubicación = "Bajo",
@@ -34,7 +34,7 @@ cof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
                                          distancia_agua,
                                          acotado,
                                          demanda_mva,
-                                         red_segura,
+                                         red_segura = T,
                                          gb_ref_given = NULL) {
 
   financiero <- financiero_cof_grupo_electrogeno_13_8kv(tipo_generador = tipo_generador,
@@ -42,26 +42,21 @@ cof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
                                                         MVA = MVA,
                                                         acceso = acceso)
 
-  seguridad <- seguridad_cof_transformador_34kv(tipo_generador = tipo_generador,
-                                                riesgo_ubicación = riesgo_ubicación,
-                                                riesgo_tipo = riesgo_tipo)
+  seguridad <- seguridad_cof_grupo_electrogeno_13_8kv(tipo_generador = tipo_generador,
+                                                      riesgo_ubicación = riesgo_ubicación,
+                                                      riesgo_tipo = riesgo_tipo)
 
-  ambiental <- ambiental_cof_transformador_34kv(tipo_generador = tipo_generador,
-                                                distancia_agua = distancia_agua,
-                                                acotado = acotado,
-                                                MVA = MVA)
+  ambiental <- ambiental_cof_grupo_electrogeno_13_8kv(tipo_generador = tipo_generador,
+                                                      distancia_agua = distancia_agua,
+                                                      acotado = acotado,
+                                                      MVA = MVA)
 
-  red <- red_cof_transformador_34kv(tipo_generador = tipo_generador,
-                                    demanda_mva = demanda_mva,
-                                    red_segura = red_segura)
+  red <- red_cof_grupo_electrogeno_13_8kv(tipo_generador = tipo_generador,
+                                          demanda_mva = demanda_mva,
+                                          red_segura = red_segura)
 
   CoF <- financiero + seguridad + ambiental + red
-  
-  cat("CoF financiero:", financiero,
-      "; CoF seguridad:", seguridad,
-      "; CoF ambiental:", ambiental,
-      "; COF red:", red,
-      "y COF total:", CoF)
 
-  return(CoF)
+  return(data.frame(CoF_financiero = financiero, CoF_seguridad = seguridad,
+                    CoF_ambiental = ambiental, CoF_red = red, CoF_total = CoF))
 }

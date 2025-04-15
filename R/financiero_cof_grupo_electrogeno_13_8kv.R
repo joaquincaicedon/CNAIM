@@ -19,7 +19,7 @@
 #' @export
 #' @examples
 #' financiero_cof_grupo_electrogeno_13_8kv(tipo_generador = "Grupo Electrógeno Diésel 13.8kV",
-#'                                         nivel_tensión = 13.8kV,
+#'                                         nivel_tensión = "13.8kV",
 #'                                         MVA = 15,
 #'                                         acceso = "Tipo A")
 
@@ -49,7 +49,7 @@ financiero_cof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Elec
 
   # Reference financial cost of failure -------------------------------------
   fcost <- reference_costs_of_failure_tf$`Financial - (GBP)`
-  print(fcost)
+ 
   # Type financial factor ---------------------------------------------------
   type_financial_factors <- gb_ref_taken$type_financial_factors
 
@@ -69,7 +69,6 @@ financiero_cof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Elec
 
   type_financial_factor <- type_financial_factors_GE$`Type Financial Factor`[1]
   
-  print(type_financial_factor)
   # Access financial factor -------------------------------------------------
   access_financial_factors <- gb_ref_taken$access_factor_swg_tf_asset
 
@@ -88,7 +87,6 @@ financiero_cof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Elec
                                `Access Factor: Type C Criteria - Underground substation`
   }
 
-  print(access_financial_factor)
   # Financial consequences factor -------------------------------------------
   fc_factor <- type_financial_factor * access_financial_factor
 

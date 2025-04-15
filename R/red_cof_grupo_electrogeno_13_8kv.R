@@ -24,7 +24,7 @@ red_cof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógen
 
   `Asset Register Category` = `Health Index Asset Category` = `Asset Category` =
     `Maximum Demand Used To Derive Reference Cost (MVA)` = NULL
-
+  
   if(is.null(gb_ref_given)){
     gb_ref_taken <- gb_ref
   }else{
@@ -34,7 +34,7 @@ red_cof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógen
 
   reference_costs_of_failure_GE <- dplyr::filter(gb_ref_taken$reference_costs_of_failure,
                                                  `Asset Register Category` == tipo_generador)
-
+  
   # Costo financiero de referencia por falla -------------------------------------
   ncost <- reference_costs_of_failure_GE$`Network Performance - (GBP)`
   
@@ -45,12 +45,12 @@ red_cof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógen
   ref_nw_perf_cost_fail_ehv_single_row_df <- dplyr::filter(ref_nw_perf_cost_fail_ehv_df,
                                                            `Asset Category` == tipo_generador)
 
-  load_factor <- actual_load_mva/ref_nw_perf_cost_fail_ehv_single_row_df$`Maximum Demand Used To Derive Reference Cost (MVA)`
+  load_factor <- demanda_mva/ref_nw_perf_cost_fail_ehv_single_row_df$`Maximum Demand Used To Derive Reference Cost (MVA)`
   
   # Factor de tipo de red -----------------------------------
   network_type_factor <- 1
 
-  if(!secure){
+  if(!red_segura){
     network_type_factor <- 2.5
   }
 
