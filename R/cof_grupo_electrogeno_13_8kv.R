@@ -15,10 +15,15 @@
 #' @export
 #' @examples
 #' # Consecuencias de falla para un grupo electrógeno diésel de 13.8 kV
-#' cof_grupo_electrogeno_13_8kv(kva = 500, type = "Type C",
-#'                              type_risk = "High", location_risk = "High",
-#'                              prox_water = 50, bunded = "No",
-#'                              no_customers = 500, kva_per_customer = 1)
+#' cof_grupo_electrogeno_13_8kv(tipo_generador = "Grupo Electrógeno Diésel 13.8kV",
+#'                              nivel_tensión = 13.8kV,
+#'                              MVA = 15,
+#'                              acceso = "Tipo A",
+#'                              riesgo_ubicación = "Bajo",
+#'                              riesgo_tipo = "Bajo",
+#'                              distancia_agua = 100,
+#'                              acotado = "Sí",
+#'                              demanda_mva = 12)
 
 cof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Diésel 13.8kV",
                                          nivel_tensión,
@@ -28,27 +33,27 @@ cof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
                                          riesgo_tipo,
                                          distancia_agua,
                                          acotado,
-                                         carga_actual,
+                                         demanda_mva,
                                          red_segura,
                                          gb_ref_given = NULL) {
 
   financiero <- financiero_cof_grupo_electrogeno_13_8kv(tipo_generador = tipo_generador,
-                                                        type_financial_factor_size = nivel_tensión,
-                                                        type_financial_factor_kva_mva = MVA,
-                                                        access_factor_criteria = acceso)
+                                                        nivel_tensión = nivel_tensión,
+                                                        MVA = MVA,
+                                                        acceso = acceso)
 
-  seguridad <- seguridad_cof_transformador_34kv(tf_asset_category = tipo_generador,
-                                                location_risk = riesgo_ubicación,
-                                                type_risk = riesgo_tipo)
+  seguridad <- seguridad_cof_transformador_34kv(tipo_generador = tipo_generador,
+                                                riesgo_ubicación = riesgo_ubicación,
+                                                riesgo_tipo = riesgo_tipo)
 
-  ambiental <- ambiental_cof_transformador_34kv(tf_asset_category = tipo_generador,
-                                                prox_water = distancia_agua,
-                                                bunded = acotado,
-                                                size_kva_mva = MVA)
+  ambiental <- ambiental_cof_transformador_34kv(tipo_generador = tipo_generador,
+                                                distancia_agua = distancia_agua,
+                                                acotado = acotado,
+                                                MVA = MVA)
 
-  red <- red_cof_transformador_34kv(tf_asset_category = tipo_generador,
-                                    actual_load_mva = carga_actual,
-                                    secure = red_segura)
+  red <- red_cof_transformador_34kv(tipo_generador = tipo_generador,
+                                    demanda_mva = demanda_mva,
+                                    red_segura = red_segura)
 
   CoF <- financiero + seguridad + ambiental + red
   
