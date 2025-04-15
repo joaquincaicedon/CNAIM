@@ -26,25 +26,37 @@ cof_grupo_electrogeno_13_8kv <- function(tipo_generador = "Grupo Electrógeno Di
                                          acceso,
                                          riesgo_tipo,
                                          riesgo_ubicación,
-                                         distancias_agua,
-                                         contención,
+                                         distancia_agua,
+                                         acotado,
                                          carga_actual,
                                          red_segura,
                                          gb_ref_given = NULL) {
 
-  financiero <- f_cof_transformer_11kv(kva, type, gb_ref_given)
+  financiero <- financiero_cof_grupo_electrogeno_13_8kv(tf_asset_category = tipo_generador,
+                                                        type_financial_factor_size = "",
+                                                        type_financial_factor_kva_mva = MVA,
+                                                        access_factor_criteria = acceso)
 
-  seguridad <- s_cof_swg_tf_ohl(type_risk, location_risk,
-                             asset_type_scf = tipo_generador, gb_ref_given)
+  seguridad <- seguridad_cof_transformador_34kv(tf_asset_category = tipo_generador,
+                                                location_risk = riesgo_ubicación,
+                                                type_risk = riesgo_tipo)
 
-  ambiental <-  e_cof_tf(asset_type_tf = tipo_generador,
-                             rated_capacity = kva,
-                             prox_water, bunded,
-                             gb_ref_given)
+  ambiental <-  ambiental_cof_transformador_34kv(tf_asset_category = tipo_generador,
+                                                 prox_water = distancia_agua,
+                                                 bunded = acotado,
+                                                 size_kva_mva = MVA)
 
-  red <-
-    n_cof_excl_ehv_132kv_tf(asset_type_ncf = "6.6/11kV Transformer (GM)",
-                            no_customers, kva_per_customer, gb_ref_given)
+  red <- red_cof_transformador_34kv(tf_asset_category = tipo_generador,
+                                    actual_load_mva = carga_actual,
+                                    secure = red_segura)
 
-  return(financiero + seguridad + ambiental + red)
+  CoF <- financiero + seguridad + ambiental + red
+  
+  cat("CoF financiero:", financiero,
+      "; CoF seguridad:", seguridad,
+      "; CoF ambiental:", ambiental,
+      "; COF red:", red,
+      "y COF total:", CoF)
+
+  return(CoF)
 }
