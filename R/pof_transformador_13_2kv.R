@@ -44,20 +44,20 @@
 #' @export
 #' @examples
 #' # Probabilidad actual de falla para un transformador de 13.2 kV
-#'pof_transformador_13_2kv(tipo_transformador = "Transformador 13.2kV",
-#'                         utilización_pct = "Default",
-#'                         emplazamiento = "Default",
-#'                         altitud_m = "Default",
-#'                         distancia_costa_km = "Default",
-#'                         índice_corrosión = "Default",
-#'                         edad = 10,
-#'                         descarga_parcial = "Default",
-#'                         lectura_temperatura = "Default",
-#'                         condición_observada = "Default",
-#'                         factor_confiabilidad = "Default",
-#'                         humedad = "Default",
-#'                         acidez_aceite = "Default",
-#'                         resistencia_dieléctrica = "Default"
+#' pof_transformador_13_2kv(tipo_transformador = "Transformador 13.2kV",
+#'                          utilización_pct = "Default",
+#'                          emplazamiento = "Default",
+#'                          altitud_m = "Default",
+#'                          distancia_costa_km = "Default",
+#'                          índice_corrosión = "Default",
+#'                          edad = 10,
+#'                          descarga_parcial = "Default",
+#'                          lectura_temperatura = "Default",
+#'                          condición_observada = "Default",
+#'                          factor_confiabilidad = "Default",
+#'                          humedad = "Default",
+#'                          acidez_aceite = "Default",
+#'                          resistencia_dieléctrica = "Default")
 
 pof_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2kV",
                                      utilización_pct = "Default",
@@ -85,7 +85,7 @@ pof_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2kV"
     check_gb_ref_given(gb_ref_given)
     gb_ref_taken <- gb_ref_given
   }
-
+  
   # Ref. table Categorisation of Assets and Generic Terms for Assets  --
   asset_type <- tipo_transformador
 
@@ -174,20 +174,19 @@ pof_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2kV"
     mci_hv_tf_partial_discharge$`Condition Input Factor`[which(
       mci_hv_tf_partial_discharge$
         `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge)]
+        descarga_parcial)]
 
   ci_cap_partial_discharge <-
     mci_hv_tf_partial_discharge$`Condition Input Cap`[which(
       mci_hv_tf_partial_discharge$
         `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge)]
+        descarga_parcial)]
 
   ci_collar_partial_discharge <-
     mci_hv_tf_partial_discharge$`Condition Input Collar`[which(
       mci_hv_tf_partial_discharge$
         `Condition Criteria: Partial Discharge Test Result` ==
-        partial_discharge)]
-
+        descarga_parcial)]
 
   # Oil test modifier -------------------------------------------------------
   oil_test_mod <- oil_test_modifier(humedad,
@@ -202,19 +201,19 @@ pof_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2kV"
     mci_hv_tf_temp_readings$`Condition Input Factor`[which(
       mci_hv_tf_temp_readings$
         `Condition Criteria: Temperature Reading` ==
-        temperature_reading)]
+        lectura_temperatura)]
 
   ci_cap_temp_reading <-
     mci_hv_tf_temp_readings$`Condition Input Cap`[which(
       mci_hv_tf_temp_readings$
         `Condition Criteria: Temperature Reading` ==
-        temperature_reading)]
+        lectura_temperatura)]
 
   ci_collar_temp_reading <-
     mci_hv_tf_temp_readings$`Condition Input Collar`[which(
       mci_hv_tf_temp_readings$
         `Condition Criteria: Temperature Reading` ==
-        temperature_reading)]
+        lectura_temperatura)]
 
   # measured condition factor -----------------------------------------------
   factors <- c(ci_factor_partial_discharge,
@@ -269,17 +268,17 @@ pof_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2kV"
   ci_factor_ext_cond <-
     oci_hv_tf_tf_ext_cond_df$`Condition Input Factor`[which(
       oci_hv_tf_tf_ext_cond_df$`Condition Criteria: Observed Condition` ==
-        observed_condition)]
+        condición_observada)]
 
   ci_cap_ext_cond <-
     oci_hv_tf_tf_ext_cond_df$`Condition Input Cap`[which(
       oci_hv_tf_tf_ext_cond_df$`Condition Criteria: Observed Condition` ==
-        observed_condition)]
+        condición_observada)]
 
   ci_collar_ext_cond <-
     oci_hv_tf_tf_ext_cond_df$`Condition Input Collar`[which(
       oci_hv_tf_tf_ext_cond_df$`Condition Criteria: Observed Condition` ==
-        observed_condition)]
+        condición_observada)]
 
   # Observed condition factor -----------------------------------------------
   observed_condition_factor <- mmi(factors = ci_factor_ext_cond,
