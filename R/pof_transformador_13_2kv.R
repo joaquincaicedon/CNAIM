@@ -7,36 +7,37 @@
 #' función exponencial. Para más información sobre la
 #' función de probabilidad de falla, consulte la sección 6
 #' en la página 34 de CNAIM (2021).
-#' @param hv_transformer_type String. Refers to the high voltage transformer
-#' type the calculation is done for. Options: \code{hv_transformer_type =
-#' c("6.6/11kV Transformer (GM)", "20kV Transformer (GM)")}. The default setting
-#' is \code{hv_transformer_type = 6.6/11kV Transformer (GM)}.
+#' @param tipo_transformador String. Se refiere al tipo de transformador de alta
+#' tensión para el cual se realiza el cálculo. Opciones: \code{tipo_transformador =
+#' c("6.6/11kV Transformer (GM)", "20kV Transformer (GM)", "Transformador 13.2kV")}.
+#' La configuración predeterminada es \code{tipo_transformador = "Transformador 13.2kV"}.
 #' @inheritParams duty_factor_transformer_11_20kv
 #' @inheritParams location_factor
 #' @inheritParams current_health
-#' @param age  Numeric. The current age in years.
-#' @param partial_discharge String. Indicating the
-#' @param oil_acidity Oil Acidity
-#' level of partial discharge. Options for \code{partial_discharge}:
-#' \code{partial_discharge = c("Low", "Medium", "High (Not Confirmed)",
-#'  "High (Confirmed)", "Default")}. See page 153, table 171 in CNAIM (2021).
+#' @param edad Numérico. La edad actual en años.
+#' @param descarga_parcial Texto. Indica el nivel de descarga parcial.
+#' Opciones: \code{descarga_parcial = c("Baja", "Media", "Alta (No Confirmada)",
+#' "Alta (Confirmada)", "Default")}. Ver página 153, tabla 171 en CNAIM (2021).
+#' @param acidez_aceite Acidez del aceite. Indica el nivel de acidez del aceite
+#' en el transformador. Ver página 162, tabla 202 en CNAIM (2021).
 #' @inheritParams oil_test_modifier
-#' See page 162, table 204 in CNAIM (2021).
-#' @param temperature_reading String. Indicating the criticality.
-#' Options for \code{temperature_reading}:
-#' \code{temperature_reading = c("Normal", "Moderately High",
-#' "Very High", "Default")}. See page 153, table 172 in CNAIM (2021).
-#' @param observed_condition String. Indicating the observed condition of the
-#'  transformer. Options for \code{observed_condition}:
-#' \code{observed_condition = c("No deterioration", "Superficial/minor deterioration", "Slight deterioration",
-#'  "Some Deterioration", "Substantial Deterioration", "Default")}. See page 130, table 81 in CNAIM (2021).
-#' @param moisture Numeric. the amount of moisture given in (ppm) See page 162, table 203 in CNAIM (2021).
-#' @param bd_strength Numeric. the amount of breakdown strength given in (kV) See page 162, table 205 in CNAIM (2021).
-#' @param corrosion_category_index Integer.
-#' Specify the corrosion index category, 1-5.
-#' @param gb_ref_given optional parameter to use custom reference values
-#' @return DataFrame Current probability of failure
-#' per annum per kilometer along with current health score.
+#' Ver página 162, tabla 204 en CNAIM (2021).
+#' @param lectura_temperatura Texto. Indica la criticidad.
+#' Opciones: \code{lectura_temperatura = c("Normal", "Moderadamente Alta",
+#' "Muy Alta", "Default")}. Ver página 153, tabla 172 en CNAIM (2021).
+#' @param condición_observada Texto. Indica la condición observada del
+#' transformador. Opciones para \code{observed_condition}:
+#' \code{condición_observada = c("Sin deterioro", "Deterioro específico/menor",
+#' "Ligeramente deteriorado", "Cierto deterioro", "Deterioro sustancial", "Default")}.
+#' Ver página 130, tabla 81 en CNAIM (2021).
+#' @param humedad Numérico. La humedad dada en (ppm). Ver página 162, tabla 203 en CNAIM (2021).
+#' @param resistencia_dieléctrica Numérico. La resistencia dieléctrica dada en (kV).
+#' Ver página 162, tabla 205 en CNAIM (2021).
+#' @param categoría_corrosión Entero.
+#' Especifica la categoría del índice de corrosión, 1-5.
+#' @param gb_ref_given Parámetro opcional para usar valores de referencia personalizados.
+#' @return DataFrame Probabilidad actual de falla
+#' anual por kilómetro junto con el puntaje de salud actual.
 #' @source DNO Common Network Asset Indices Methodology (CNAIM),
 #' Health & Criticality - Version 2.1, 2021:
 #' \url{https://www.ofgem.gov.uk/sites/default/files/docs/2021/04/dno_common_network_asset_indices_methodology_v2.1_final_01-04-2021.pdf}
