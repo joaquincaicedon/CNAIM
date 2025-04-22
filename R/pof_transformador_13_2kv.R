@@ -126,7 +126,7 @@ pof_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2kV"
                                                  índice_corrosión,
                                                  asset_type)
 
-  # Expected life for6.6/11 kV transformer ------------------------------
+  # Expected life for 13.2 kV transformer ------------------------------
   expected_life_years <- expected_life(normal_expected_life,
                                        duty_factor_tf_11kv,
                                        location_factor_transformer)
@@ -136,7 +136,7 @@ pof_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2kV"
 
   # Initial health score ----------------------------------------------------
   initial_health_score <- initial_health(b1, edad)
-
+browser()
   ## NOTE
   # Typically, the Health Score Collar is 0.5 and
   # Health Score Cap is 10, implying no overriding
