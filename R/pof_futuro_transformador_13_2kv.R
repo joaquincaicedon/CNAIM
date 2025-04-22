@@ -18,296 +18,292 @@
 #' \url{https://www.ofgem.gov.uk/sites/default/files/docs/2021/04/dno_common_network_asset_indices_methodology_v2.1_final_01-04-2021.pdf}
 #' @export
 #' @examples
-#' # Future probability of a 6.6/11 kV transformer
-#' future_pof_transformer <-
-#' pof_future_transformer_11_20kv(hv_transformer_type = "6.6/11kV Transformer (GM)",
-#' utilisation_pct = "Default",
-#' placement = "Default",
-#' altitude_m = "Default",
-#' distance_from_coast_km = "Default",
-#' corrosion_category_index = "Default",
-#' age = 20,
-#' partial_discharge = "Default",
-#' temperature_reading = "Default",
-#' observed_condition = "Default",
-#' reliability_factor = "Default",
-#' moisture = "Default",
-#' oil_acidity = "Default",
-#' bd_strength = "Default",
-#' simulation_end_year = 100)
-pof_future_transformer_11_20kv <-
-  function(hv_transformer_type = "6.6/11kV Transformer (GM)",
-           utilisation_pct = "Default",
-           placement = "Default",
-           altitude_m = "Default",
-           distance_from_coast_km = "Default",
-           corrosion_category_index = "Default",
-           age,
-           partial_discharge = "Default",
-           temperature_reading = "Default",
-           observed_condition = "Default",
-           reliability_factor = "Default",
-           moisture = "Default",
-           oil_acidity = "Default",
-           bd_strength = "Default",
-           simulation_end_year = 100,
-           gb_ref_given = NULL) {
+#' # Probabilidad futura de un transformador de 13.2 kV
+#' pof_futuro_transformador_13_2kv(tipo_transformador = "Transformador 13.2kV",
+#'                                 utilización_pct = "Default",
+#'                                 emplazamiento = "Default",
+#'                                 altitud_m = "Default",
+#'                                 distancia_costa_km = "Default",
+#'                                 índice_corrosión = "Default",
+#'                                 edad = 10,
+#'                                 descarga_parcial = "Default",
+#'                                 lectura_temperatura = "Default",
+#'                                 condición_observada = "Default",
+#'                                 factor_confiabilidad = "Default",
+#'                                 humedad = "Default",
+#'                                 acidez_aceite = "Default",
+#'                                 resistencia_dieléctrica = "Default",
+#'                                 año_final_simulación = 10)
 
-    `Asset Register Category` = `Health Index Asset Category` =
-      `Generic Term...1` = `Generic Term...2` = `Functional Failure Category` =
-      `K-Value (%)` = `C-Value` = `Asset Register  Category` = NULL
-    # due to NSE notes in R CMD check
+pof_futuro_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2kV",
+                                            utilización_pct = "Default",
+                                            emplazamiento = "Default",
+                                            altitud_m = "Default",
+                                            distancia_costa_km = "Default",
+                                            índice_corrosión = "Default",
+                                            edad,
+                                            descarga_parcial = "Default",
+                                            lectura_temperatura = "Default",
+                                            condición_observada = "Default",
+                                            factor_confiabilidad = "Default",
+                                            humedad = "Default",
+                                            acidez_aceite = "Default",
+                                            resistencia_dieléctrica = "Default",
+                                            año_final_simulación = 100,
+                                            gb_ref_given = NULL) {
 
-    if(is.null(gb_ref_given)){
-      gb_ref_taken <- gb_ref
-    }else{
-      check_gb_ref_given(gb_ref_given)
-      gb_ref_taken <- gb_ref_given
-    }
+  `Asset Register Category` = `Health Index Asset Category` =
+    `Generic Term...1` = `Generic Term...2` = `Functional Failure Category` =
+    `K-Value (%)` = `C-Value` = `Asset Register  Category` = NULL
+  # due to NSE notes in R CMD check
+  if(is.null(gb_ref_given)){
+    gb_ref_taken <- gb_ref
+  }else{
+    check_gb_ref_given(gb_ref_given)
+    gb_ref_taken <- gb_ref_given
+  }
+  
+  # Ref. table Categorisation of Assets and Generic Terms for Assets  --
+  asset_type <- tipo_transformador
 
-    # Ref. table Categorisation of Assets and Generic Terms for Assets  --
-    asset_type <- hv_transformer_type
+  asset_category <- gb_ref_taken$categorisation_of_assets %>%
+    dplyr::filter(`Asset Register Category` == asset_type) %>%
+    dplyr::select(`Health Index Asset Category`) %>% dplyr::pull()
 
-    asset_category <- gb_ref_taken$categorisation_of_assets %>%
-      dplyr::filter(`Asset Register Category` == asset_type) %>%
-      dplyr::select(`Health Index Asset Category`) %>% dplyr::pull()
+  generic_term_1 <- gb_ref_taken$generic_terms_for_assets %>%
+    dplyr::filter(`Health Index Asset Category` == asset_category) %>%
+    dplyr::select(`Generic Term...1`) %>% dplyr::pull()
 
-    generic_term_1 <- gb_ref_taken$generic_terms_for_assets %>%
-      dplyr::filter(`Health Index Asset Category` == asset_category) %>%
-      dplyr::select(`Generic Term...1`) %>% dplyr::pull()
+  generic_term_2 <- gb_ref_taken$generic_terms_for_assets %>%
+    dplyr::filter(`Health Index Asset Category` == asset_category) %>%
+    dplyr::select(`Generic Term...2`) %>% dplyr::pull()
 
-    generic_term_2 <- gb_ref_taken$generic_terms_for_assets %>%
-      dplyr::filter(`Health Index Asset Category` == asset_category) %>%
-      dplyr::select(`Generic Term...2`) %>% dplyr::pull()
+  # Normal expected life for 13.2 kV transformer ------------------------------
+  normal_expected_life <- gb_ref_taken$normal_expected_life %>%
+    dplyr::filter(`Asset Register  Category` == asset_type) %>%
+    dplyr::pull()
 
-    # Normal expected life for 6.6/11 kV transformer ------------------------------
-    normal_expected_life <- gb_ref_taken$normal_expected_life %>%
-      dplyr::filter(`Asset Register  Category` == asset_type) %>%
-      dplyr::pull()
+  # Constants C and K for PoF function --------------------------------------
+  k <- gb_ref_taken$pof_curve_parameters %>%
+    dplyr::filter(`Functional Failure Category` ==
+                    asset_category) %>% dplyr::select(`K-Value (%)`) %>%
+    dplyr::pull()/100
 
-    # Constants C and K for PoF function --------------------------------------
-    k <- gb_ref_taken$pof_curve_parameters %>%
-      dplyr::filter(`Functional Failure Category` ==
-                      asset_category) %>% dplyr::select(`K-Value (%)`) %>%
-      dplyr::pull()/100
+  c <- gb_ref_taken$pof_curve_parameters %>%
+    dplyr::filter(`Functional Failure Category` ==
+                    asset_category) %>% dplyr::select(`C-Value`) %>% dplyr::pull()
 
-    c <- gb_ref_taken$pof_curve_parameters %>%
-      dplyr::filter(`Functional Failure Category` ==
-                      asset_category) %>% dplyr::select(`C-Value`) %>%
-      dplyr::pull()
+  # Duty factor -------------------------------------------------------------
+  duty_factor_tf_11kv <- duty_factor_transformer_11_20kv(utilización_pct)
 
-    # Duty factor -------------------------------------------------------------
-    duty_factor_tf_11kv <- duty_factor_transformer_11_20kv(utilisation_pct)
+  # Location factor ----------------------------------------------------
+  location_factor_transformer <- location_factor(emplazamiento,
+                                                 altitud_m,
+                                                 distancia_costa_km,
+                                                 índice_corrosión,
+                                                 asset_type)
 
-    # Location factor ----------------------------------------------------
-    location_factor_transformer <- location_factor(placement,
-                                                   altitude_m,
-                                                   distance_from_coast_km,
-                                                   corrosion_category_index,
-                                                   asset_type)
+  # Expected life for 13.2 kV transformer ------------------------------
+  expected_life_years <- expected_life(normal_expected_life,
+                                       duty_factor_tf_11kv,
+                                       location_factor_transformer)
 
-    # Expected life for 6.6/11 kV transformer ------------------------------
-    expected_life_years <- expected_life(normal_expected_life,
-                                         duty_factor_tf_11kv,
-                                         location_factor_transformer)
+  # b1 (Initial Ageing Rate) ------------------------------------------------
+  b1 <- beta_1(expected_life_years)
 
-    # b1 (Initial Ageing Rate) ------------------------------------------------
-    b1 <- beta_1(expected_life_years)
+  # Initial health score ----------------------------------------------------
+  initial_health_score <- initial_health(b1, edad)
 
-    # Initial health score ----------------------------------------------------
-    initial_health_score <- initial_health(b1, age)
+  ## NOTE
+  # Typically, the Health Score Collar is 0.5 and
+  # Health Score Cap is 10, implying no overriding
+  # of the Health Score. However, in some instances
+  # these parameters are set to other values in the
+  # Health Score Modifier calibration tables.
+  # These overriding values are shown in Table 35 to Table 202
+  # and Table 207 in Appendix B.
 
-    ## NOTE
-    # Typically, the Health Score Collar is 0.5 and
-    # Health Score Cap is 10, implying no overriding
-    # of the Health Score. However, in some instances
-    # these parameters are set to other values in the
-    # Health Score Modifier calibration tables.
-    # These overriding values are shown in Table 35 to Table 202
-    # and Table 207 in Appendix B.
+  # Measured condition inputs ---------------------------------------------
+  mcm_mmi_cal_df <-
+    gb_ref_taken$measured_cond_modifier_mmi_cal
 
-    # Measured condition inputs ---------------------------------------------
-    mcm_mmi_cal_df <-
-      gb_ref_taken$measured_cond_modifier_mmi_cal
+  mcm_mmi_cal_df <-
+    mcm_mmi_cal_df[which(mcm_mmi_cal_df$`Asset Category` == asset_category), ]
 
-    mcm_mmi_cal_df <-
-      mcm_mmi_cal_df[which(mcm_mmi_cal_df$`Asset Category` == asset_category), ]
+  factor_divider_1 <-
+    as.numeric(mcm_mmi_cal_df$
+                 `Parameters for Combination Using MMI Technique - Factor Divider 1`)
 
-    factor_divider_1 <-
-      as.numeric(mcm_mmi_cal_df$
-                   `Parameters for Combination Using MMI Technique - Factor Divider 1`)
+  factor_divider_2 <-
+    as.numeric(mcm_mmi_cal_df$
+                 `Parameters for Combination Using MMI Technique - Factor Divider 2`)
 
-    factor_divider_2 <-
-      as.numeric(mcm_mmi_cal_df$
-                   `Parameters for Combination Using MMI Technique - Factor Divider 2`)
+  max_no_combined_factors <-
+    as.numeric(mcm_mmi_cal_df$
+                 `Parameters for Combination Using MMI Technique - Max. No. of Combined Factors`
+    )
 
-    max_no_combined_factors <-
-      as.numeric(mcm_mmi_cal_df$
-                   `Parameters for Combination Using MMI Technique - Max. No. of Combined Factors`
-      )
+  # Partial discharge -------------------------------------------------------
+  mci_hv_tf_partial_discharge <-
+    gb_ref_taken$mci_hv_tf_partial_discharge
 
-    # Partial discharge -------------------------------------------------------
-    mci_hv_tf_partial_discharge <-
-      gb_ref_taken$mci_hv_tf_partial_discharge
+  ci_factor_partial_discharge <-
+    mci_hv_tf_partial_discharge$`Condition Input Factor`[which(
+      mci_hv_tf_partial_discharge$
+        `Condition Criteria: Partial Discharge Test Result` ==
+        descarga_parcial)]
 
-    ci_factor_partial_discharge <-
-      mci_hv_tf_partial_discharge$`Condition Input Factor`[which(
-        mci_hv_tf_partial_discharge$
-          `Condition Criteria: Partial Discharge Test Result` ==
-          partial_discharge)]
+  ci_cap_partial_discharge <-
+    mci_hv_tf_partial_discharge$`Condition Input Cap`[which(
+      mci_hv_tf_partial_discharge$
+        `Condition Criteria: Partial Discharge Test Result` ==
+        descarga_parcial)]
 
-    ci_cap_partial_discharge <-
-      mci_hv_tf_partial_discharge$`Condition Input Cap`[which(
-        mci_hv_tf_partial_discharge$
-          `Condition Criteria: Partial Discharge Test Result` ==
-          partial_discharge)]
+  ci_collar_partial_discharge <-
+    mci_hv_tf_partial_discharge$`Condition Input Collar`[which(
+      mci_hv_tf_partial_discharge$
+        `Condition Criteria: Partial Discharge Test Result` ==
+        descarga_parcial)]
 
-    ci_collar_partial_discharge <-
-      mci_hv_tf_partial_discharge$`Condition Input Collar`[which(
-        mci_hv_tf_partial_discharge$
-          `Condition Criteria: Partial Discharge Test Result` ==
-          partial_discharge)]
+  # Oil test modifier -------------------------------------------------------
+  oil_test_mod <- oil_test_modifier(humedad,
+                                    acidez_aceite,
+                                    resistencia_dieléctrica)
 
-    # Oil acidity -------------------------------------------------------------
-    oil_test_mod <- oil_test_modifier(moisture,
-                                      oil_acidity,
-                                      bd_strength)
+  # Temperature readings ----------------------------------------------------
+  mci_hv_tf_temp_readings <-
+    gb_ref_taken$mci_hv_tf_temp_readings
 
+  ci_factor_temp_reading <-
+    mci_hv_tf_temp_readings$`Condition Input Factor`[which(
+      mci_hv_tf_temp_readings$
+        `Condition Criteria: Temperature Reading` ==
+        lectura_temperatura)]
 
-    # Temperature readings ----------------------------------------------------
-    mci_hv_tf_temp_readings <-
-      gb_ref_taken$mci_hv_tf_temp_readings
+  ci_cap_temp_reading <-
+    mci_hv_tf_temp_readings$`Condition Input Cap`[which(
+      mci_hv_tf_temp_readings$
+        `Condition Criteria: Temperature Reading` ==
+        lectura_temperatura)]
 
-    ci_factor_temp_reading <-
-      mci_hv_tf_temp_readings$`Condition Input Factor`[which(
-        mci_hv_tf_temp_readings$
-          `Condition Criteria: Temperature Reading` ==
-          temperature_reading)]
+  ci_collar_temp_reading <-
+    mci_hv_tf_temp_readings$`Condition Input Collar`[which(
+      mci_hv_tf_temp_readings$
+        `Condition Criteria: Temperature Reading` ==
+        lectura_temperatura)]
 
-    ci_cap_temp_reading <-
-      mci_hv_tf_temp_readings$`Condition Input Cap`[which(
-        mci_hv_tf_temp_readings$
-          `Condition Criteria: Temperature Reading` ==
-          temperature_reading)]
+  # measured condition factor -----------------------------------------------
+  factors <- c(ci_factor_partial_discharge,
+               oil_test_mod$oil_condition_factor,
+               ci_factor_temp_reading)
 
-    ci_collar_temp_reading <-
-      mci_hv_tf_temp_readings$`Condition Input Collar`[which(
-        mci_hv_tf_temp_readings$
-          `Condition Criteria: Temperature Reading` ==
-          temperature_reading)]
+  measured_condition_factor <- mmi(factors,
+                                   factor_divider_1,
+                                   factor_divider_2,
+                                   max_no_combined_factors)
 
-    # measured condition factor -----------------------------------------------
-    factors <- c(ci_factor_partial_discharge,
-                 oil_test_mod$oil_condition_factor,
-                 ci_factor_temp_reading)
+  # Measured condition cap --------------------------------------------------
+  caps <- c(ci_cap_partial_discharge,
+            oil_test_mod$oil_condition_cap,
+            ci_cap_temp_reading)
+  measured_condition_cap <- min(caps)
 
-    measured_condition_factor <- mmi(factors,
-                                     factor_divider_1,
-                                     factor_divider_2,
-                                     max_no_combined_factors)
+  # Measured condition collar -----------------------------------------------
+  collars <- c(ci_collar_partial_discharge,
+               oil_test_mod$oil_condition_collar,
+               ci_collar_temp_reading)
+  measured_condition_collar <- max(collars)
 
-    # Measured condition cap --------------------------------------------------
-    caps <- c(ci_cap_partial_discharge,
-              oil_test_mod$oil_condition_cap,
-              ci_cap_temp_reading)
-    measured_condition_cap <- min(caps)
+  # Measured condition modifier ---------------------------------------------
+  measured_condition_modifier <- data.frame(measured_condition_factor,
+                                            measured_condition_cap,
+                                            measured_condition_collar)
 
-    # Measured condition collar -----------------------------------------------
-    collars <- c(ci_collar_partial_discharge,
-                 oil_test_mod$oil_condition_collar,
-                 ci_collar_temp_reading)
-    measured_condition_collar <- max(collars)
+  # Observed condition inputs ---------------------------------------------
+  oci_mmi_cal_df <-
+    gb_ref_taken$observed_cond_modifier_mmi_cal
 
-    # Measured condition modifier ---------------------------------------------
-    measured_condition_modifier <- data.frame(measured_condition_factor,
-                                              measured_condition_cap,
-                                              measured_condition_collar)
+  oci_mmi_cal_df <-
+    oci_mmi_cal_df[which(oci_mmi_cal_df$`Asset Category` == asset_category), ]
 
-    # Observed condition inputs ---------------------------------------------
-    oci_mmi_cal_df <-
-      gb_ref_taken$observed_cond_modifier_mmi_cal
+  factor_divider_1 <-
+    as.numeric(oci_mmi_cal_df$
+                 `Parameters for Combination Using MMI Technique - Factor Divider 1`)
 
-    oci_mmi_cal_df <-
-      oci_mmi_cal_df[which(oci_mmi_cal_df$`Asset Category` == asset_category), ]
+  factor_divider_2 <-
+    as.numeric(oci_mmi_cal_df$
+                 `Parameters for Combination Using MMI Technique - Factor Divider 2`)
 
-    factor_divider_1 <-
-      as.numeric(oci_mmi_cal_df$
-                   `Parameters for Combination Using MMI Technique - Factor Divider 1`)
+  max_no_combined_factors <-
+    as.numeric(oci_mmi_cal_df$
+                 `Parameters for Combination Using MMI Technique - Max. No. of Combined Factors`
+    )
 
-    factor_divider_2 <-
-      as.numeric(oci_mmi_cal_df$
-                   `Parameters for Combination Using MMI Technique - Factor Divider 2`)
+  oci_hv_tf_tf_ext_cond_df <-
+    gb_ref_taken$oci_hv_tf_tf_ext_cond
 
-    max_no_combined_factors <-
-      as.numeric(oci_mmi_cal_df$
-                   `Parameters for Combination Using MMI Technique - Max. No. of Combined Factors`
-      )
+  ci_factor_ext_cond <-
+    oci_hv_tf_tf_ext_cond_df$`Condition Input Factor`[which(
+      oci_hv_tf_tf_ext_cond_df$`Condition Criteria: Observed Condition` ==
+        condición_observada)]
 
-    oci_hv_tf_tf_ext_cond_df <-
-      gb_ref_taken$oci_hv_tf_tf_ext_cond
+  ci_cap_ext_cond <-
+    oci_hv_tf_tf_ext_cond_df$`Condition Input Cap`[which(
+      oci_hv_tf_tf_ext_cond_df$`Condition Criteria: Observed Condition` ==
+        condición_observada)]
 
-    ci_factor_ext_cond <-
-      oci_hv_tf_tf_ext_cond_df$`Condition Input Factor`[which(
-        oci_hv_tf_tf_ext_cond_df$`Condition Criteria: Observed Condition` ==
-          observed_condition)]
+  ci_collar_ext_cond <-
+    oci_hv_tf_tf_ext_cond_df$`Condition Input Collar`[which(
+      oci_hv_tf_tf_ext_cond_df$`Condition Criteria: Observed Condition` ==
+        condición_observada)]
 
-    ci_cap_ext_cond <-
-      oci_hv_tf_tf_ext_cond_df$`Condition Input Cap`[which(
-        oci_hv_tf_tf_ext_cond_df$`Condition Criteria: Observed Condition` ==
-          observed_condition)]
+  # Observed condition factor -----------------------------------------------
+  observed_condition_factor <- mmi(factors = ci_factor_ext_cond,
+                                   factor_divider_1,
+                                   factor_divider_2,
+                                   max_no_combined_factors)
 
-    ci_collar_ext_cond <-
-      oci_hv_tf_tf_ext_cond_df$`Condition Input Collar`[which(
-        oci_hv_tf_tf_ext_cond_df$`Condition Criteria: Observed Condition` ==
-          observed_condition)]
+  # Observed condition cap ---------------------------------------------
+  observed_condition_cap <- ci_cap_ext_cond
 
-    # Observed condition factor -----------------------------------------------
-    observed_condition_factor <- mmi(factors = ci_factor_ext_cond,
-                                     factor_divider_1,
-                                     factor_divider_2,
-                                     max_no_combined_factors)
+  # Observed condition collar ---------------------------------------------
+  observed_condition_collar <- ci_collar_ext_cond
 
-    # Observed condition cap ---------------------------------------------
-    observed_condition_cap <- ci_cap_ext_cond
+  # Observed condition modifier ---------------------------------------------
+  observed_condition_modifier <- data.frame(observed_condition_factor,
+                                            observed_condition_cap,
+                                            observed_condition_collar)
 
-    # Observed condition collar ---------------------------------------------
-    observed_condition_collar <- ci_collar_ext_cond
+  # Health score factor ---------------------------------------------------
+  health_score_factor <-
+    health_score_excl_ehv_132kv_tf(observed_condition_factor,
+                                   measured_condition_factor)
 
-    # Observed condition modifier ---------------------------------------------
-    observed_condition_modifier <- data.frame(observed_condition_factor,
-                                              observed_condition_cap,
-                                              observed_condition_collar)
+  # Health score cap --------------------------------------------------------
+  health_score_cap <- min(observed_condition_cap, measured_condition_cap)
 
-    # Health score factor ---------------------------------------------------
-    health_score_factor <-
-      health_score_excl_ehv_132kv_tf(observed_condition_factor,
-                                     measured_condition_factor)
+  # Health score collar -----------------------------------------------------
+  health_score_collar <-  max(observed_condition_collar,
+                              measured_condition_collar)
 
-    # Health score cap --------------------------------------------------------
-    health_score_cap <- min(observed_condition_cap, measured_condition_cap)
+  # Health score modifier ---------------------------------------------------
+  health_score_modifier <- data.frame(health_score_factor,
+                                      health_score_cap,
+                                      health_score_collar)
 
-    # Health score collar -----------------------------------------------------
-    health_score_collar <-  max(observed_condition_collar,
-                                measured_condition_collar)
+  # Current health score ----------------------------------------------------
+  current_health_score <-
+    current_health(initial_health_score,
+                   health_score_modifier$health_score_factor,
+                   health_score_modifier$health_score_cap,
+                   health_score_modifier$health_score_collar,
+                   reliability_factor = factor_confiabilidad)
 
-    # Health score modifier ---------------------------------------------------
-    health_score_modifier <- data.frame(health_score_factor,
-                                        health_score_cap,
-                                        health_score_collar)
-
-    # Current health score ----------------------------------------------------
-    current_health_score <-
-      current_health(initial_health_score,
-                     health_score_modifier$health_score_factor,
-                     health_score_modifier$health_score_cap,
-                     health_score_modifier$health_score_collar,
-                     reliability_factor = reliability_factor)
-
-    # Probability of failure ---------------------------------------------------
-    probability_of_failure <- k *
-      (1 + (c * current_health_score) +
-         (((c * current_health_score)^2) / factorial(2)) +
-         (((c * current_health_score)^3) / factorial(3)))
+  # Probability of failure for the 6.6/11kV and 20kV transformer today -----------------
+  probability_of_failure <- k *
+    (1 + (c * current_health_score) +
+       (((c * current_health_score)^2) / factorial(2)) +
+       (((c * current_health_score)^3) / factorial(3)))
 
     # Future probability of failure -------------------------------------------
 
@@ -315,7 +311,7 @@ pof_future_transformer_11_20kv <-
     H_new <- 0.5
 
     # the Health Score of the asset when it reaches its Expected Life
-    b2 <- beta_2(current_health_score, age)
+    b2 <- beta_2(current_health_score, edad)
     if (b2 > 2*b1){
       b2 <- b1*2
     } else if (current_health_score == 0.5){
@@ -333,7 +329,7 @@ pof_future_transformer_11_20kv <-
     # Dynamic part
     pof_year <- list()
     future_health_score_list <- list()
-    year <- seq(from=0,to=simulation_end_year,by=1)
+    year <- seq(from=0,to=año_final_simulación,by=1)
 
     for (y in 1:length(year)){
       t <- year[y]
@@ -360,11 +356,11 @@ pof_future_transformer_11_20kv <-
       PoF=as.numeric(unlist(pof_year)),
       future_health_score = as.numeric(unlist(future_health_score_list)))
     pof_future$age <- NA
-    pof_future$age[1] <- age
+    pof_future$age[1] <- edad
 
     for(i in 2:nrow(pof_future)) {
 
-      pof_future$age[i] <- age + i -1
+      pof_future$age[i] <- edad + i -1
 
     }
 
