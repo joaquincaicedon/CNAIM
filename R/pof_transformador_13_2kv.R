@@ -136,7 +136,7 @@ pof_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2kV"
 
   # Initial health score ----------------------------------------------------
   initial_health_score <- initial_health(b1, edad)
-browser()
+
   ## NOTE
   # Typically, the Health Score Collar is 0.5 and
   # Health Score Cap is 10, implying no overriding
