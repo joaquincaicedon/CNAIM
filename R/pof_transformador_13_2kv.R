@@ -33,7 +33,7 @@
 #' @param humedad Numérico. La humedad dada en (ppm). Ver página 162, tabla 203 en CNAIM (2021).
 #' @param resistencia_dieléctrica Numérico. La resistencia dieléctrica dada en (kV).
 #' Ver página 162, tabla 205 en CNAIM (2021).
-#' @param categoría_corrosión Entero.
+#' @param índice_corrosión Entero.
 #' Especifica la categoría del índice de corrosión, 1-5.
 #' @param gb_ref_given Parámetro opcional para usar valores de referencia personalizados.
 #' @return DataFrame Probabilidad actual de falla
@@ -43,36 +43,37 @@
 #' \url{https://www.ofgem.gov.uk/sites/default/files/docs/2021/04/dno_common_network_asset_indices_methodology_v2.1_final_01-04-2021.pdf}
 #' @export
 #' @examples
-#' # Current probability of failure for a 6.6/11 kV transformer
-#' pof_transformer_11_20kv(hv_transformer_type = "6.6/11kV Transformer (GM)",
-#' utilisation_pct = "Default",
-#' placement = "Default",
-#' altitude_m = "Default",
-#' distance_from_coast_km = "Default",
-#' corrosion_category_index = "Default",
-#' age = 10,
-#' partial_discharge = "Default",
-#' temperature_reading = "Default",
-#' observed_condition = "Default",
-#' reliability_factor = "Default",
-#' moisture = "Default",
-#' oil_acidity = "Default",
-#' bd_strength = "Default")
-pof_transformer_11_20kv <- function(hv_transformer_type = "6.6/11kV Transformer (GM)",
-                                    utilisation_pct = "Default",
-                                    placement = "Default",
-                                    altitude_m = "Default",
-                                    distance_from_coast_km = "Default",
-                                    corrosion_category_index = "Default",
-                                    age,
-                                    partial_discharge = "Default",
-                                    temperature_reading = "Default",
-                                    observed_condition = "Default",
-                                    reliability_factor = "Default",
-                                    moisture = "Default",
-                                    oil_acidity = "Default",
-                                    bd_strength = "Default",
-                                    gb_ref_given = NULL) {
+#' # Probabilidad actual de falla para un transformador de 13.2 kV
+#'pof_transformador_13_2kv(tipo_transformador = "Transformador 13.2kV",
+#'                         utilización_pct = "Default",
+#'                         emplazamiento = "Default",
+#'                         altitud_m = "Default",
+#'                         distancia_costa_km = "Default",
+#'                         índice_corrosión = "Default",
+#'                         edad = 10,
+#'                         descarga_parcial = "Default",
+#'                         lectura_temperatura = "Default",
+#'                         condición_observada = "Default",
+#'                         factor_confiabilidad = "Default",
+#'                         humedad = "Default",
+#'                         acidez_aceite = "Default",
+#'                         resistencia_dieléctrica = "Default"
+
+pof_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2kV",
+                                     utilización_pct = "Default",
+                                     emplazamiento = "Default",
+                                     altitud_m = "Default",
+                                     distancia_costa_km = "Default",
+                                     índice_corrosión = "Default",
+                                     edad,
+                                     descarga_parcial = "Default",
+                                     lectura_temperatura = "Default",
+                                     condición_observada = "Default",
+                                     factor_confiabilidad = "Default",
+                                     humedad = "Default",
+                                     acidez_aceite = "Default",
+                                     resistencia_dieléctrica = "Default",
+                                     gb_ref_given = NULL) {
 
   `Asset Register Category` = `Health Index Asset Category` =
     `Generic Term...1` = `Generic Term...2` = `Functional Failure Category` =
@@ -86,7 +87,7 @@ pof_transformer_11_20kv <- function(hv_transformer_type = "6.6/11kV Transformer 
   }
 
   # Ref. table Categorisation of Assets and Generic Terms for Assets  --
-  asset_type <- hv_transformer_type
+  asset_type <- tipo_transformador
 
   asset_category <- gb_ref_taken$categorisation_of_assets %>%
     dplyr::filter(`Asset Register Category` == asset_type) %>%
@@ -100,7 +101,7 @@ pof_transformer_11_20kv <- function(hv_transformer_type = "6.6/11kV Transformer 
     dplyr::filter(`Health Index Asset Category` == asset_category) %>%
     dplyr::select(`Generic Term...2`) %>% dplyr::pull()
 
-  # Normal expected life for 6.6/11 kV transformer ------------------------------
+  # Normal expected life for 13.2 kV transformer ------------------------------
   normal_expected_life <- gb_ref_taken$normal_expected_life %>%
     dplyr::filter(`Asset Register  Category` == asset_type) %>%
     dplyr::pull()
@@ -116,13 +117,13 @@ pof_transformer_11_20kv <- function(hv_transformer_type = "6.6/11kV Transformer 
                     asset_category) %>% dplyr::select(`C-Value`) %>% dplyr::pull()
 
   # Duty factor -------------------------------------------------------------
-  duty_factor_tf_11kv <- duty_factor_transformer_11_20kv(utilisation_pct)
+  duty_factor_tf_11kv <- duty_factor_transformer_11_20kv(utilización_pct)
 
   # Location factor ----------------------------------------------------
-  location_factor_transformer <- location_factor(placement,
-                                                 altitude_m,
-                                                 distance_from_coast_km,
-                                                 corrosion_category_index,
+  location_factor_transformer <- location_factor(emplazamiento,
+                                                 altitud_m,
+                                                 distancia_costa_km,
+                                                 índice_corrosión,
                                                  asset_type)
 
   # Expected life for6.6/11 kV transformer ------------------------------
@@ -134,7 +135,7 @@ pof_transformer_11_20kv <- function(hv_transformer_type = "6.6/11kV Transformer 
   b1 <- beta_1(expected_life_years)
 
   # Initial health score ----------------------------------------------------
-  initial_health_score <- initial_health(b1, age)
+  initial_health_score <- initial_health(b1, edad)
 
   ## NOTE
   # Typically, the Health Score Collar is 0.5 and
@@ -189,9 +190,9 @@ pof_transformer_11_20kv <- function(hv_transformer_type = "6.6/11kV Transformer 
 
 
   # Oil test modifier -------------------------------------------------------
-  oil_test_mod <- oil_test_modifier(moisture,
-                                    oil_acidity,
-                                    bd_strength)
+  oil_test_mod <- oil_test_modifier(humedad,
+                                    acidez_aceite,
+                                    resistencia_dieléctrica)
 
   # Temperature readings ----------------------------------------------------
   mci_hv_tf_temp_readings <-
@@ -320,7 +321,7 @@ pof_transformer_11_20kv <- function(hv_transformer_type = "6.6/11kV Transformer 
                    health_score_modifier$health_score_factor,
                    health_score_modifier$health_score_cap,
                    health_score_modifier$health_score_collar,
-                   reliability_factor = reliability_factor)
+                   reliability_factor = factor_confiabilidad)
 
   # Probability of failure for the 6.6/11kV and 20kV transformer today -----------------
   probability_of_failure <- k *
