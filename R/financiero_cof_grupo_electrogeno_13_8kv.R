@@ -5,8 +5,8 @@
 #' \code{\link{cof}}().
 #' @param tipo_generador Texto. El tipo de categoría de activo.
 #' Opciones: \code{tipo_generador = c("Grupo Electrógeno Diésel 13.8kV")}.
-#' @param acceso String. Asses Financial factor criteria for Transformer
-#' setting (cf. table 221, page 180, CNAIM, 2021).
+#' @param acceso Texto. Criterios del factor financiero de acceso para el
+#' grupo electrógeno (cf. tabla 221, página 180, CNAIM modificada, 2021).
 #' @param nivel_tensión Texto. Nivel de tensión del grupo electrógeno.
 #' @param MVA Numérico. Potencia aparente nominal del grupo electrógeno.
 #' @param gb_ref_given parámetro opcional para usar valores de referencia 
