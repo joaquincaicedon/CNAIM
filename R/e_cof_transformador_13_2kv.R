@@ -46,7 +46,7 @@ e_cof_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2k
 
   # Get category ------------------------------------------------------------
   asset_category <- gb_ref_taken$categorisation_of_assets %>%
-    dplyr::filter(`Asset Register Category` == asset_type_tf) %>%
+    dplyr::filter(`Asset Register Category` == tipo_transformador) %>%
     dplyr::select(`Health Index Asset Category`) %>% dplyr::pull()
 
   # Reference cost of failure table 16 --------------------------------------
