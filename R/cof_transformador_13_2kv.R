@@ -38,7 +38,7 @@ cof_transformador_13_2kv <- function(kva,
                                        tipo_transformador = "Transformador 13.2kV", gb_ref_given)
 
   environmental <- e_cof_transformador_13_2kv(tipo_transformador = "Transformador 13.2kV",
-                                              rated_capacity = kva,
+                                              kva = kva,
                                               distancia_agua, acotado,
                                               gb_ref_given)
 
