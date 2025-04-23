@@ -13,11 +13,14 @@
 #' @export
 #' @examples
 #' # Consecuencias de falla para un transformador de 13.2 kV
-#' cof_transformador_13_2kv(kva = 500, type = "Type C",
-#'                      type_risk = "High", location_risk = "High",
-#'                      prox_water = 50, bunded = "No",
-#'                      no_customers = 500, kva_per_customer = 1)
-
+#' cof_transformador_13_2kv(kva = 500,
+#'                          acceso = "Tipo B",
+#'                          tipo_riesgo = "Alto",
+#'                          riesgo_ubicacion = "Alto",
+#'                          distancia_agua = 50,
+#'                          acotado = "No",
+#'                          no_usuarios = 100,
+#'                          kva_usuario = 1)
 
 cof_transformador_13_2kv <- function(kva,
                                      acceso,
@@ -32,7 +35,7 @@ cof_transformador_13_2kv <- function(kva,
   finance <- f_cof_transformador_13_2kv(kva, acceso, gb_ref_given)
 
   safety <- s_cof_transformador_13_2kv(tipo_riesgo, riesgo_ubicacion,
-                                       asset_type_scf = "Transformador 13.2kV", gb_ref_given)
+                                       tipo_transformador = "Transformador 13.2kV", gb_ref_given)
 
   environmental <- e_cof_transformador_13_2kv(tipo_transformador = "Transformador 13.2kV",
                                               rated_capacity = kva,
