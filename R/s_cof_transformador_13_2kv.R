@@ -69,6 +69,6 @@ s_cof_transformador_13_2kv <- function(tipo_riesgo = "Default",
 
   # Safety consequence of failure -------------------------------------------
   safety_cof <- safety_consequence_factor * scost
-browser()
+
   return(safety_cof)
 }
