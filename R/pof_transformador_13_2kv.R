@@ -25,15 +25,15 @@
 #' @param lectura_temperatura Texto. Indica la criticidad.
 #' Opciones: \code{lectura_temperatura = c("Normal", "Moderadamente Alta",
 #' "Muy Alta", "Default")}. Ver página 153, tabla 172 en CNAIM (2021).
-#' @param condición_observada Texto. Indica la condición observada del
+#' @param condicion_observada Texto. Indica la condición observada del
 #' transformador. Opciones para \code{observed_condition}:
-#' \code{condición_observada = c("Sin deterioro", "Deterioro específico/menor",
+#' \code{condicion_observada = c("Sin deterioro", "Deterioro específico/menor",
 #' "Ligeramente deteriorado", "Cierto deterioro", "Deterioro sustancial", "Default")}.
 #' Ver página 130, tabla 81 en CNAIM (2021).
 #' @param humedad Numérico. La humedad dada en (ppm). Ver página 162, tabla 203 en CNAIM (2021).
-#' @param resistencia_dieléctrica Numérico. La resistencia dieléctrica dada en (kV).
+#' @param resistencia_dielectrica Numérico. La resistencia dieléctrica dada en (kV).
 #' Ver página 162, tabla 205 en CNAIM (2021).
-#' @param índice_corrosión Entero.
+#' @param indice_corrosion Entero.
 #' Especifica la categoría del índice de corrosión, 1-5.
 #' @param gb_ref_given Parámetro opcional para usar valores de referencia personalizados.
 #' @return DataFrame Probabilidad actual de falla
@@ -45,34 +45,34 @@
 #' @examples
 #' # Probabilidad actual de falla para un transformador de 13.2 kV
 #' pof_transformador_13_2kv(tipo_transformador = "Transformador 13.2kV",
-#'                          utilización_pct = "Default",
+#'                          utilizacion_pct = "Default",
 #'                          emplazamiento = "Default",
 #'                          altitud_m = "Default",
 #'                          distancia_costa_km = "Default",
-#'                          índice_corrosión = "Default",
+#'                          indice_corrosion = "Default",
 #'                          edad = 10,
 #'                          descarga_parcial = "Default",
 #'                          lectura_temperatura = "Default",
-#'                          condición_observada = "Default",
+#'                          condicion_observada = "Default",
 #'                          factor_confiabilidad = "Default",
 #'                          humedad = "Default",
 #'                          acidez_aceite = "Default",
-#'                          resistencia_dieléctrica = "Default")
+#'                          resistencia_dielectrica = "Default")
 
 pof_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2kV",
-                                     utilización_pct = "Default",
+                                     utilizacion_pct = "Default",
                                      emplazamiento = "Default",
                                      altitud_m = "Default",
                                      distancia_costa_km = "Default",
-                                     índice_corrosión = "Default",
+                                     indice_corrosion = "Default",
                                      edad,
                                      descarga_parcial = "Default",
                                      lectura_temperatura = "Default",
-                                     condición_observada = "Default",
+                                     condicion_observada = "Default",
                                      factor_confiabilidad = "Default",
                                      humedad = "Default",
                                      acidez_aceite = "Default",
-                                     resistencia_dieléctrica = "Default",
+                                     resistencia_dielectrica = "Default",
                                      gb_ref_given = NULL) {
 
   `Asset Register Category` = `Health Index Asset Category` =
@@ -117,13 +117,13 @@ pof_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2kV"
                     asset_category) %>% dplyr::select(`C-Value`) %>% dplyr::pull()
 
   # Duty factor -------------------------------------------------------------
-  duty_factor_tf_11kv <- duty_factor_transformer_11_20kv(utilización_pct)
+  duty_factor_tf_11kv <- duty_factor_transformer_11_20kv(utilizacion_pct)
 
   # Location factor ----------------------------------------------------
   location_factor_transformer <- location_factor(emplazamiento,
                                                  altitud_m,
                                                  distancia_costa_km,
-                                                 índice_corrosión,
+                                                 indice_corrosion,
                                                  asset_type)
 
   # Expected life for 13.2 kV transformer ------------------------------
@@ -191,7 +191,7 @@ pof_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2kV"
   # Oil test modifier -------------------------------------------------------
   oil_test_mod <- oil_test_modifier(humedad,
                                     acidez_aceite,
-                                    resistencia_dieléctrica)
+                                    resistencia_dielectrica)
 
   # Temperature readings ----------------------------------------------------
   mci_hv_tf_temp_readings <-
@@ -268,17 +268,17 @@ pof_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2kV"
   ci_factor_ext_cond <-
     oci_hv_tf_tf_ext_cond_df$`Condition Input Factor`[which(
       oci_hv_tf_tf_ext_cond_df$`Condition Criteria: Observed Condition` ==
-        condición_observada)]
+        condicion_observada)]
 
   ci_cap_ext_cond <-
     oci_hv_tf_tf_ext_cond_df$`Condition Input Cap`[which(
       oci_hv_tf_tf_ext_cond_df$`Condition Criteria: Observed Condition` ==
-        condición_observada)]
+        condicion_observada)]
 
   ci_collar_ext_cond <-
     oci_hv_tf_tf_ext_cond_df$`Condition Input Collar`[which(
       oci_hv_tf_tf_ext_cond_df$`Condition Criteria: Observed Condition` ==
-        condición_observada)]
+        condicion_observada)]
 
   # Observed condition factor -----------------------------------------------
   observed_condition_factor <- mmi(factors = ci_factor_ext_cond,

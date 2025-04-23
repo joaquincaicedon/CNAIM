@@ -8,7 +8,7 @@
 #' función de probabilidad de falla, consulte la sección 6
 #' en la página 34 de CNAIM (2021).
 #' @inheritParams pof_transformador_13_2kv
-#' @param año_final_simulación Numérico. El último año para simular la probabilidad
+#' @param año_final_simulacion Numérico. El último año para simular la probabilidad
 #' de falla. El valor predeterminado es 100.
 #' @param gb_ref_given parámetro opcional para usar valores de referencia personalizados
 #' @return DataFrame. Probabilidad futura de falla
@@ -20,36 +20,36 @@
 #' @examples
 #' # Probabilidad futura de un transformador de 13.2 kV
 #' pof_futuro_transformador_13_2kv(tipo_transformador = "Transformador 13.2kV",
-#'                                 utilización_pct = "Default",
+#'                                 utilizacion_pct = "Default",
 #'                                 emplazamiento = "Default",
 #'                                 altitud_m = "Default",
 #'                                 distancia_costa_km = "Default",
-#'                                 índice_corrosión = "Default",
+#'                                 indice_corrosion = "Default",
 #'                                 edad = 10,
 #'                                 descarga_parcial = "Default",
 #'                                 lectura_temperatura = "Default",
-#'                                 condición_observada = "Default",
+#'                                 condicion_observada = "Default",
 #'                                 factor_confiabilidad = "Default",
 #'                                 humedad = "Default",
 #'                                 acidez_aceite = "Default",
-#'                                 resistencia_dieléctrica = "Default",
-#'                                 año_final_simulación = 10)
+#'                                 resistencia_dielectrica = "Default",
+#'                                 año_final_simulacion = 10)
 
 pof_futuro_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2kV",
-                                            utilización_pct = "Default",
+                                            utilizacion_pct = "Default",
                                             emplazamiento = "Default",
                                             altitud_m = "Default",
                                             distancia_costa_km = "Default",
-                                            índice_corrosión = "Default",
+                                            indice_corrosion = "Default",
                                             edad,
                                             descarga_parcial = "Default",
                                             lectura_temperatura = "Default",
-                                            condición_observada = "Default",
+                                            condicion_observada = "Default",
                                             factor_confiabilidad = "Default",
                                             humedad = "Default",
                                             acidez_aceite = "Default",
-                                            resistencia_dieléctrica = "Default",
-                                            año_final_simulación = 100,
+                                            resistencia_dielectrica = "Default",
+                                            año_final_simulacion = 100,
                                             gb_ref_given = NULL) {
 
   `Asset Register Category` = `Health Index Asset Category` =
@@ -94,13 +94,13 @@ pof_futuro_transformador_13_2kv <- function(tipo_transformador = "Transformador 
                     asset_category) %>% dplyr::select(`C-Value`) %>% dplyr::pull()
 
   # Duty factor -------------------------------------------------------------
-  duty_factor_tf_11kv <- duty_factor_transformer_11_20kv(utilización_pct)
+  duty_factor_tf_11kv <- duty_factor_transformer_11_20kv(utilizacion_pct)
 
   # Location factor ----------------------------------------------------
   location_factor_transformer <- location_factor(emplazamiento,
                                                  altitud_m,
                                                  distancia_costa_km,
-                                                 índice_corrosión,
+                                                 indice_corrosion,
                                                  asset_type)
 
   # Expected life for 13.2 kV transformer ------------------------------
@@ -168,7 +168,7 @@ pof_futuro_transformador_13_2kv <- function(tipo_transformador = "Transformador 
   # Oil test modifier -------------------------------------------------------
   oil_test_mod <- oil_test_modifier(humedad,
                                     acidez_aceite,
-                                    resistencia_dieléctrica)
+                                    resistencia_dielectrica)
 
   # Temperature readings ----------------------------------------------------
   mci_hv_tf_temp_readings <-
@@ -245,17 +245,17 @@ pof_futuro_transformador_13_2kv <- function(tipo_transformador = "Transformador 
   ci_factor_ext_cond <-
     oci_hv_tf_tf_ext_cond_df$`Condition Input Factor`[which(
       oci_hv_tf_tf_ext_cond_df$`Condition Criteria: Observed Condition` ==
-        condición_observada)]
+        condicion_observada)]
 
   ci_cap_ext_cond <-
     oci_hv_tf_tf_ext_cond_df$`Condition Input Cap`[which(
       oci_hv_tf_tf_ext_cond_df$`Condition Criteria: Observed Condition` ==
-        condición_observada)]
+        condicion_observada)]
 
   ci_collar_ext_cond <-
     oci_hv_tf_tf_ext_cond_df$`Condition Input Collar`[which(
       oci_hv_tf_tf_ext_cond_df$`Condition Criteria: Observed Condition` ==
-        condición_observada)]
+        condicion_observada)]
 
   # Observed condition factor -----------------------------------------------
   observed_condition_factor <- mmi(factors = ci_factor_ext_cond,
@@ -329,7 +329,7 @@ pof_futuro_transformador_13_2kv <- function(tipo_transformador = "Transformador 
     # Dynamic part
     pof_year <- list()
     future_health_score_list <- list()
-    year <- seq(from=0,to=año_final_simulación,by=1)
+    year <- seq(from=0,to=año_final_simulacion,by=1)
 
     for (y in 1:length(year)){
       t <- year[y]
