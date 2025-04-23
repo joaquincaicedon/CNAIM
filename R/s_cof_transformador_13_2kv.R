@@ -1,63 +1,36 @@
-#' @title Safety Consequences of Failure for Switchgears, Transformers &
-#' Overhead Lines
-#' @description This function calculates safety consequences of failure
-#' for switchgear, transformers and overhead lines
-#' (cf. section 7.4, page 80, CNAIM, 2021). Safety consequences of failure
-#' is used in the derivation of consequences of failure see \code{\link{cof}}().
-#' @param type_risk String. Risk that the asset presents to the
-#' public by its characteristics and particular situation. Options:
-#' \code{type_risk = c("Low", "Medium", "High", "Default")}
-#' (cf. table 225, page 183, CNAIM, 2021).
-#' A setting of \code{"Default"} equals a setting of \code{"Medium"}.
-#' @param location_risk String. Proximity to areas that may affect its
-#' likelihood of trespass or interference. Options:
-#' \code{location_risk = c("Low", "Medium", "High", "Default")}
-#' (cf. table 225, page 183, CNAIM, 2021).
-#' A setting of \code{"Default"} equals a setting of \code{"Medium"}.
-#' @param asset_type_scf String.
-#' Options:
-#' \code{asset_type_scf = c("LV Poles", "LV Circuit Breaker",
-#' "LV Pillar (ID)", "LV Pillar (OD at Substation)",
-#' "LV Pillar (OD not at a Substation)", "LV Board (WM)",
-#' "LV UGB", "LV Board (X-type Network) (WM)", "6.6/11kV Poles",
-#' "20kV Poles", "6.6/11kV CB (GM) Primary",
-#' "6.6/11kV CB (GM) Secondary", "6.6/11kV Switch (GM)", "6.6/11kV RMU",
-#' "6.6/11kV X-type RMU", "20kV CB (GM) Primary", "20kV CB (GM) Secondary",
-#' "20kV Switch (GM)", "20kV RMU", "6.6/11kV Transformer (GM)",
-#' "20kV Transformer (GM)", "33kV Pole", "66kV Pole",
-#' "33kV OHL (Tower Line) Conductor", "33kV Tower", "33kV Fittings",
-#' "66kV OHL (Tower Line) Conductor", "66kV Tower", "66kV Fittings",
-#' "33kV CB (Air Insulated Busbars)(ID) (GM)",
-#' "33kV CB (Air Insulated Busbars)(OD) (GM)",
-#' "33kV CB (Gas Insulated Busbars)(ID) (GM)",
-#' "33kV CB (Gas Insulated Busbars)(OD) (GM)", "33kV Switch (GM)",
-#' "33kV RMU", "66kV CB (Air Insulated Busbars)(ID) (GM)",
-#' "66kV CB (Air Insulated Busbars)(OD) (GM)",
-#' "66kV CB (Gas Insulated Busbars)(ID) (GM)",
-#' "66kV CB (Gas Insulated Busbars)(OD) (GM)", "33kV Transformer (GM)",
-#' "66kV Transformer (GM)", "132kV OHL (Tower Line) Conductor",
-#' "132kV Tower", "132kV Fittings",
-#' "132kV CB (Air Insulated Busbars)(ID) (GM)",
-#' "132kV CB (Air Insulated Busbars)(OD) (GM)",
-#' "132kV CB (Gas Insulated Busbars)(ID) (GM)",
-#' "132kV CB (Gas Insulated Busbars)(OD) (GM)", "132kV Transformer (GM)")
-#'}
-#' @param gb_ref_given optional parameter to use custom reference values
-#' @return Numeric. Safety consequences of failure for
-#' switchgear, transformers and overhead lines.
+#' @title Consecuencias de Seguridad por Falla para Transformadores de 13.2 kV
+#' @description Esta función calcula las consecuencias de seguridad por fallo
+#' para transformadores de 13.2 kV
+#' (cf. sección 7.4, página 80, CNAIM, 2021). Las consecuencias de seguridad por falla
+#' se utilizan en la derivación de las consecuencias de falla, ver \code{\link{cof}}().
+#' @param tipo_riesgo Cadena de texto. Riesgo que el activo presenta al
+#' público por sus características y situación particular. Opciones:
+#' \code{tipo_riesgo = c("Bajo", "Medio", "Alto", "Default")}
+#' (cf. tabla 225A, página 183, CNAIM, 2021).
+#' Una configuración de \code{"Default"} equivale a una configuración de \code{"Medio"}.
+#' @param riesgo_ubicacion Cadena de texto. Proximidad a áreas que pueden afectar su
+#' probabilidad de intrusión o interferencia. Opciones:
+#' \code{riesgo_ubicacion = c("Bajo", "Medio", "Alto", "Default")}
+#' (cf. tabla 225A, página 183, CNAIM, 2021).
+#' Una configuración de \code{"Default"} equivale a una configuración de \code{"Medio"}.
+#' @param tipo_transformador Cadena de texto.
+#' Opciones: \code{tipo_transformador = c("Transformador 13.2kV")}
+#' @param gb_ref_given Parámetro opcional para usar valores de referencia personalizados
+#' @return Numérico. Consecuencias de seguridad por falla para
+#' interruptores, transformadores y líneas aéreas.
 #' @source DNO Common Network Asset Indices Methodology (CNAIM),
 #' Health & Criticality - Version 2.1, 2021:
 #' \url{https://www.ofgem.gov.uk/sites/default/files/docs/2021/04/dno_common_network_asset_indices_methodology_v2.1_final_01-04-2021.pdf}
 #' @export
 #' @examples
-#' # Safety consequences failure for a 6.6/11 kV transformer
-#' s_cof_swg_tf_ohl(type_risk = "Default", location_risk = "Default",
-#'                  asset_type_scf = "6.6/11kV Transformer (GM)")
+#' # Consecuencias de seguridad por falla para un transformador de 13.2 kV
+#' s_cof_transformador_13_2kv(tipo_riesgo = "Default", riesgo_ubicacion = "Default",
+#'                            tipo_transformador = "Transformador 13.2kV")
 
-s_cof_swg_tf_ohl <- function(type_risk = "Default",
-                            location_risk = "Default",
-                            asset_type_scf,
-                            gb_ref_given = NULL) {
+s_cof_transformador_13_2kv <- function(tipo_riesgo = "Default",
+                                       riesgo_ubicacion = "Default",
+                                       tipo_transformador = "Transformador 13.2kV",
+                                       gb_ref_given = NULL) {
 
   `Asset Register Category` = NULL
   # due to NSE notes in R CMD check
@@ -73,26 +46,26 @@ s_cof_swg_tf_ohl <- function(type_risk = "Default",
   reference_costs_of_failure_tf <-
     dplyr::filter(gb_ref_taken$reference_costs_of_failure,
                                                  `Asset Register Category` ==
-                                                   asset_type_scf)
+                                                   tipo_transformador)
 
   # Reference safety cost of failure ----------------------------------------
   scost <- reference_costs_of_failure_tf$`Safety - (GBP)`
 
 
   #  Safety Consequence factor ----------------------------------------------
-  safety_conseq_factor_sg_tf_oh <- gb_ref_taken$safety_conseq_factor_sg_tf_oh
+  factor_consec_seg_transformador <- gb_ref_taken$factor_consec_seg_generador
 
   if (location_risk == "Default") location_risk <- "Medium (Default)"
   if (location_risk == "Medium") location_risk <- "Medium (Default)"
   if (type_risk == "Default") type_risk <- "Medium"
 
-  row_no <- which(safety_conseq_factor_sg_tf_oh$
+  row_no <- which(factor_consec_seg_transformador$
   `Safety Consequence Factor - Switchgear, Transformers & Overhead Lines...2` ==
     location_risk)
 
-  col_no <- grep(type_risk, colnames(safety_conseq_factor_sg_tf_oh))
+  col_no <- grep(type_risk, colnames(factor_consec_seg_transformador))
 
-  safety_consequence_factor <- safety_conseq_factor_sg_tf_oh[row_no, col_no]
+  safety_consequence_factor <- factor_consec_seg_transformador[row_no, col_no]
 
   # Safety consequence of failure -------------------------------------------
   safety_cof <- safety_consequence_factor * scost
