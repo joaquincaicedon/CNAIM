@@ -55,15 +55,15 @@ s_cof_transformador_13_2kv <- function(tipo_riesgo = "Default",
   #  Safety Consequence factor ----------------------------------------------
   factor_consec_seg_transformador <- gb_ref_taken$factor_consec_seg_generador
 
-  if (location_risk == "Default") location_risk <- "Medium (Default)"
-  if (location_risk == "Medium") location_risk <- "Medium (Default)"
-  if (type_risk == "Default") type_risk <- "Medium"
+  if (riesgo_ubicacion == "Default") riesgo_ubicacion <- "Medio (Default)"
+  if (riesgo_ubicacion == "Medio") riesgo_ubicacion <- "Medio (Default)"
+  if (tipo_riesgo == "Default") tipo_riesgo <- "Medio"
 
   row_no <- which(factor_consec_seg_transformador$
   `Safety Consequence Factor - Switchgear, Transformers & Overhead Lines...2` ==
-    location_risk)
+    riesgo_ubicacion)
 
-  col_no <- grep(type_risk, colnames(factor_consec_seg_transformador))
+  col_no <- grep(tipo_riesgo, colnames(factor_consec_seg_transformador))
 
   safety_consequence_factor <- factor_consec_seg_transformador[row_no, col_no]
 
