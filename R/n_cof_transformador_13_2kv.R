@@ -5,7 +5,7 @@
 #' todas las categorías de activos excluyendo transformadores EHV y 132kV.
 #' (cf. sección 7.6, página 87, CNAIM, 2021). El costo de falla de red
 #' se utiliza en la derivación de las consecuencias de falla; ver \code{\link{cof}}().
-#' @param asset_type_ncf Cadena de texto.
+#' @param tipo_transformador Cadena de texto.
 #' Opciones: \code{asset_type_ncf = c("Transformador 13.2kV")}
 #' @param no_usuarios Numérico. El número de clientes
 #' alimentados por un activo individual.
