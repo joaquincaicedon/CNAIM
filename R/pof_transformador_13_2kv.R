@@ -18,10 +18,6 @@
 #' @param descarga_parcial Texto. Indica el nivel de descarga parcial.
 #' Opciones: \code{descarga_parcial = c("Baja", "Media", "Alta (No Confirmada)",
 #' "Alta (Confirmada)", "Default")}. Ver página 153, tabla 171 en CNAIM (2021).
-#' @param acidez_aceite Acidez del aceite. Indica el nivel de acidez del aceite
-#' en el transformador. Ver página 162, tabla 202 en CNAIM (2021).
-#' @inheritParams oil_test_modifier
-#' Ver página 162, tabla 204 en CNAIM (2021).
 #' @param lectura_temperatura Texto. Indica la criticidad.
 #' Opciones: \code{lectura_temperatura = c("Normal", "Moderadamente Alta",
 #' "Muy Alta", "Default")}. Ver página 153, tabla 172 en CNAIM (2021).
@@ -30,7 +26,11 @@
 #' \code{condicion_observada = c("Sin deterioro", "Deterioro específico/menor",
 #' "Ligeramente deteriorado", "Cierto deterioro", "Deterioro sustancial", "Default")}.
 #' Ver página 130, tabla 81 en CNAIM (2021).
+#' @inheritParams oil_test_modifier
+#' Ver página 162 en CNAIM (2021).
 #' @param humedad Numérico. La humedad dada en (ppm). Ver página 162, tabla 203 en CNAIM (2021).
+#' @param acidez_aceite Acidez del aceite. Indica el nivel de acidez del aceite
+#' en el transformador. Ver página 162, tabla 204 en CNAIM (2021).
 #' @param resistencia_dielectrica Numérico. La resistencia dieléctrica dada en (kV).
 #' Ver página 162, tabla 205 en CNAIM (2021).
 #' @param indice_corrosion Entero.
