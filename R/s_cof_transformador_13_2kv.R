@@ -60,7 +60,7 @@ s_cof_transformador_13_2kv <- function(tipo_riesgo = "Default",
   if (tipo_riesgo == "Default") tipo_riesgo <- "Medio"
 
   row_no <- which(factor_consec_seg_transformador$
-  `Safety Consequence Factor - Switchgear, Transformers & Overhead Lines...2` ==
+  `Factor de consecuencia de seguridad - Generadores...2` ==
     riesgo_ubicacion)
 
   col_no <- grep(tipo_riesgo, colnames(factor_consec_seg_transformador))
@@ -69,6 +69,6 @@ s_cof_transformador_13_2kv <- function(tipo_riesgo = "Default",
 
   # Safety consequence of failure -------------------------------------------
   safety_cof <- safety_consequence_factor * scost
-
+browser()
   return(safety_cof)
 }
