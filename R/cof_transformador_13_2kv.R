@@ -1,0 +1,50 @@
+#' @title Consecuencias de falla para un transformador de 13.2 kV
+#' @description Esta función calcula las consecuencias de falla
+#' para un transformador de 13.2 kV (cf. sección 7, página 75, CNAIM, 2021).
+#' @inheritParams f_cof_transformer_11kv
+#' @inheritParams s_cof_swg_tf_ohl
+#' @inheritParams e_cof_tf
+#' @inheritParams n_cof_excl_ehv_132kv_tf
+#' @param gb_ref_given Parámetro opcional para usar valores de referencia personalizados
+#' @return Numérico. Consecuencias de falla para un transformador de 13.2 kV.
+#' @source DNO Common Network Asset Indices Methodology (CNAIM),
+#' Health & Criticality - Version 2.1, 2021:
+#' \url{https://www.ofgem.gov.uk/sites/default/files/docs/2021/04/dno_common_network_asset_indices_methodology_v2.1_final_01-04-2021.pdf}
+#' @export
+#' @examples
+#' # Consecuencias de falla para un transformador de 13.2 kV
+#' cof_transformador_13_2kv(kva = 500, type = "Type C",
+#'                      type_risk = "High", location_risk = "High",
+#'                      prox_water = 50, bunded = "No",
+#'                      no_customers = 500, kva_per_customer = 1)
+
+
+cof_transformador_13_2kv <- function(kva,
+                                     acceso,
+                                     tipo_riesgo,
+                                     riesgo_ubicacion,
+                                     distancia_agua,
+                                     acotado,
+                                     no_usuarios,
+                                     kva_usuario,
+                                     gb_ref_given = NULL) {
+
+  finance <- f_cof_transformer_11kv(kva, acceso, gb_ref_given)
+
+  safety <- s_cof_swg_tf_ohl(tipo_riesgo, riesgo_ubicacion,
+                             asset_type_scf = "Transformador 13.2kV", gb_ref_given)
+
+  environmental <-  e_cof_tf(asset_type_tf = "Transformador 13.2kV",
+                             rated_capacity = kva,
+                             distancia_agua, acotado,
+                             gb_ref_given)
+
+  network <-
+    n_cof_excl_ehv_132kv_tf(asset_type_ncf = "Transformador 13.2kV",
+                            no_usuarios, kva_usuario, gb_ref_given)
+
+  CoF <- finance + safety + environmental + network
+
+  return(data.frame(CoF_financiero = finance, CoF_seguridad = safety,
+                    CoF_ambiental = environmental, CoF_red = network, CoF_total = CoF))
+}
