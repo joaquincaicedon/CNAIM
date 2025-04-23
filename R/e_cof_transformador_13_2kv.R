@@ -85,7 +85,7 @@ e_cof_transformador_13_2kv <- function(tipo_transformador = "Transformador 13.2k
     if (kva == 'Default'){
       size_environmental_factor <- 1
       break
-    } else if (rated_capacity >= as.numeric(
+    } else if (kva >= as.numeric(
       size_enviromental_factor_tf$Lower[n]) &
       kva < as.numeric(
         size_enviromental_factor_tf$Upper[n])){
