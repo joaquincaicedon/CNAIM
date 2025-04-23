@@ -1,10 +1,10 @@
 #' @title Consecuencias de falla para un transformador de 13.2 kV
 #' @description Esta función calcula las consecuencias de falla
 #' para un transformador de 13.2 kV (cf. sección 7, página 75, CNAIM, 2021).
-#' @inheritParams f_cof_transformer_11kv
-#' @inheritParams s_cof_swg_tf_ohl
-#' @inheritParams e_cof_tf
-#' @inheritParams n_cof_excl_ehv_132kv_tf
+#' @inheritParams f_cof_transformador_13_2kv
+#' @inheritParams s_cof_transformador_13_2kv
+#' @inheritParams e_cof_transformador_13_2kv
+#' @inheritParams n_cof_transformador_13_2kv
 #' @param gb_ref_given Parámetro opcional para usar valores de referencia personalizados
 #' @return Numérico. Consecuencias de falla para un transformador de 13.2 kV.
 #' @source DNO Common Network Asset Indices Methodology (CNAIM),
@@ -29,19 +29,18 @@ cof_transformador_13_2kv <- function(kva,
                                      kva_usuario,
                                      gb_ref_given = NULL) {
 
-  finance <- f_cof_transformer_11kv(kva, acceso, gb_ref_given)
+  finance <- f_cof_transformador_13_2kv(kva, acceso, gb_ref_given)
 
-  safety <- s_cof_swg_tf_ohl(tipo_riesgo, riesgo_ubicacion,
-                             asset_type_scf = "Transformador 13.2kV", gb_ref_given)
+  safety <- s_cof_transformador_13_2kv(tipo_riesgo, riesgo_ubicacion,
+                                       asset_type_scf = "Transformador 13.2kV", gb_ref_given)
 
-  environmental <-  e_cof_tf(asset_type_tf = "Transformador 13.2kV",
-                             rated_capacity = kva,
-                             distancia_agua, acotado,
-                             gb_ref_given)
+  environmental <- e_cof_transformador_13_2kv(tipo_transformador = "Transformador 13.2kV",
+                                              rated_capacity = kva,
+                                              distancia_agua, acotado,
+                                              gb_ref_given)
 
-  network <-
-    n_cof_excl_ehv_132kv_tf(asset_type_ncf = "Transformador 13.2kV",
-                            no_usuarios, kva_usuario, gb_ref_given)
+  network <- n_cof_transformador_13_2kv(tipo_transformador = "Transformador 13.2kV",
+                                        no_usuarios, kva_usuario, gb_ref_given)
 
   CoF <- finance + safety + environmental + network
 
