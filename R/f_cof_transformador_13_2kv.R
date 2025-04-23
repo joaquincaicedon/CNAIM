@@ -42,7 +42,7 @@ f_cof_transformer_11kv <- function(kva = "Default",
   }
 
   # Get category ------------------------------------------------------------
-  asset_type <- "6.6/11kV Transformer (GM)"
+  asset_type <- "Transformador 13.2kV"
 
   asset_category <- gb_ref_taken$categorisation_of_assets %>%
     dplyr::filter(`Asset Register Category` == asset_type) %>%
@@ -81,18 +81,18 @@ f_cof_transformer_11kv <- function(kva = "Default",
                                              `Asset Category` ==
                                                asset_category)
 
-  if (type == 'Default') type <- "Type A"
-  if (type == "Type A") {
+  if (type == 'Default') type <- "Tipo A"
+  if (type == "Tipo A") {
     access_finacial_factor <-
       access_financial_factors_tf$
       `Access Factor: Type A Criteria - Normal Access ( & Default Value)`
   }
-  else if (type == "Type B") {
+  else if (type == "Tipo B") {
     access_finacial_factor <-
       access_financial_factors_tf$
 `Access Factor: Type B Criteria - Constrained Access or Confined Working Space`
   }
-  else if (type == "Type C") {
+  else if (type == "Tipo C") {
     access_finacial_factor <-
       access_financial_factors_tf$
       `Access Factor: Type C Criteria - Underground substation`
