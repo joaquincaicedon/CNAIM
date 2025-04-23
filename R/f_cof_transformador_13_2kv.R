@@ -1,35 +1,35 @@
 #' @importFrom magrittr %>%
-#' @title Financial Consequences of Failure for a 6.6/11 kV Transformer
-#' @description This function calculates financial consequences of failure
-#' (cf. section 7.3, page 79, CNAIM, 2021). Financial consequences
-#' of failure is used in
-#' the derivation of consequences of failure see \code{\link{cof}}().
-#' @param kva Numeric. The rated transformer capacity measured in kVA
-#' for a 6.6/11 kV transformer. Rated capacity is used to derive the
-#' type financial factor. For a general description of type financial factor see
-#' section 7.3.3.1 on page 80 in CNAIM (2021). A setting of \code{"Default"}
-#' will result in a type financial factor equal to 1
-#' (cf. section D1.2.1, page 178, CNAIM, 2021).
-#' @param type String. Relates to the accessibility of the transformer
-#' Options: \code{type = c("Type A", "Type B", "Type C", "Default")}.
-#' A setting of \code{"Type A"} - Normal access.
-#' A setting of \code{"Type B"} - Constrained access or confined working space.
-#' A setting of \code{"Type C"} - Underground substation.
-#' A setting of \code{"Default"} - Normal access thus same as \code{"Type A"}
-#' setting (cf. table 221, page 180, CNAIM, 2021).
-#' @param gb_ref_given optional parameter to use custom reference values
-#' @return Numeric. Financial consequences of failure for a 6.6/11 kV transformer.
+#' @title Consecuencias Financieras de Falla para un Transformador de 13.2 kV
+#' @description Esta función calcula las consecuencias financieras de falla
+#' (cf. sección 7.3, página 79, CNAIM, 2021). Las consecuencias financieras
+#' de falla se utilizan en la derivación de las consecuencias de falla,
+#' ver \code{\link{cof}}().
+#' @param kva Numérico. La potencia nominal del transformador medida en kVA
+#' para un transformador de 13.2 kV. La potencia nominal se utiliza para derivar el
+#' factor financiero de tipo. Para una descripción general del factor financiero de tipo, 
+#' ver sección 7.3.3.1 en la página 80 de CNAIM (2021). Una configuración de 
+#' \code{"Default"} resultará en un factor financiero de tipo igual a 1
+#' (cf. sección D1.2.1, página 178, CNAIM, 2021).
+#' @param acceso Cadena. Relacionado con la accesibilidad del transformador.
+#' Opciones: \code{type = c("Tipo A", "Tipo B", "Tipo C", "Default")}.
+#' Una configuración de \code{"Tipo A"} - Acceso normal.
+#' Una configuración de \code{"Tipo B"} - Acceso restringido o espacio de trabajo confinado.
+#' Una configuración de \code{"Tipo C"} - Subestación subterránea.
+#' Una configuración de \code{"Default"} - Acceso normal, por lo tanto, igual a la configuración de \code{"Tipo A"}
+#' (cf. tabla 221, página 180, CNAIM, 2021).
+#' @param gb_ref_given parámetro opcional para usar valores de referencia personalizados.
+#' @return Numérico. Consecuencias financieras de falla para un transformador de 6.6/11 kV.
 #' @source DNO Common Network Asset Indices Methodology (CNAIM),
 #' Health & Criticality - Version 2.1, 2021:
 #' \url{https://www.ofgem.gov.uk/sites/default/files/docs/2021/04/dno_common_network_asset_indices_methodology_v2.1_final_01-04-2021.pdf}
 #' @export
 #' @examples
-#' # Financial consequences of failure for a 6.6/11 kV transformer
-#' f_cof_transformer_11kv(kva = 700, type = "Default")
+#' # Consecuencias financieras de falla para un transformador de 13.2 kV
+#' f_cof_transformador_13_2kv(kva = 500, acceso = "Default")
 
-f_cof_transformer_11kv <- function(kva = "Default",
-                                   type = "Default",
-                                   gb_ref_given = NULL) {
+f_cof_transformador_13_2kv <- function(kva = "Default",
+                                       acceso = "Default",
+                                       gb_ref_given = NULL) {
 
   `Asset Register Category` = `Health Index Asset Category` = `Asset Category` = NULL
   # due to NSE notes in R CMD check
@@ -50,8 +50,7 @@ f_cof_transformer_11kv <- function(kva = "Default",
 
   # Reference cost of failure table 16 --------------------------------------
   reference_costs_of_failure_tf <- dplyr::filter(gb_ref_taken$reference_costs_of_failure,
-                                                 `Asset Register Category` ==
-                                                   asset_type)
+                                                 `Asset Register Category` == asset_type)
 
   # Reference financial cost of failure -------------------------------------
   fcost <- reference_costs_of_failure_tf$`Financial - (GBP)`
@@ -59,8 +58,7 @@ f_cof_transformer_11kv <- function(kva = "Default",
   # Type financial factor ---------------------------------------------------
   type_financial_factors <- gb_ref_taken$type_financial_factors
   type_financial_factors_tf <- dplyr::filter(type_financial_factors,
-                                             `Asset Register Category` ==
-                                               asset_type)
+                                             `Asset Register Category` == asset_type)
 
   if (kva == 'Default'){
     type_financial_factor <- 1
@@ -78,21 +76,20 @@ f_cof_transformer_11kv <- function(kva = "Default",
   # Access financial factor -------------------------------------------------
   access_financial_factors <- gb_ref_taken$access_factor_swg_tf_asset
   access_financial_factors_tf <- dplyr::filter(access_financial_factors,
-                                             `Asset Category` ==
-                                               asset_category)
+                                             `Asset Category` == asset_category)
 
-  if (type == 'Default') type <- "Tipo A"
-  if (type == "Tipo A") {
+  if (acceso == 'Default') acceso <- "Tipo A"
+  if (acceso == "Tipo A") {
     access_finacial_factor <-
       access_financial_factors_tf$
       `Access Factor: Type A Criteria - Normal Access ( & Default Value)`
   }
-  else if (type == "Tipo B") {
+  else if (acceso == "Tipo B") {
     access_finacial_factor <-
       access_financial_factors_tf$
 `Access Factor: Type B Criteria - Constrained Access or Confined Working Space`
   }
-  else if (type == "Tipo C") {
+  else if (acceso == "Tipo C") {
     access_finacial_factor <-
       access_financial_factors_tf$
       `Access Factor: Type C Criteria - Underground substation`
